@@ -1,0 +1,70 @@
+#idiomas img {
+    height: 15px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.formulario{
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    top: 3.5%;
+    border: 1px solid darkgrey;
+    padding:0;
+    z-index: 10;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 400px;
+    max-height: 90%;
+    text-align: center;
+}
+.formulario p {
+    text-align: left;
+    margin-left: 75px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#difuminador {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: 0;
+    left: 0;
+}
+#texto_error {
+    color: red;
+}
+.img-index {
+    margin-top: -200px;
+    width: 100%;
+    min-width: 900px;
+}
+.imagen_index {
+    height: 400px;
+    overflow: hidden;
+    padding:0;
+    border-radius: 7px;
+}
+#index_title {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#index_title h1 {
+    font-size: 4em;
+}
+#index_title hr {
+    color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
