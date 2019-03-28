@@ -6,6 +6,23 @@ require_once "entities/Usuario.php";
 
 $conexion = Connection::make();
 
+//Mantener usuario si ha iniciado sesión
+
+if (isset($_SESSION['email'])) {
+    $stmt = $conexion->prepare("SELECT * FROM usuario WHERE email = :email");
+    $parameters = [':email'=>$_SESSION['email']];
+    $stmt->execute($parameters);
+    $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Usuario");
+    $usuario = $stmt->fetch();
+}
+
+//Cerrar sesión
+
+if(isset($_POST['logout'])) {
+    session_destroy();
+    header('Location: index.php');
+}
+
 //Cambio de idioma
 
 $ruta = "lengC.php";

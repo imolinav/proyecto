@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/bootstrap.min.css" >
+    <link rel="stylesheet" href="css/bootstrap.css" >
     <link rel="stylesheet" href="css/main.css" >
     <title>Smart Living</title>
 </head>
@@ -12,12 +12,15 @@
 <script src="js/bootstrap.js"></script>
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
-    <h1 class="navbar-brand">Smart Living</h1>
-    <?php if(!isset($_SESSION['dni'])): ?>
+    <h1 class="navbar-brand"><a href="index.php"">Smart Living</a></h1>
+    <?php if(!isset($_SESSION['email'])): ?>
         <button type="button" class="btn btn-light ml-auto mr-3">Iniciar sesión</button>
     <?php else: ?>
-        <h1 class="ml-auto"><a href="usuario.php"><?= $usuario->getNombre() ?></a></h1>
-        <button type="button" class="btn btn-light mr-3">Cerrar sesión</button>
+        <p class="ml-auto mt-3 mr-3"><a href="usuario.php"><?= $usuario->getNombre() ?></a></p>
+        <form method="post" action="index.php">
+            <button type="button" class="btn btn-light mr-3" id="logout">Cerrar sesión</button>
+            <input type="hidden" name="logout">
+        </form>
     <?php endif; ?>
     <form id="idiomas" class="form-inline my-2 my-lg-0" action="index.php" method="post">
         <img src="imgs/spanish.png" id="castellano">

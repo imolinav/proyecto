@@ -19,3 +19,4 @@ class Connection {
         return $connection;
     }
 }
+?>
