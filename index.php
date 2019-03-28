@@ -12,4 +12,5 @@ if(isset($_POST['li_dni'])) {
 $hora = date("H", time());
 include "views/partials/header.part.php";
 include "views/index.view.php";
+include "views/partials/footer.part.php";
 ?>

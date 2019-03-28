@@ -57,7 +57,7 @@
     user-select: none;
     text-align: center;
     padding: 10px 20px;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 1);
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -67,4 +67,11 @@
 #index_title hr {
     color: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(0, 0, 0, 0.5);
+}
+footer {
+    margin-top: 20px;
+}
+footer a {
+    text-decoration: none;
+    color: white;
 }

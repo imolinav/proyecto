@@ -74,7 +74,7 @@
 
         let boton2 = document.createElement('button');
         boton2.setAttribute('type', 'button');
-        boton2.setAttribute('class', 'btn btn-danger mt-4 mb-4 ml-2');
+        boton2.setAttribute('class', 'btn btn-secondary mt-4 mb-4 ml-2');
         let texto_b2 = document.createTextNode("Cancelar");
         boton2.appendChild(texto_b2);
 
@@ -160,8 +160,3 @@
     }
 
 </script>
-
-
-
-</body>
-</html>
