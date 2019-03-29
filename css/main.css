@@ -1,46 +1,64 @@
+/* HEADER */
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+}
+.dropdown-menu a {
+    color: black;
+}
+#logout {
+    outline: none;
+    text-align: left;
+    border: 0;
+    box-sizing: unset;
+    background-color: transparent;
+    padding-left: 0;
+    margin-left: 0;
+    cursor: pointer;
+}
+.dropdown-toggle {
+    cursor: pointer;
+    padding: 9px 0;
+}
+.dropdown-toggle img {
+    height: 40px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+.dropdown-menu {
+    margin-top: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.dropdown-menu hr {
+    margin: 5px 0;
+}
 #idiomas img {
     height: 15px;
     margin-right: 10px;
     cursor: pointer;
 }
-.formulario{
-    position: fixed;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    top: 3.5%;
-    border: 1px solid darkgrey;
-    padding:0;
-    z-index: 10;
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 400px;
-    max-height: 90%;
-    text-align: center;
+
+/* FOOTER */
+
+footer {
+    margin-top: 20px;
 }
-.formulario p {
-    text-align: left;
-    margin-left: 75px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+footer a {
+    text-decoration: none;
+    color: white;
 }
-#difuminador {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    background-color: rgba(255, 255, 255, 0.5);
-    top: 0;
-    left: 0;
-}
-#texto_error {
-    color: red;
-}
+
+/* INDEX */
+
 .img-index {
-    margin-top: -200px;
+    margin-top: -100px;
     width: 100%;
     min-width: 900px;
 }
 .imagen_index {
-    height: 400px;
+    height: 500px;
     overflow: hidden;
     padding:0;
     border-radius: 7px;
@@ -56,8 +74,8 @@
     -ms-user-select: none;
     user-select: none;
     text-align: center;
-    padding: 10px 20px;
-    background-color: rgba(255, 255, 255, 1);
+    padding: 20px 30px;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -68,10 +86,68 @@
     color: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(0, 0, 0, 0.5);
 }
-footer {
-    margin-top: 20px;
+
+/* FORMULARIO INICIO SESION */
+
+.formulario{
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    top: 3.5%;
+    border: 1px solid darkgrey;
+    padding:20px 0 0 0;
+    z-index: 10;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 400px;
+    max-height: 90%;
+    text-align: left;
 }
-footer a {
-    text-decoration: none;
-    color: white;
+.formulario p {
+    text-align: left;
+    margin-left: 75px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.formulario small {
+    margin-left: 75px;
+}
+.formulario button {
+    margin-left: 90px;
+}
+.formulario input[type=text], .formulario input[type=password] {
+    width: 250px;
+    margin-left: 75px;
+}
+#difuminador {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: 0;
+    left: 0;
+}
+#texto_error {
+    color: red;
+}
+
+/* CAMBIO/RECUPERAR PASS */
+
+.cambio_pass {
+    width: 30%;
+    text-align: center;
+    padding: 20px 30px;
+    box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.cambio_pass p, .cambio_pass small {
+    text-align: left;
+}
+.cambio_pass input[type=submit] {
+    width: 100%;
+}
+
+/* PERFIL */
+
+.datos_perfil img {
+    width: 200px;
 }

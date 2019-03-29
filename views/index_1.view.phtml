@@ -14,14 +14,18 @@
                 <h1>SMART LIVING</h1>
                 <hr>
                 <h3>Donde tu casa cobra vida</h3>
-                <a href="contacto.php" class="btn btn-light">Contacta con nosotros</a>
+                <a href="contacto.php" class="btn btn-dark mt-3">Contacta con nosotros</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    document.getElementsByTagName("button")[0].onclick = login;
+    if(document.getElementsByTagName('button')[0].id==="logout") {
+        document.getElementsByTagName("button")[0].onclick = logout;
+    } else {
+        document.getElementsByTagName("button")[0].onclick = login;
+    }
 
     function login() {
         let divisor = document.createElement('form');
@@ -36,17 +40,17 @@
         parrafo.appendChild(texto);
 
         let p1 = document.createElement('p');
-        let text_p1 = document.createTextNode('DNI');
+        let text_p1 = document.createTextNode('E-mail');
         p1.appendChild(text_p1);
         let input1 = document.createElement('input');
         input1.setAttribute('type', 'text');
         input1.setAttribute('class', 'form-control');
-        input1.setAttribute('name', 'li_dni');
+        input1.setAttribute('name', 'li_email');
 
         let small1 = document.createElement('small');
-        small1.setAttribute('id', 'dniHelp');
+        small1.setAttribute('id', 'emailHelp');
         small1.setAttribute('class', 'form-text text-muted');
-        let small1_text = document.createTextNode("Introduce tu DNI en formato 00000000-X");
+        let small1_text = document.createTextNode("Introduce tu e-mail (xxxxx@yyyyy.qqq)");
         small1.appendChild(small1_text);
 
         let p2 = document.createElement('p');
@@ -79,7 +83,7 @@
         boton2.appendChild(texto_b2);
 
         //let salto = document.createElement('br');
-        divisor.appendChild(parrafo);
+        //divisor.appendChild(parrafo);
         divisor.appendChild(p1);
         divisor.appendChild(input1);
         divisor.appendChild(small1);
@@ -98,7 +102,7 @@
     }
 
     function cerrarForm() {
-        document.body.removeChild(document.getElementsByTagName('form')[1]);
+        document.body.removeChild(document.getElementsByTagName('form')[2]);
         document.body.removeChild(document.getElementById('difuminador'));
     }
 
@@ -106,7 +110,6 @@
         let p_error = document.createElement('p');
         p_error.setAttribute('id', 'texto_error');
         let texto_error;
-
 
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'comprobacion_login.php', true);
@@ -128,15 +131,19 @@
                 }
             }
         }
-        let data = new Datos(document.getElementsByName('li_dni')[0].value, document.getElementsByName('li_pass')[0].value);
+        let data = new Datos(document.getElementsByName('li_email')[0].value, document.getElementsByName('li_pass')[0].value);
         let json_data = JSON.stringify(data);
         httpRequest.send('datos='+json_data);
 
     }
 
-    function Datos(dni, pass) {
-        this.dni = dni;
+    function Datos(email, pass) {
+        this.email = email;
         this.pass = pass;
+    }
+
+    function logout(event) {
+        event.target.parentNode.submit();
     }
 
     function obtainXMLHttpRequest() {
