@@ -1,0 +1,29 @@
+<div class="container cambio_pass mt-5 mb-5">
+    <form method="post" action="index.php">
+        <p>Introduce tu nueva contraseña:</p>
+        <input type="password" class="form-control" name="pass_chg">
+        <p class="mt-3">Confirma tu nueva contraseña:</p>
+        <input type="password" class="form-control" name="pass_chg_conf">
+        <small class="form-text text-muted">Mensaje de ayuda para la contraseña</small>
+        <input type="button" name="submit_cambio_pass" class="btn btn-primary mt-3" value="Cambiar contraseña">
+    </form>
+</div>
+
+<script>
+    document.getElementsByName('submit_cambio_pass')[0].onclick = comprobarPass;
+
+    function comprobarPass(event) {
+        if(document.getElementsByName('pass_chg')[0].value!==document.getElementsByName('pass_chg_conf')[0].value) {
+            if(document.getElementById('texto_error')) {
+                event.target.parentNode.removeChild(document.getElementById('texto_error'));
+            }
+            let error = document.createElement('p');
+            let texto_error = document.createTextNode('Las contraseñas no coinciden');
+            error.setAttribute('id', 'texto_error');
+            error.appendChild(texto_error);
+            event.target.parentNode.insertBefore(error, event.target);
+        } else {
+            event.target.parentNode.submit();
+        }
+    }
+</script>

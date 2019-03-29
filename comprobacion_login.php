@@ -9,8 +9,7 @@ if(isset($_POST['datos'])) {
     if(empty($usuario)) {
         echo "opcion1";
     } else {
-        //if(password_verify($datos['pass'], $usuario[0]['pass'])) {
-        if($datos['pass']==$usuario[0]['pass']) {
+        if(password_verify($datos['pass'], $usuario[0]['pass'])) {
             echo "opcion3";
         } else {
             echo "opcion2";

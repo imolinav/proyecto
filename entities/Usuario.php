@@ -12,13 +12,21 @@ class Usuario {
     protected $nombre;
     protected $foto;
     protected $pass;
+    protected $activo;
 
-    public function __construct($email="", $dni="", $nombre="", $foto="", $pass="") {
+    public function __construct($email="", $dni="", $nombre="", $foto="", $pass="", $activo="") {
         $this->email = $email;
         $this->dni = $dni;
         $this->nombre = $nombre;
         $this->foto = $foto;
         $this->pass = $pass;
+        $this->activo = $activo;
+    }
+
+    public function updatePassFT($conexion, $pass) {
+        $stmt = $conexion->prepare("UPDATE usuario SET pass = :pass, activo = 1 WHERE email = :email");
+        $parameters = [':pass'=>password_hash($pass, PASSWORD_DEFAULT, ['cost'=>10]), ':email'=>$this->email];
+        $stmt->execute($parameters);
     }
 
 
@@ -70,5 +78,12 @@ class Usuario {
         return $this;
     }
 
+    public function getActivo(): string {
+        return $this->activo;
+    }
 
+    public function setActivo(string $activo): Usuario {
+        $this->activo = $activo;
+        return $this;
+    }
 }
