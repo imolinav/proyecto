@@ -21,6 +21,9 @@ if(isset($_POST['li_email'])) {
     if($usuario->getActivo() == 0) {
         header('Location: cambio_pass.php');
     }
+    if($usuario->getAdmin() == 1) {
+        header('Location: cpanel.php');
+    }
 
 }
 

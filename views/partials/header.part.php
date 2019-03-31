@@ -44,3 +44,4 @@
         <input type="hidden" name="lengua">
     </form>
 </header>
+<script src="js/logout.js"></script>

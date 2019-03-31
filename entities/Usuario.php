@@ -13,14 +13,18 @@ class Usuario {
     protected $foto;
     protected $pass;
     protected $activo;
+    protected $puerto;
+    protected $admin;
 
-    public function __construct($email="", $dni="", $nombre="", $foto="", $pass="", $activo="") {
+    public function __construct($email="", $dni="", $nombre="", $foto="", $pass="", $activo="", $puerto="", $admin="") {
         $this->email = $email;
         $this->dni = $dni;
         $this->nombre = $nombre;
         $this->foto = $foto;
         $this->pass = $pass;
         $this->activo = $activo;
+        $this->puerto = $puerto;
+        $this->admin = $admin;
     }
 
     public function updatePassFT($conexion, $pass) {
@@ -84,6 +88,24 @@ class Usuario {
 
     public function setActivo(string $activo): Usuario {
         $this->activo = $activo;
+        return $this;
+    }
+
+    public function getPuerto(): string {
+        return $this->puerto;
+    }
+
+    public function setPuerto(string $puerto): Usuario {
+        $this->puerto = $puerto;
+        return $this;
+    }
+
+    public function getAdmin(): string {
+        return $this->admin;
+    }
+
+    public function setAdmin(string $admin): Usuario {
+        $this->admin = $admin;
         return $this;
     }
 }

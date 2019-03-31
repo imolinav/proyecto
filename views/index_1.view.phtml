@@ -19,11 +19,8 @@
         </div>
     </div>
 </div>
-
 <script>
-    if(document.getElementsByTagName('button')[0].id==="logout") {
-        document.getElementsByTagName("button")[0].onclick = logout;
-    } else {
+    if(document.getElementsByTagName('button')[0].id!=="logout") {
         document.getElementsByTagName("button")[0].onclick = login;
     }
 
@@ -140,10 +137,6 @@
     function Datos(email, pass) {
         this.email = email;
         this.pass = pass;
-    }
-
-    function logout(event) {
-        event.target.parentNode.submit();
     }
 
     function obtainXMLHttpRequest() {

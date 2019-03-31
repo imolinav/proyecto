@@ -3,6 +3,5 @@
         <a href="https://github.com/imolinav" style="text-decoration: none;">Ian Molina</a>
     </div>
 </footer>
-
 </body>
 </html>
