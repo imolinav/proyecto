@@ -1,0 +1,31 @@
+<div id="chat_wdw">
+    <div id="cabecera_chat">
+        <p>Preguntanos lo que necesites!</p>
+    </div>
+    <div id="cuerpo_chat" style="display: none">
+
+    </div>
+    <div id="enviar_chat" style="display: none">
+        <div class="row">
+            <div class="col-8">
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-4">
+                <input type="button" value="Enviar" class="btn btn-primary">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('cabecera_chat').onclick = minMax;
+
+    function minMax() {
+        if(document.getElementById('cuerpo_chat').style.display === "none") {
+            document.getElementById('cuerpo_chat').style.display = "block";
+            document.getElementById('enviar_chat').style.display = "block";
+        } else {
+            document.getElementById('cuerpo_chat').style.display = "none";
+            document.getElementById('enviar_chat').style.display = "none";
+        }
+    }
+</script>

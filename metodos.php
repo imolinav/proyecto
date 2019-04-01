@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "database/Connection.php";
 require_once "twitter/TwitterAPIExchange.php";
 require_once "entities/Usuario.php";

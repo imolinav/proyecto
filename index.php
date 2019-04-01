@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 require_once "metodos.php";
 require_once "entities/Usuario.php";
 date_default_timezone_set("Europe/Madrid");
@@ -35,5 +35,6 @@ if(isset($_POST['pass_chg'])) {
 $hora = date("H", time());
 include "views/partials/header.part.php";
 include "views/index_1.view.phtml";
+include "chat.php";
 include "views/partials/footer.part.php";
 ?>

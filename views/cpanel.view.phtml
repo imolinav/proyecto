@@ -1,7 +1,7 @@
 <div class="container mt-4 formulario_registro">
     <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user" aria-selected="true">Gestion usuarios</a>
+            <a class="nav-link active" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user" aria-selected="true">Gestión usuarios</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="chat_tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Chat</a>
@@ -10,13 +10,79 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="add_user" role="tabpanel" aria-labelledby="add_user_tab">
             <div class="container w-75 mt-4">
-                <form action="cpanel.php" method="post">
-                    <p>Nombre de usuario: </p>
-                    <input type="text" name="su_name" class="form-control">
-                    <p>E-mail: </p>
-                    <input type="text" name="su_email" class="form-control">
-                    <p>Contraseña: </p>
-                    <input type="password" name="su_pass" class="form-control">
+                <form action="cpanel.php" method="post" id="form_reg">
+                    <div class="row">
+                        <div class="col-6">
+                            <p>Nombre de usuario: </p>
+                        </div>
+                        <div class="col-6">
+                            <p>E-mail: </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" name="su_name" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <input type="text" name="su_email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <p>DNI: </p>
+                        </div>
+                        <div class="col-6">
+                            <p>Contraseña: </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" name="su_dni" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <input type="password" name="su_pass" class="form-control">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <p>Cantidad de habitaciones:</p>
+                        </div>
+                        <div class="col-6">
+                            <input type="number" class="form-control" value="1" min="1" name="su_hab_num">
+                        </div>
+                    </div>
+                    <div class="habitaciones">
+                        <hr>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <p>Habitación: </p>
+                            </div>
+                            <div class="col-6">
+                                <p>Cantidad de dispositivos: </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="su_hab_name[]">
+                            </div>
+                            <div class="col-6">
+                                <input type="number" class="form-control" value="1" min="1" name="su_hab_cant_disp[]">
+                            </div>
+                        </div>
+                        <div class="dispositivos">
+                            <div class="row mt-4">
+                                <div class="col-6">
+                                    <p>Nombre del dispositivo: </p>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" class="form-control" name="su_disp_name[]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <input type="button" class="btn btn-primary mt-2" value="Registrar usuario" name="submit_btn">
                 </form>
             </div>
         </div>
@@ -24,6 +90,58 @@
             <p>Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.</p>
         </div>
     </div>
+
 </div>
 <script>
+    let div_hab = document.getElementsByClassName('habitaciones')[0].cloneNode(true);
+    let div_disp = document.getElementsByClassName('dispositivos')[0].cloneNode(true);
+    document.getElementsByName('su_hab_num')[0].onchange = anyadirHab;
+    document.getElementsByName('su_hab_cant_disp[]')[0].onchange = anyadirDisp;
+    document.getElementsByName('su_dni')[0].onkeyup = calcularLetra;
+    document.getElementsByName('submit_btn')[0].onclick = comprobarForm;
+    let letras_dni = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'];
+
+    function anyadirHab() {
+        if(document.getElementsByName('su_hab_num')[0].value > document.getElementsByClassName('habitaciones').length) {
+            document.getElementById('form_reg').insertBefore(div_hab.cloneNode(true), document.getElementsByName('submit_btn')[0].previousSibling.previousSibling);
+            for(let i = 0; i<document.getElementsByName('su_hab_cant_disp[]').length; i++) {
+                document.getElementsByName('su_hab_cant_disp[]')[i].onchange = anyadirDisp;
+            }
+        } else if(document.getElementsByName('su_hab_num')[0].value < document.getElementsByClassName('habitaciones').length) {
+            document.getElementById('form_reg').removeChild(document.getElementsByClassName('habitaciones')[document.getElementsByClassName('habitaciones').length - 1]);
+        }
+    }
+
+    function anyadirDisp(event) {
+        if(event.target.value > event.target.parentNode.parentNode.parentNode.getElementsByClassName('dispositivos').length) {
+            event.target.parentNode.parentNode.parentNode.appendChild(div_disp.cloneNode(true));
+        } else if(event.target.value < event.target.parentNode.parentNode.parentNode.getElementsByClassName('dispositivos').length) {
+            event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode.getElementsByClassName('dispositivos')[event.target.parentNode.parentNode.parentNode.getElementsByClassName('dispositivos').length - 1]);
+        }
+    }
+
+    function calcularLetra(event) {
+        if(event.target.value.length===8) {
+            let resto = parseInt(event.target.value)%23;
+            event.target.value+="-"+letras_dni[resto];
+        }
+    }
+
+    function comprobarForm(event) {
+        let completos = true;
+        for(let i=0; i<document.getElementsByTagName('input').length; i++) {
+            if(document.getElementsByTagName('input').value == null) {
+                completos = false;
+            }
+        }
+        if(completos===false) {
+            alert("Tienes que rellenar todos los datos para continuar");
+        } else {
+            event.target.parentNode.submit();
+        }
+    }
+
+    $("[type='number']").keypress(function (evt) {
+        evt.preventDefault();
+    });
 </script>

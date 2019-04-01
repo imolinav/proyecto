@@ -21,11 +21,17 @@
                 <img class="mr-3" src="<?= $usuario->getFoto() ?>"><?= $usuario->getNombre() ?>
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuId">
-                <a class="dropdown-item" href="perfil.php">Perfil <span class="glyphicon glyphicon-user pull-right"></span></a>
-                <a class="dropdown-item" href="graficas.php"><span class="glyphicon glyphicon-stats"></span> Gráficas</a>
+                <?php if($usuario->getAdmin()==0): ?>
+                <a class="dropdown-item" href="control.php">Control</a>
+                <a class="dropdown-item" href="perfil.php">Perfil</a>
+                <a class="dropdown-item" href="graficas.php">Gráficas</a>
+                <?php else: ?>
+                <a class="dropdown-item" href="cpanel.php">Panel de control</a>
+                <a class="dropdown-item" href="cpanel.php">Chat</a>
+                <?php endif; ?>
                 <hr>
                 <form class="dropdown-item" method="post" action="index.php">
-                    <button type="button" id="logout"><span class="glyphicon glyphicon-remove"></span> Cerrar sesión</button>
+                    <button type="button" id="logout">Cerrar sesión</button>
                     <input type="hidden" name="logout">
                 </form>
             </div>
@@ -44,4 +50,4 @@
         <input type="hidden" name="lengua">
     </form>
 </header>
-<script src="js/logout.js"></script>
+<script src="js/functions.js"></script>

@@ -2,13 +2,13 @@
     <div class="row">
         <div class="col-12 imagen_index">
             <?php if($hora>=00 && $hora<=05): ?>
-                <img src="imgs/index1.jpg" class="img-fluid">
+                <img src="imgs/index4.jpg" class="img-fluid">
             <?php elseif($hora>=06 && $hora<=11): ?>
-                <img src="imgs/index2.jpg" class="img-fluid img-index">
+                <img src="imgs/index1.jpg" class="img-fluid img-index">
             <?php elseif($hora>=12 && $hora<=17): ?>
-                <img src="imgs/index3.jpg" class="img-fluid img-index">
+                <img src="imgs/index2.jpg" class="img-fluid img-index">
             <?php elseif($hora>=18 && $hora<=23): ?>
-                <img src="imgs/index4.jpg" class="img-index">
+                <img src="imgs/index3.jpg" class="img-index">
             <?php endif; ?>
             <div id="index_title">
                 <h1>SMART LIVING</h1>
@@ -99,7 +99,7 @@
     }
 
     function cerrarForm() {
-        document.body.removeChild(document.getElementsByTagName('form')[2]);
+        document.body.removeChild(document.getElementsByTagName('form')[1]);
         document.body.removeChild(document.getElementById('difuminador'));
     }
 
@@ -137,26 +137,6 @@
     function Datos(email, pass) {
         this.email = email;
         this.pass = pass;
-    }
-
-    function obtainXMLHttpRequest() {
-        let httpRequest;
-        if(window.XMLHttpRequest) {
-            httpRequest = new XMLHttpRequest();
-        } else if (window.ActiveXObject) {
-            try {
-                httpRequest = new ActiveXObject('MSXML2.XMLHTTP');
-            } catch(e) {
-                try {
-                    httpRequest = new ActiveXObject('Microsoft.XMLHTTP');
-                } catch(e) {}
-            }
-        }
-        if (!httpRequest) {
-            return false;
-        } else {
-            return httpRequest;
-        }
     }
 
 </script>

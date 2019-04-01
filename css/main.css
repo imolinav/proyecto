@@ -45,7 +45,7 @@
 footer {
     margin-top: 20px;
 }
-footer a {
+footer a, footer a:hover {
     text-decoration: none;
     color: white;
 }
@@ -152,4 +152,64 @@ footer a {
     width: 200px;
 }
 
-/* FORMULARIO REGISTRO */
+/* CHAT */
+
+#chat_wdw {
+    width: 350px;
+    position: absolute;
+    bottom: 0;
+    right: 0.5%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px 10px;
+}
+#chat_wdw #cabecera_chat {
+    height: 30px;
+    cursor: pointer;
+}
+#chat_wdw #cuerpo_chat {
+    height: 300px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+}
+#chat_wdw #enviar_chat {
+    height: 50px;
+}
+
+/* CONTROL DISPOSITIVOS */
+
+.dispositivos_list, .habitacion_list {
+    padding: 10px 30px;
+    margin: 0;
+    border-bottom: 1px solid darkgrey;
+    border-left: 1px solid darkgrey;
+    border-right: 1px solid darkgrey;
+    cursor: pointer;
+}
+.dispositivos_list {
+    padding-left: 50px;
+}
+.dispositivos_list:first-child, .habitacion_list:first-child {
+    border-top: 1px solid darkgrey;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.dispositivos_list:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.disp_act {
+    background-color: #ededed;
+}
+#datos_disp img {
+    cursor: pointer;
+    margin-left: 15%;
+}
+.habitacion_list {
+    cursor: initial;
+    background-color: #f4f4f4;
+    color: #727272;
+}
