@@ -44,6 +44,9 @@
 
 footer {
     margin-top: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 footer a, footer a:hover {
     text-decoration: none;
@@ -156,8 +159,10 @@ footer a, footer a:hover {
 
 #chat_wdw {
     width: 350px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
+    z-index: 100000;
+    margin-bottom: 0;
     right: 0.5%;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -172,11 +177,91 @@ footer a, footer a:hover {
     border: 1px solid lightgrey;
     border-radius: 5px;
     margin-bottom: 10px;
-    margin-top: 10px;
     background-color: #f9f9f9;
+    overflow: auto;
+}
+#chat_wdw #cuerpo_chat table {
+    width: 100%;
 }
 #chat_wdw #enviar_chat {
     height: 50px;
+}
+.msg_user {
+    display: inline-block;
+    padding: 5px 12px 5px 8px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin-bottom: 3px;
+    float: right;
+    margin-right: 5px;
+}
+.msg_admin {
+    display: inline-block;
+    padding: 5px 8px 5px 10px;
+    background-color: #007BFF;
+    border: 1px solid #006cd8;
+    color: white;
+    border-radius: 5px;
+    text-align: right;
+    margin-bottom: 3px;
+    margin-left: 5px;
+}
+
+/* CHAT ADMIN */
+
+#admin_chat {
+    margin-top: 10px;
+    min-height: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#admin_chat .user_chat {
+    border-bottom: 1px solid darkgrey;
+    margin: 0;
+    padding: 15px 15px;
+}
+#admin_chat_users {
+    overflow: hidden;
+    border: 1px solid darkgrey;
+    min-height: 500px;
+    padding: 0;
+}
+#admin_chat_body {
+    overflow: auto;
+    border-left: none;
+    border-bottom: none;
+    padding: 25px;
+    height: 430px;
+}
+#admin_chat_body table {
+    width: 100%;
+}
+.user_chat:hover {
+    background-color: #fafafa;
+}
+.user_selected {
+    background-color: #f8f8f8;
+}
+.user_chat {
+    cursor: pointer;
+    padding: 30px;
+    width: 100%;
+    display: inline-block;
+    margin:0;
+}
+#admin_chat_body .msg_user {
+    padding: 5px 12px 5px 8px;
+    background-color: #007BFF;
+    border: 1px solid #006cd8;
+    color: white;
+    float: left;
+}
+#admin_chat_body .msg_admin {
+    padding: 5px 8px 5px 10px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    color: black;
+    float: right;
 }
 
 /* CONTROL DISPOSITIVOS */

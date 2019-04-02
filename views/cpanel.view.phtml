@@ -87,10 +87,31 @@
             </div>
         </div>
         <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat_tab">
-            <p>Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.</p>
+            <div class="container" id="admin_chat">
+                <div class="row">
+                    <div class="col-4" id="admin_chat_users">
+                        <?php foreach($usuarios_chat as $usuario_chat) :?>
+                        <p class="user_chat"><?= $usuario_chat['usuario'] ?></p>
+                        <input type="hidden" value="<?= $usuario_chat['email'] ?>">
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-12" id="admin_chat_body">
+
+                            </div>
+                            <div class="col-10 mt-3">
+                                <input type="text" class="form-control" disabled id="msg_admin">
+                            </div>
+                            <div class="col-2 mt-3">
+                                <input type="button" class="btn btn-primary" value="Enviar" disabled id="enviar_admin">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
 <script>
     let div_hab = document.getElementsByClassName('habitaciones')[0].cloneNode(true);
@@ -99,7 +120,12 @@
     document.getElementsByName('su_hab_cant_disp[]')[0].onchange = anyadirDisp;
     document.getElementsByName('su_dni')[0].onkeyup = calcularLetra;
     document.getElementsByName('submit_btn')[0].onclick = comprobarForm;
+    for(let i = 0; i<document.getElementsByClassName('user_chat').length; i++) {
+        document.getElementsByClassName('user_chat')[i].onclick = cargarMensajes;
+    }
+    document.getElementById('enviar_admin').onclick = enviarMensaje;
     let letras_dni = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'];
+    let usuario;
 
     function anyadirHab() {
         if(document.getElementsByName('su_hab_num')[0].value > document.getElementsByClassName('habitaciones').length) {
@@ -134,11 +160,57 @@
                 completos = false;
             }
         }
-        if(completos===false) {
+        /*if(completos===false) {
             alert("Tienes que rellenar todos los datos para continuar");
-        } else {
+        } else {*/
             event.target.parentNode.submit();
+        /*}*/
+    }
+
+    function cargarMensajes(event) {
+        document.getElementById('msg_admin').disabled = false;
+        document.getElementById('enviar_admin').disabled = false;
+
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_chat.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    document.getElementById('admin_chat_body').innerHTML = httpRequest.responseText;
+                    for(let i = 0; i<document.getElementsByClassName('user_chat'); i++) {
+                        if(document.getElementsByClassName('user_chat')[i].classList.contains("user_selected")) {
+                            document.getElementsByClassName('user_chat')[i].classList.remove("user_selected");
+                        }
+                    }
+                    event.target.classList.add('user_selected');
+                }
+            }
         }
+        httpRequest.send('user='+event.target.nextElementSibling.value);
+        usuario = event.target.nextElementSibling.value;
+    }
+
+    function enviarMensaje() {
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_chat.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    document.getElementsByTagName('input')[12].value="";
+                    document.getElementById('admin_chat_body').getElementsByTagName('table')[0].innerHTML += httpRequest.responseText;
+                }
+            }
+        }
+        let data = new Datos(document.getElementById('msg_admin').value, usuario);
+        let datos = JSON.stringify(data);
+        httpRequest.send('new_msg='+datos);
+    }
+
+    function Datos(mensaje_admin, usuario) {
+        this.mensaje_admin = mensaje_admin;
+        this.usuario = usuario;
     }
 
     $("[type='number']").keypress(function (evt) {

@@ -1,9 +1,18 @@
 <?php
 //session_start();
 require_once "metodos.php";
+
+//Busqueda de usuarios que se han puesto en contacto con el administrador
+
+$stmt_usuarios = $conexion->prepare("select U.nombre as usuario, U.email as email from usuario U, mensaje M where U.email = M.de and U.email<>'admin@smartliving.es' group by U.nombre");
+$stmt_usuarios->execute();
+$usuarios_chat = $stmt_usuarios->fetchAll(PDO::FETCH_ASSOC);
 include "views/partials/header.part.php";
 include "views/cpanel.view.phtml";
 include "views/partials/footer.part.php";
+
+//Registro de usuarios
+
 if(isset($_POST['su_name'])) {
     $stmt_recoger = $conexion->prepare("SELECT puerto FROM usuario");
     $stmt_recoger->execute();
@@ -21,7 +30,6 @@ if(isset($_POST['su_name'])) {
             $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, usuario_email) VALUES (:nombre, :habitacion, 0, 0, 0, :usuario)");
             $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['su_hab_name'][$i], ':usuario'=>$_POST['su_email']];
             $stmt_disp->execute($parameters_disp);
-
         }
     }
 }

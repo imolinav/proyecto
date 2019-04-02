@@ -8,16 +8,18 @@
     <div id="enviar_chat" style="display: none">
         <div class="row">
             <div class="col-8">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" id="texto_msg">
             </div>
             <div class="col-4">
-                <input type="button" value="Enviar" class="btn btn-primary">
+                <input type="button" value="Enviar" class="btn btn-primary" name="chat_enviar">
             </div>
         </div>
     </div>
 </div>
 <script>
     document.getElementById('cabecera_chat').onclick = minMax;
+    document.body.onload = cargarMsg;
+    document.getElementsByName('chat_enviar')[0].onclick = enviarMsg;
 
     function minMax() {
         if(document.getElementById('cuerpo_chat').style.display === "none") {
@@ -27,5 +29,41 @@
             document.getElementById('cuerpo_chat').style.display = "none";
             document.getElementById('enviar_chat').style.display = "none";
         }
+    }
+
+    function cargarMsg() {
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_chat.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    document.getElementById('cuerpo_chat').innerHTML = httpRequest.responseText;
+                }
+            }
+        }
+        httpRequest.send('user=<?= $usuario->getEmail() ?>');
+    }
+
+    function enviarMsg() {
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_chat.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    document.getElementById('texto_msg').value="";
+                    cargarMsg();
+                }
+            }
+        }
+        let data = new Datos(document.getElementById('texto_msg').value, '<?= $usuario->getEmail() ?>');
+        let datos = JSON.stringify(data);
+        httpRequest.send('new_msg='+datos);
+    }
+
+    function Datos(mensaje, usuario) {
+        this.mensaje = mensaje;
+        this.usuario = usuario;
     }
 </script>
