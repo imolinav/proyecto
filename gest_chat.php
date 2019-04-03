@@ -15,8 +15,7 @@ if (isset($_POST['user'])) {
                 <td class="msg_user"><?= $mensaje['texto'] ?></td><td></td>
             <?php else: ?>
                 <td></td><td class="msg_user"><?= $mensaje['texto'] ?></td>
-
-                <?php endif;
+            <?php endif;
         } else {
             if ($usuario->getAdmin() == 1):?>
                 <td></td><td class="msg_admin"><?= $mensaje['texto'] ?></td>
@@ -41,7 +40,9 @@ if (isset($_POST['user'])) {
     $parameters_insert = [':texto'=>$mens, ':usuario'=>$datos['usuario']];
     $stmt_insert->execute($parameters_insert);
     if(isset($datos['mensaje_admin'])):?>
-<td></td><td class="msg_admin"><?= $datos['mensaje_admin'] ?></td>
+<tr><td></td><td class="msg_admin"><?= $datos['mensaje_admin'] ?></td></tr>
+<?php else: ?>
+<tr><td></td><td class="msg_user"><?= $datos['mensaje'] ?></td></tr>
 <?php endif;
 }
 ?>

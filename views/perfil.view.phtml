@@ -1,15 +1,53 @@
 <div class="container datos_perfil mt-3">
     <div class="row">
-        <div class="col-2 offset-2">
+        <div class="col-4 offset-2">
             <img src="<?= $usuario->getFoto() ?>">
+            <p class="mt-3">Nombre: <?= $usuario->getNombre() ?> <button type="button" class="btn btn-light btn-sm">♪</button></p>
+            <p>E-mail: <?= $usuario->getEmail() ?> <button type="button" class="btn btn-light btn-sm">♫</button></p>
+            <p>DNI: <?= $usuario->getDni() ?> <button type="button" class="btn btn-light btn-sm">♫</button></p>
         </div>
-        <div class="col-6 ml-4">
-            <div class="container">
-                <p>Nombre:</p>
-                <p><?= $usuario->getNombre() ?></p>
-                <p>E-mail:</p>
-                <p><?= $usuario->getEmail() ?></p>
-            </div>
+
+        <div class="col-4 offset-1">
+
+            <?php foreach ($habitaciones as $habitacion) :?>
+                <p class="habitacion_list"><?= $habitacion['habitacion'] ?></p>
+                <?php foreach($dispositivos as $dispositivo) {
+                    if($dispositivo['habitacion']==$habitacion['habitacion']):?>
+                        <p class="dispositivos_list"><?= $dispositivo['nombre'] ?></p>
+                        <input type="hidden" value="<?= $dispositivo['id'] ?>">
+                    <?php endif;
+                } endforeach; ?>
+            <p class="habitacion_list">Cámaras</p>
+            <?php foreach($camaras as $camara):?>
+                <p class="dispositivos_list"><?= $camara['nombre'] ?></p>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
+<script>
+    for(let i = 0; i<document.getElementsByClassName('dispositivos_list').length; i++) {
+        document.getElementsByClassName('dispositivos_list')[i].onclick = mostrarDatos;
+    }
+
+    function mostrarDatos(event) {
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'datos_dispositivos.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    if(document.getElementById('datos_disp')!=null) {
+                        document.getElementById('datos_disp').parentNode.removeChild(document.getElementById('datos_disp'));
+                    }
+                    event.target.parentNode.parentNode.innerHTML += httpRequest.responseText;
+                    for(let i=0; i<document.getElementsByClassName('dispositivos_list').length; i++) {
+                        document.getElementsByClassName('dispositivos_list')[i].onclick = seleccionar;
+                    }
+                    document.getElementById('controlador').onclick = cambiarEstado;
+                }
+            }
+        }
+        httpRequest.send('profile='+event.target.nextElementSibling.value);
+    }
+
+</script>

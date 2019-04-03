@@ -1,3 +1,14 @@
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    margin:0;
+    min-height: 100%;
+}
+
 /* HEADER */
 
 .navbar a {
@@ -42,11 +53,16 @@
 
 /* FOOTER */
 
+#separador {
+    margin-bottom: 120px;
+}
 footer {
-    margin-top: 20px;
-    position: fixed;
+    position: absolute;
+    right:0;
+    left:0;
     bottom: 0;
     width: 100%;
+    margin-top: 120px;
 }
 footer a, footer a:hover {
     text-decoration: none;
@@ -167,6 +183,8 @@ footer a, footer a:hover {
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 10px 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 #chat_wdw #cabecera_chat {
     height: 30px;
@@ -288,7 +306,8 @@ footer a, footer a:hover {
     border-bottom-right-radius: 5px;
 }
 .disp_act {
-    background-color: #ededed;
+    background-color: #007BFF;
+    color: white;
 }
 #datos_disp img {
     cursor: pointer;

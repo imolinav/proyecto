@@ -33,6 +33,34 @@ class Usuario {
         $stmt->execute($parameters);
     }
 
+    public function getDispositivos($conexion) {
+        $stmt_disp = $conexion->prepare("SELECT * FROM dispositivo WHERE usuario_email = '$this->email'");
+        $stmt_disp->execute();
+        $dispositivos = $stmt_disp->fetchAll(PDO::FETCH_ASSOC);
+        return $dispositivos;
+    }
+
+    public function getHabitaciones($conexion) {
+        $stmt_hab = $conexion->prepare("SELECT habitacion FROM dispositivo WHERE usuario_email = '$this->email' GROUP BY habitacion");
+        $stmt_hab->execute();
+        $habitaciones = $stmt_hab->fetchAll(PDO::FETCH_ASSOC);
+        return $habitaciones;
+    }
+
+    public function getCamaras($conexion) {
+        $stmt_cam = $conexion->prepare("SELECT * FROM camara WHERE usuario_email = '$this->email'");
+        $stmt_cam->execute();
+        $camaras = $stmt_cam->fetchAll(PDO::FETCH_ASSOC);
+        return $camaras;
+    }
+
+    public function getEscenas($conexion) {
+        $stmt_esc = $conexion->prepare("SELECT * FROM escena WHERE usuario_email = '$this->email'");
+        $stmt_esc->execute();
+        $escenas = $stmt_esc->fetchAll(PDO::FETCH_ASSOC);
+        return $escenas;
+    }
+
 
     /* -- GETTERS & SETTERS -- */
 

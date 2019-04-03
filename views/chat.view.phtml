@@ -54,7 +54,8 @@
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
                     document.getElementById('texto_msg').value="";
-                    cargarMsg();
+                    document.getElementById('cuerpo_chat').getElementsByTagName('table')[0].innerHTML += httpRequest.responseText;
+                    //cargarMsg();
                 }
             }
         }
