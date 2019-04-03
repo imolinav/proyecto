@@ -16,10 +16,14 @@
         </div>
     </div>
 </div>
+<script src="/socket.io/socket.io.js"></script>
 <script>
     document.getElementById('cabecera_chat').onclick = minMax;
     document.body.onload = cargarMsg;
     document.getElementsByName('chat_enviar')[0].onclick = enviarMsg;
+
+    let socket = io();
+    socket.on('message', addMessages);
 
     function minMax() {
         if(document.getElementById('cuerpo_chat').style.display === "none") {
@@ -63,6 +67,10 @@
         let datos = JSON.stringify(data);
         httpRequest.send('new_msg='+datos);
     }
+
+    /*function sendMessage(message){
+        $.post('http://localhost:3000/messages', message);
+    }*/
 
     function actualizarScroll() {
         //document.getElementById('cuerpo_chat').scrollTop = document.getElementById('cuerpo_chat').scrollHeight /*- document.getElementById('cuerpo_chat').clientHeight*/;
