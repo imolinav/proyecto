@@ -39,6 +39,7 @@
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
                     document.getElementById('cuerpo_chat').innerHTML = httpRequest.responseText;
+                    actualizarScroll();
                 }
             }
         }
@@ -60,6 +61,11 @@
         let data = new Datos(document.getElementById('texto_msg').value, '<?= $usuario->getEmail() ?>');
         let datos = JSON.stringify(data);
         httpRequest.send('new_msg='+datos);
+    }
+
+    function actualizarScroll() {
+        //document.getElementById('cuerpo_chat').scrollTop = document.getElementById('cuerpo_chat').scrollHeight /*- document.getElementById('cuerpo_chat').clientHeight*/;
+        document.getElementById('cuerpo_chat').scrollTop = document.getElementById('cuerpo_chat').scrollHeight;
     }
 
     function Datos(mensaje, usuario) {

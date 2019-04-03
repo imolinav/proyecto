@@ -179,6 +179,7 @@ footer a, footer a:hover {
     margin-bottom: 10px;
     background-color: #f9f9f9;
     overflow: auto;
+    position: relative;
 }
 #chat_wdw #cuerpo_chat table {
     width: 100%;

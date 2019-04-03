@@ -21,7 +21,7 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <input type="text" name="su_name" class="form-control">
+                            <input type="text" name="su_name" class="form-control" data-toggle="popover" data-placement="bottom" data-content="prueba">
                         </div>
                         <div class="col-6">
                             <input type="text" name="su_email" class="form-control">
@@ -154,17 +154,32 @@
     }
 
     function comprobarForm(event) {
-        let completos = true;
-        for(let i=0; i<document.getElementsByTagName('input').length; i++) {
-            if(document.getElementsByTagName('input').value == null) {
-                completos = false;
+        let completo = true;
+        if(document.getElementsByName('su_name')[0].value === "") {
+            alert("Falta el nombre!");
+        } else if(document.getElementsByName('su_email')[0].value === "") {
+            alert("Falta el email!");
+        } else if(document.getElementsByName('su_dni')[0].value === "") {
+            alert("Falta el dni!");
+        } else if(document.getElementsByName('su_pass')[0].value === "") {
+            alert("Falta la contraseña!");
+        } /*else {
+            for(let i = 0; i<document.getElementsByName('su_hab_name[]').length; i++) {
+                if(document.getElementsByName('su_hab_name[]')[i].value === "") {
+                    alert("Falta el nombre de la  " + (i+1) + "ª habitación!");
+                    break;
+                }
             }
-        }
-        /*if(completos===false) {
-            alert("Tienes que rellenar todos los datos para continuar");
-        } else {*/
+        } else {
+            for (let i = 0; i<document.getElementsByName('su_disp_name[]').length; i++) {
+                if(document.getElementsByName('su_disp_name[]')[i].value === "") {
+                    alert("Falta el nombre del dispositivo!");
+                    break;
+                }
+            }
+        }*/ else {
             event.target.parentNode.submit();
-        /*}*/
+        }
     }
 
     function cargarMensajes(event) {
@@ -178,17 +193,18 @@
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
                     document.getElementById('admin_chat_body').innerHTML = httpRequest.responseText;
-                    for(let i = 0; i<document.getElementsByClassName('user_chat'); i++) {
-                        if(document.getElementsByClassName('user_chat')[i].classList.contains("user_selected")) {
-                            document.getElementsByClassName('user_chat')[i].classList.remove("user_selected");
-                        }
+                    for(let i = 0; i<document.getElementsByClassName('user_chat').length; i++) {
+                        document.getElementsByClassName('user_chat')[i].classList.remove("user_selected");
+                        document.getElementsByClassName('user_chat')[i].onclick = cargarMensajes;
                     }
                     event.target.classList.add('user_selected');
+                    event.target.onclick = null;
                 }
             }
         }
         httpRequest.send('user='+event.target.nextElementSibling.value);
-        usuario = event.target.nextElementSibling.value;
+        //usuario = event.target.nextElementSibling.value;
+        actualizarScroll();
     }
 
     function enviarMensaje() {
@@ -198,7 +214,7 @@
         httpRequest.onreadystatechange = function() {
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
-                    document.getElementsByTagName('input')[12].value="";
+                    document.getElementById('msg_admin').value="";
                     document.getElementById('admin_chat_body').getElementsByTagName('table')[0].innerHTML += httpRequest.responseText;
                 }
             }
@@ -213,7 +229,15 @@
         this.usuario = usuario;
     }
 
+    function actualizarScroll() {
+        document.getElementById('admin_chat_body').scrollTop(document.getElementById('admin_chat_body').scrollHeight);
+    }
+
     $("[type='number']").keypress(function (evt) {
         evt.preventDefault();
     });
+
+
+
+
 </script>

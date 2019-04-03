@@ -10,6 +10,7 @@
 </head>
 <script src="js/jquery-3.3.1.js"></script>
 <script src="js/bootstrap.js"></script>
+<script src="js/popper.min.js"></script>
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
     <h1 class="navbar-brand"><a href="index.php"">Smart Living</a></h1>
