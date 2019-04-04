@@ -27,3 +27,11 @@ function obtainXMLHttpRequest() {
         return httpRequest;
     }
 }
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});
+
+$(function () {
+    $('[data-toggle="popover"]').popover()
+});

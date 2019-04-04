@@ -33,6 +33,24 @@ class Usuario {
         $stmt->execute($parameters);
     }
 
+    public function updateNombre($conexion, $nombre) {
+        $stmt = $conexion->prepare("UPDATE usuario SET nombre = '$nombre' WHERE email = '$this->email'");
+        $stmt->execute();
+        $this->setNombre($nombre);
+    }
+
+    public function updateDni($conexion, $dni) {
+        $stmt = $conexion->prepare("UPDATE usuario SET dni = '$dni' WHERE email = '$this->email'");
+        $stmt->execute();
+        $this->setDni($dni);
+    }
+
+    public function updateFoto($conexion, $foto) {
+        $stmt = $conexion->prepare("UPDATE usuario SET foto = '$foto' WHERE email = '$this->email'");
+        $stmt->execute();
+        $this->setFoto($foto);
+    }
+
     public function getDispositivos($conexion) {
         $stmt_disp = $conexion->prepare("SELECT * FROM dispositivo WHERE usuario_email = '$this->email'");
         $stmt_disp->execute();
@@ -59,6 +77,13 @@ class Usuario {
         $stmt_esc->execute();
         $escenas = $stmt_esc->fetchAll(PDO::FETCH_ASSOC);
         return $escenas;
+    }
+
+    public function getProgramas($conexion) {
+        $stmt_prg = $conexion->prepare("SELECT * FROM programa WHERE dispositivo_id IN (SELECT id FROM dispositivo WHERE usuario_email = '$this->email')");
+        $stmt_prg->execute();
+        $programas = $stmt_prg->fetchAll(PDO::FETCH_ASSOC);
+        return $programas;
     }
 
 

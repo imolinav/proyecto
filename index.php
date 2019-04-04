@@ -1,7 +1,6 @@
 <?php
 //session_start();
 require_once "metodos.php";
-require_once "entities/Usuario.php";
 date_default_timezone_set("Europe/Madrid");
 //login
 if(isset($_POST['li_email'])) {
@@ -24,6 +23,8 @@ if(isset($_POST['li_email'])) {
     if($usuario->getAdmin() == 1) {
         header('Location: cpanel.php');
     }
+
+    $mensajes_nl = comprobarMsgs($conexion, $_POST['li_email']);
 
 }
 

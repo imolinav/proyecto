@@ -8,10 +8,13 @@
     <link rel="stylesheet" href="css/main.css" />
     <title>Smart Living</title>
 </head>
+<script src="js/bootstrap.bundle.js"></script>
 <script src="js/jquery-3.3.1.js"></script>
-<script src="js/bootstrap.js"></script>
 <script src="js/popper.min.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/socket.io/socket.io.js"></script>
+<script src="js/util.js"></script>
+
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
     <h1 class="navbar-brand"><a href="index.php"">Smart Living</a></h1>
@@ -19,6 +22,11 @@
         <button type="button" class="btn btn-light ml-auto mr-3">Iniciar sesión</button>
     <?php else: ?>
         <div class="dropdown ml-auto mr-3">
+            <?php if($usuario->getAdmin() == 1) {
+                if(!empty($mensajes_nl)) :?>
+                <div class="msgs_nl_admin"><?= count($mensajes_nl) ?></div>
+                <?php endif;
+            } ?>
             <div class="dropdown-toggle" id="dropdownMenuId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
                 <img class="mr-3" src="<?= $usuario->getFoto() ?>"><?= $usuario->getNombre() ?>
             </div>
@@ -38,13 +46,6 @@
                 </form>
             </div>
         </div>
-        <!--
-        <p class="ml-auto mt-3 mr-3"><a href="usuario.php"><?= $usuario->getNombre() ?></a></p>
-        <form method="post" action="index.php">
-            <button type="button" class="btn btn-light mr-3" id="logout">Cerrar sesión</button>
-            <input type="hidden" name="logout">
-        </form>
-        -->
     <?php endif; ?>
     <form id="idiomas" class="form-inline my-2 my-lg-0" action="index.php" method="post">
         <img src="imgs/spanish.png" id="castellano">

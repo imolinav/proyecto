@@ -27,12 +27,19 @@ if (isset($_POST['disp'])) {
         <p>Veces encendido: <?= $dispositivo['num_encendidos'] ?></p>
         <p>Tiempo encendido: <?= $dispositivo['tiempo_encendido'] ?></p>
 
-        <?php if(!empty($programas)):?>
         <hr>
-        <p>Programas activos: </p>
-        <?php endif; ?>
 
-        <hr>
+        <?php if(!empty($programas)){
+            foreach ($programas as $programa) {
+                if($programa['dispositivo_id']==$dispositivo['id']):?>
+                    <p>Programado para: </p>
+                    <p><?=$programa['inicio'] ?></p>
+                    <p><?=$programa['fin'] ?></p>
+                    <hr>
+                <?php endif;
+            }
+        } ?>
+
         <p>Inicio: </p>
         <input type="date" class="form-control mb-2" name="prg_date_start">
         <input type="time" class="form-control mb-2" name="prg_hour_start">
@@ -43,7 +50,7 @@ if (isset($_POST['disp'])) {
         <p>Temperatura: </p>
         <input type="number" class="form-control mb-2" name="prg_temp" value="0" min="0" />
         <?php endif; ?>
-        <input type="button" class="btn btn-primary" value="Programar dispositivo">
+        <input type="button" class="btn btn-primary" value="Programar dispositivo" name="prg_enviar">
     </div>
     <?php endif;
 } else if(isset($_POST['profile'])) {

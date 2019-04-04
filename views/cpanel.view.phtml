@@ -91,8 +91,21 @@
                 <div class="row">
                     <div class="col-4" id="admin_chat_users">
                         <?php foreach($usuarios_chat as $usuario_chat) :?>
-                        <p class="user_chat"><?= $usuario_chat['usuario'] ?></p>
-                        <input type="hidden" value="<?= $usuario_chat['email'] ?>">
+                        <?php
+                        $cont = 0;
+                        if(!empty($mensajes_nl)) {
+                            foreach ($mensajes_nl as $mensaje_nl) {
+                                if($mensaje_nl['de']==$usuario_chat['email']) {
+                                    $cont++;
+                                }
+                            }
+                        }
+                        if($cont>0):?>
+                            <div class="new_msg_admin"><?= $cont ?></div>
+                        <?php endif; ?>
+                            <p class="user_chat"><?= $usuario_chat['usuario'] ?></p>
+                            <input type="hidden" value="<?= $usuario_chat['email'] ?>">
+
                         <?php endforeach; ?>
                     </div>
                     <div class="col-8">
@@ -121,11 +134,11 @@
     document.getElementsByName('su_dni')[0].onkeyup = calcularLetra;
     document.getElementsByName('submit_btn')[0].onclick = comprobarForm;
     for(let i = 0; i<document.getElementsByClassName('user_chat').length; i++) {
-        document.getElementsByClassName('user_chat')[i].onclick = cargarMensajes;
+        document.getElementsByClassName('user_chat')[i].onclick = selecUser;
     }
     document.getElementById('enviar_admin').onclick = enviarMensaje;
     let letras_dni = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'];
-    let usuario;
+    let usuario, elemento;
 
     function anyadirHab() {
         if(document.getElementsByName('su_hab_num')[0].value > document.getElementsByClassName('habitaciones').length) {
@@ -182,7 +195,18 @@
         }
     }
 
-    function cargarMensajes(event) {
+    function selecUser(event) {
+        elemento = event.target;
+        usuario = event.target.nextElementSibling.value;
+        cargarMensajes(elemento, usuario);
+    }
+
+    function cargarMensajes(elemento, usuario) {
+        if(elemento.previousElementSibling!==null) {
+            if(elemento.previousElementSibling.classList.contains('new_msg_admin')) {
+                elemento.parentNode.removeChild(elemento.previousElementSibling);
+            }
+        }
         document.getElementById('msg_admin').disabled = false;
         document.getElementById('enviar_admin').disabled = false;
 
@@ -195,16 +219,15 @@
                     document.getElementById('admin_chat_body').innerHTML = httpRequest.responseText;
                     for(let i = 0; i<document.getElementsByClassName('user_chat').length; i++) {
                         document.getElementsByClassName('user_chat')[i].classList.remove("user_selected");
-                        document.getElementsByClassName('user_chat')[i].onclick = cargarMensajes;
+                        document.getElementsByClassName('user_chat')[i].onclick = selecUser;
+                        actualizarScroll();
                     }
-                    event.target.classList.add('user_selected');
-                    event.target.onclick = null;
+                    elemento.classList.add('user_selected');
+                    elemento.onclick = null;
                 }
             }
         }
-        httpRequest.send('user='+event.target.nextElementSibling.value);
-        //usuario = event.target.nextElementSibling.value;
-        actualizarScroll();
+        httpRequest.send('user='+usuario);
     }
 
     function enviarMensaje() {
@@ -216,6 +239,7 @@
                 if(httpRequest.status === 200) {
                     document.getElementById('msg_admin').value="";
                     document.getElementById('admin_chat_body').getElementsByTagName('table')[0].innerHTML += httpRequest.responseText;
+                    actualizarScroll();
                 }
             }
         }
@@ -230,8 +254,9 @@
     }
 
     function actualizarScroll() {
-        document.getElementById('admin_chat_body').scrollTop(document.getElementById('admin_chat_body').scrollHeight);
+        document.getElementById('admin_chat_body').scrollTop = document.getElementById('admin_chat_body').scrollHeight;
     }
+
 
     $("[type='number']").keypress(function (evt) {
         evt.preventDefault();

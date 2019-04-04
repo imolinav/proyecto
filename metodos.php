@@ -14,6 +14,19 @@ if (isset($_SESSION['email'])) {
     $stmt->execute($parameters);
     $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Usuario");
     $usuario = $stmt->fetch();
+
+    $mensajes_nl = comprobarMsgs($conexion, $usuario->getEmail());
+
+}
+
+//Comprobar mensajes
+
+function comprobarMsgs($conexion, $email) {
+    $stmt = $conexion->prepare("SELECT * FROM mensaje where para = :usuario AND leido = 0");
+    $parameters = [':usuario'=>$email];
+    $stmt->execute($parameters);
+    $mensajes_nl = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $mensajes_nl;
 }
 
 //Cerrar sesión
@@ -47,6 +60,8 @@ if (isset($_POST['cerrar'])) {
 }
 $_SESSION['idioma'] = $ruta;
 include $_SESSION['idioma'];
+
+
 
 //Metodos Twitter
 

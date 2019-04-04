@@ -1,4 +1,7 @@
 <div id="chat_wdw">
+    <?php if(!empty($mensajes_nl)):?>
+        <div id="new_msg_user"><?= count($mensajes_nl) ?></div>
+    <?php endif; ?>
     <div id="cabecera_chat">
         <p>Preguntanos lo que necesites!</p>
     </div>
@@ -19,7 +22,6 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     document.getElementById('cabecera_chat').onclick = minMax;
-    document.body.onload = cargarMsg;
     document.getElementsByName('chat_enviar')[0].onclick = enviarMsg;
 
     let socket = io();
@@ -33,9 +35,13 @@
             document.getElementById('cuerpo_chat').style.display = "none";
             document.getElementById('enviar_chat').style.display = "none";
         }
+        cargarMsg();
     }
 
     function cargarMsg() {
+        if(document.getElementById('new_msg_user')) {
+            document.getElementById('new_msg_user').parentNode.removeChild(document.getElementById('new_msg_user'));
+        }
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -73,7 +79,6 @@
     }*/
 
     function actualizarScroll() {
-        //document.getElementById('cuerpo_chat').scrollTop = document.getElementById('cuerpo_chat').scrollHeight /*- document.getElementById('cuerpo_chat').clientHeight*/;
         document.getElementById('cuerpo_chat').scrollTop = document.getElementById('cuerpo_chat').scrollHeight;
     }
 

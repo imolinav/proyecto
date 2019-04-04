@@ -33,10 +33,14 @@ body {
     padding: 9px 0;
 }
 .dropdown-toggle img {
-    height: 40px;
+    height: auto;
+    width: auto;
+    max-height: 40px;
+    max-width: 40px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
+    background-color: white;
 }
 .dropdown-menu {
     margin-top: 8px;
@@ -201,6 +205,10 @@ footer a, footer a:hover {
 }
 #chat_wdw #cuerpo_chat table {
     width: 100%;
+    max-width: 100%;
+}
+#chat_wdw #cuerpo_chat table td {
+    max-width: 100%;
 }
 #chat_wdw #enviar_chat {
     height: 50px;
@@ -226,6 +234,18 @@ footer a, footer a:hover {
     margin-bottom: 3px;
     margin-left: 5px;
 }
+#new_msg_user {
+    display: block;
+    background-color: red;
+    color: white;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    position: absolute;
+    top: -25%;
+    right:0;
+}
 
 /* CHAT ADMIN */
 
@@ -235,20 +255,20 @@ footer a, footer a:hover {
     box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #admin_chat .user_chat {
-    border-bottom: 1px solid darkgrey;
+    border-bottom: 1px solid lightgrey;
     margin: 0;
     padding: 15px 15px;
 }
 #admin_chat_users {
     overflow: hidden;
-    border: 1px solid darkgrey;
+    border: 1px solid lightgrey;
     min-height: 500px;
     padding: 0;
 }
 #admin_chat_body {
     overflow: auto;
     border-left: none;
-    border-bottom: none;
+    border-bottom: 1px solid lightgrey;
     padding: 25px;
     height: 430px;
 }
@@ -282,10 +302,34 @@ footer a, footer a:hover {
     color: black;
     float: right;
 }
-
+.new_msg_admin {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: red;
+    color: white;
+    text-align: center;
+    position: absolute;
+    right: 5%;
+    margin-top: 12px;
+}
+.msgs_nl_admin {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: red;
+    color: white;
+    text-align: center;
+    position: absolute;
+    top:0;
+    left:0;
+    margin-left: -20px;
+}
 /* CONTROL DISPOSITIVOS */
 
-.dispositivos_list, .habitacion_list {
+.dispositivos_list, .habitacion_list, .programas_list {
     padding: 10px 30px;
     margin: 0;
     border-bottom: 1px solid darkgrey;
@@ -293,7 +337,7 @@ footer a, footer a:hover {
     border-right: 1px solid darkgrey;
     cursor: pointer;
 }
-.dispositivos_list {
+.dispositivos_list, .programas_list {
     padding-left: 50px;
 }
 .dispositivos_list:first-child, .habitacion_list:first-child {

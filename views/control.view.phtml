@@ -13,8 +13,8 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="dispositivos" role="tabpanel" aria-labelledby="dispositivos_tab">
             <div class="container w-75 mt-4">
-                <div class="row mt-8">
-                    <div class="col-6">
+                <div class="row mt-5" id="div_datos">
+                    <div class="col-6 mt-3">
                         <?php foreach ($habitaciones as $habitacion) :?>
                         <p class="habitacion_list"><?= $habitacion['habitacion'] ?></p>
                         <?php foreach($dispositivos as $dispositivo) {
@@ -68,10 +68,13 @@
 <script>
     document.getElementById('new_scene').onclick = nuevaEscena;
     for(let i=0; i<document.getElementsByClassName('dispositivos_list').length; i++) {
-        document.getElementsByClassName('dispositivos_list')[i].onclick = seleccionar;
+        document.getElementsByClassName('dispositivos_list')[i].onclick = seleccionarDisp;
     }
+    let dispositivo = "";
 
-    function seleccionar(event) {
+    function seleccionarDisp(event) {
+        dispositivo = event.target.nextElementSibling.value;
+        seleccionar(dispositivo);
         for(let i=0; i<document.getElementsByClassName('dispositivos_list').length; i++) {
             if(event.target===document.getElementsByClassName('dispositivos_list')[i]) {
                 event.target.classList.add("disp_act");
@@ -81,7 +84,9 @@
                 }
             }
         }
+    }
 
+    function seleccionar(dispositivo) {
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'datos_dispositivos.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -91,19 +96,70 @@
                     if(document.getElementById('datos_disp')!=null) {
                         document.getElementById('datos_disp').parentNode.removeChild(document.getElementById('datos_disp'));
                     }
-                    event.target.parentNode.parentNode.innerHTML += httpRequest.responseText;
+                    document.getElementById('div_datos').innerHTML += httpRequest.responseText;
                     for(let i=0; i<document.getElementsByClassName('dispositivos_list').length; i++) {
-                        document.getElementsByClassName('dispositivos_list')[i].onclick = seleccionar;
+                        document.getElementsByClassName('dispositivos_list')[i].onclick = seleccionarDisp;
                     }
                     document.getElementById('controlador').onclick = cambiarEstado;
+                    document.getElementsByName('prg_enviar')[0].onclick = programarDisp;
                 }
             }
         }
-        httpRequest.send('disp='+event.target.nextElementSibling.value);
+        httpRequest.send('disp='+dispositivo);
     }
 
-    function cambiarEstado() {
-        alert("Ahora estoy apagado");
+    function cambiarEstado(event) {
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'actualizar_dispositivo.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    if(httpRequest.responseText === "bien") {
+                        if(event.target.src === "http://localhost/proyecto/imgs/off.png") {
+                            event.target.src = "http://localhost/proyecto/imgs/on.png";
+                        } else {
+                            event.target.src = "http://localhost/proyecto/imgs/off.png";
+                        }
+                    }
+                }
+            }
+        }
+        httpRequest.send('activar='+dispositivo);
+    }
+
+    function programarDisp() {
+        let programa;
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'actualizar_dispositivo.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    if(httpRequest.responseText === "bien") {
+                        seleccionar(dispositivo);
+                    }
+
+                }
+            }
+        }
+        if(!document.getElementsByName('prg_temp')[0]) {
+            programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, null);
+        } else {
+            programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, document.getElementsByName('prg_temp')[0].value);
+        }
+        let datos = JSON.stringify(programa);
+        alert(datos);
+        httpRequest.send('programar='+datos);
+    }
+
+    function Program(id_disp, dia_ini, hora_ini, dia_fin, hora_fin, temp) {
+        this.id_disp = id_disp;
+        this.dia_ini = dia_ini;
+        this.hora_ini = hora_ini;
+        this.dia_fin = dia_fin;
+        this.hora_fin = hora_fin;
+        this.temp =  temp;
     }
 
     function nuevaEscena() {

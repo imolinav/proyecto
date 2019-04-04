@@ -6,6 +6,14 @@ if (isset($_POST['user'])) {
     $stmt_msgs->execute($parameters);
     $mensajes = $stmt_msgs->fetchAll(PDO::FETCH_ASSOC);
 
+    if($usuario->getAdmin()==1) {
+        $stmt_update = $conexion->prepare("UPDATE mensaje SET leido = 1 WHERE de = :email AND leido = 0");
+    } else {
+        $stmt_update = $conexion->prepare("UPDATE mensaje SET leido = 1 WHERE para = :email AND leido = 0");
+    }
+    $stmt_update->execute($parameters);
+
+
     if(!empty($mensajes)): ?>
         <table>
         <?php foreach($mensajes as $mensaje) : ?>
@@ -31,10 +39,10 @@ if (isset($_POST['user'])) {
 } else if (isset($_POST['new_msg'])) {
     $datos = json_decode($_POST['new_msg'], true);
     if (isset($datos['mensaje'])) {
-        $stmt_insert = $conexion->prepare("INSERT INTO mensaje (texto, de, para, fecha) VALUES (:texto, :usuario, 'admin@smartliving.es', CURRENT_TIME )");
+        $stmt_insert = $conexion->prepare("INSERT INTO mensaje (texto, de, para, fecha, leido) VALUES (:texto, :usuario, 'admin@smartliving.es', CURRENT_TIME, 0)");
         $mens = $datos['mensaje'];
     } else {
-        $stmt_insert = $conexion->prepare("INSERT INTO mensaje (texto, de, para, fecha) VALUES (:texto,'admin@smartliving.es', :usuario,  CURRENT_TIME )");
+        $stmt_insert = $conexion->prepare("INSERT INTO mensaje (texto, de, para, fecha, leido) VALUES (:texto,'admin@smartliving.es', :usuario,  CURRENT_TIME , 0)");
         $mens = $datos['mensaje_admin'];
     }
     $parameters_insert = [':texto'=>$mens, ':usuario'=>$datos['usuario']];
