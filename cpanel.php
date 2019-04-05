@@ -27,8 +27,26 @@ if(isset($_POST['su_name'])) {
     for($i=0; $i<$_POST['su_hab_num']; $i++) {
         for($j=0; $j<$_POST['su_hab_cant_disp'][$i]; $j++) {
             $dispositivo = array_shift($dispositivos);
-            $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, usuario_email) VALUES (:nombre, :habitacion, 0, 0, 0, :usuario)");
-            $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['su_hab_name'][$i], ':usuario'=>$_POST['su_email']];
+            $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, temperatura, usuario_email) VALUES (:nombre, :habitacion, 0, 0, 0, :temperatura, :usuario)");
+            if($_POST['su_disp_temp'][$i]=="si") {
+                $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['su_hab_name'][$i], ':temperatura'=>0,':usuario'=>$_POST['su_email']];
+            } else {
+                $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['su_hab_name'][$i], ':temperatura'=>null, ':usuario'=>$_POST['su_email']];
+            }
+            $stmt_disp->execute($parameters_disp);
+        }
+    }
+} if(isset($_POST['new_su_hab_num'])) {
+    $dispositivos = $_POST['new_su_disp_name'];
+    for($i=0; $i<$_POST['new_su_hab_num'];$i++) {
+        for($j=0; $j<$_POST['new_su_hab_cant_disp'][$i]; $j++) {
+            $dispositivo = array_shift($dispositivos);
+            $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, temperatura, usuario_email) VALUES (:nombre, :habitacion, 0, 0, 0, :temperatura, :usuario)");
+            if($_POST['new_su_disp_temp'][$i]=="si") {
+                $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>0,':usuario'=>$_POST['user_mod_email']];
+            } else {
+                $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>null, ':usuario'=>$_POST['user_mod_email']];
+            }
             $stmt_disp->execute($parameters_disp);
         }
     }

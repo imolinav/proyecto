@@ -1,7 +1,10 @@
 <div class="container mt-4 formulario_registro">
     <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user" aria-selected="true">Gestión usuarios</a>
+            <a class="nav-link active" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user" aria-selected="true">Nuevo usuario</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="modify_user_tab" data-toggle="tab" href="#modify_user" role="tab" aria-controls="modify_user" aria-selected="true">Modificar usuario</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="chat_tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Chat</a>
@@ -75,8 +78,11 @@
                                 <div class="col-6">
                                     <p>Nombre del dispositivo: </p>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-5">
                                     <input type="text" class="form-control" name="su_disp_name[]">
+                                </div>
+                                <div class="col-1">
+                                    <input class="form-control" type="checkbox" value="si" name="su_disp_temp[]">
                                 </div>
                             </div>
                         </div>
@@ -84,6 +90,18 @@
                     <hr>
                     <input type="button" class="btn btn-primary mt-2" value="Registrar usuario" name="submit_btn">
                 </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="modify_user" role="tabpanel" aria-labelledby="modify_user_tab">
+            <div class="row mt-4">
+                <div class="col-6 offset-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="s_user" aria-label="Busqueda" aria-describedby="button-addon">
+                        <div class="input-group-append">
+                            <button class="btn btn-light" type="button" id="button-addon">♫</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat_tab">
@@ -129,6 +147,7 @@
 <script>
     let div_hab = document.getElementsByClassName('habitaciones')[0].cloneNode(true);
     let div_disp = document.getElementsByClassName('dispositivos')[0].cloneNode(true);
+    let new_div_hab, new_div_disp;
     document.getElementsByName('su_hab_num')[0].onchange = anyadirHab;
     document.getElementsByName('su_hab_cant_disp[]')[0].onchange = anyadirDisp;
     document.getElementsByName('su_dni')[0].onkeyup = calcularLetra;
@@ -137,25 +156,43 @@
         document.getElementsByClassName('user_chat')[i].onclick = selecUser;
     }
     document.getElementById('enviar_admin').onclick = enviarMensaje;
-    let letras_dni = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'];
-    let usuario, elemento;
+    document.getElementById('button-addon').onclick = buscarUser;
 
-    function anyadirHab() {
-        if(document.getElementsByName('su_hab_num')[0].value > document.getElementsByClassName('habitaciones').length) {
-            document.getElementById('form_reg').insertBefore(div_hab.cloneNode(true), document.getElementsByName('submit_btn')[0].previousSibling.previousSibling);
-            for(let i = 0; i<document.getElementsByName('su_hab_cant_disp[]').length; i++) {
-                document.getElementsByName('su_hab_cant_disp[]')[i].onchange = anyadirDisp;
+    let letras_dni = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'];
+    let usuario, elemento, user;
+
+    function anyadirHab(event) {
+        let aux="";
+        if(event.target.name==="new_su_hab_num") {
+            aux = "new_";
+        }
+        if(document.getElementsByName(aux+'su_hab_num')[0].value > document.getElementsByClassName(aux+'habitaciones').length) {
+            if(event.target.name==="new_su_hab_num") {
+                document.getElementById(aux+'form_reg').insertBefore(new_div_hab.cloneNode(true), document.getElementsByName(aux+'submit_btn')[0].previousSibling.previousSibling);
+            } else {
+                document.getElementById(aux+'form_reg').insertBefore(div_hab.cloneNode(true), document.getElementsByName(aux+'submit_btn')[0].previousSibling.previousSibling);
             }
-        } else if(document.getElementsByName('su_hab_num')[0].value < document.getElementsByClassName('habitaciones').length) {
-            document.getElementById('form_reg').removeChild(document.getElementsByClassName('habitaciones')[document.getElementsByClassName('habitaciones').length - 1]);
+            for(let i = 0; i<document.getElementsByName(aux+'su_hab_cant_disp[]').length; i++) {
+                document.getElementsByName(aux+'su_hab_cant_disp[]')[i].onchange = anyadirDisp;
+            }
+        } else if(document.getElementsByName(aux+'su_hab_num')[0].value < document.getElementsByClassName(aux+'habitaciones').length) {
+            document.getElementById(aux+'form_reg').removeChild(document.getElementsByClassName(aux+'habitaciones')[document.getElementsByClassName(aux+'habitaciones').length - 1]);
         }
     }
 
     function anyadirDisp(event) {
-        if(event.target.value > event.target.parentNode.parentNode.parentNode.getElementsByClassName('dispositivos').length) {
-            event.target.parentNode.parentNode.parentNode.appendChild(div_disp.cloneNode(true));
-        } else if(event.target.value < event.target.parentNode.parentNode.parentNode.getElementsByClassName('dispositivos').length) {
-            event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode.getElementsByClassName('dispositivos')[event.target.parentNode.parentNode.parentNode.getElementsByClassName('dispositivos').length - 1]);
+        let aux="";
+        if(event.target.name==="new_su_hab_cant_disp[]") {
+            aux = "new_";
+        }
+        if(event.target.value > event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux+'dispositivos').length) {
+            if(event.target.name==="new_su_hab_cant_disp[]") {
+                event.target.parentNode.parentNode.parentNode.appendChild(new_div_disp.cloneNode(true));
+            } else {
+                event.target.parentNode.parentNode.parentNode.appendChild(div_disp.cloneNode(true));
+            }
+        } else if(event.target.value < event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux+'dispositivos').length) {
+            event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux+'dispositivos')[event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux+'dispositivos').length - 1]);
         }
     }
 
@@ -167,16 +204,20 @@
     }
 
     function comprobarForm(event) {
-        let completo = true;
-        if(document.getElementsByName('su_name')[0].value === "") {
+        let aux = "";
+        if (event.target.name==="new_submit_btn") {
+            aux = "new_";
+        }
+        //let completo = true;
+        /*if(document.getElementsByName(aux+'su_name')[0].value === "") {
             alert("Falta el nombre!");
-        } else if(document.getElementsByName('su_email')[0].value === "") {
+        } else if(document.getElementsByName(aux+'su_email')[0].value === "") {
             alert("Falta el email!");
-        } else if(document.getElementsByName('su_dni')[0].value === "") {
+        } else if(document.getElementsByName(aux+'su_dni')[0].value === "") {
             alert("Falta el dni!");
-        } else if(document.getElementsByName('su_pass')[0].value === "") {
+        } else if(document.getElementsByName(aux+'su_pass')[0].value === "") {
             alert("Falta la contraseña!");
-        } /*else {
+        } else {
             for(let i = 0; i<document.getElementsByName('su_hab_name[]').length; i++) {
                 if(document.getElementsByName('su_hab_name[]')[i].value === "") {
                     alert("Falta el nombre de la  " + (i+1) + "ª habitación!");
@@ -190,9 +231,37 @@
                     break;
                 }
             }
-        }*/ else {
-            event.target.parentNode.submit();
+        } else {*/
+        for(let i = 0; i<document.getElementsByName(aux+'su_disp_temp[]').length; i++) {
+            if(document.getElementsByName(aux+'su_disp_temp[]')[i].checked===false) {
+                document.getElementsByName(aux+'su_disp_temp[]')[i].checked = true;
+                document.getElementsByName(aux+'su_disp_temp[]')[i].value = 'no';
+            }
         }
+        event.target.parentNode.submit();
+    }
+
+    function buscarUser() {
+        if(document.getElementById('modificar_usuario')) {
+            document.getElementById('modificar_usuario').parentNode.removeChild(document.getElementById('modificar_usuario'));
+        }
+        user = document.getElementsByName('s_user')[0].value;
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_user.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    document.getElementById('modify_user').insertAdjacentHTML('beforeend', httpRequest.responseText);
+                    document.getElementsByName('new_su_hab_num')[0].onchange = anyadirHab;
+                    document.getElementsByName('new_su_hab_cant_disp[]')[0].onchange = anyadirDisp;
+                    document.getElementsByName('new_submit_btn')[0].onclick = comprobarForm;
+                    new_div_hab = document.getElementsByClassName('new_habitaciones')[0].cloneNode(true);
+                    new_div_disp = document.getElementsByClassName('new_dispositivos')[0].cloneNode(true);
+                }
+            }
+        }
+        httpRequest.send('buscar='+user);
     }
 
     function selecUser(event) {

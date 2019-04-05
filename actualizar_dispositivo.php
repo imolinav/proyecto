@@ -8,9 +8,9 @@ if(isset($_POST['activar'])) {
     $estado = $stmt_comp->fetch(PDO::FETCH_ASSOC);
 
     if($estado['encendido']==1) {
-        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 0 WHERE id = :id");
+        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 0, num_encendidos = num_encendidos+1 WHERE id = :id");
     } else {
-        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 1 WHERE id = :id");
+        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 1, num_encendidos = num_encendidos+1  WHERE id = :id");
     }
     $stmt->execute($parameters);
     echo "bien";
@@ -22,11 +22,7 @@ if(isset($_POST['activar'])) {
 
     $stmt = $conexion->prepare("INSERT INTO programa(dispositivo_id, inicio, fin, temperatura) VALUES (:disp, :inicio, :fin, :temp)");
 
-    /*if(is_null($datos['temp'])) {
-        $parameters = [':disp'=>$datos['id_disp'], ':inicio'=>$dia_inicio, ':fin'=>$dia_fin, null];
-    } else {*/
-        $parameters = [':disp'=>$datos['id_disp'], ':inicio'=>$dia_inicio, ':fin'=>$dia_fin, ':temp'=>$datos['temp']];
-    /*}*/
+    $parameters = [':disp'=>$datos['id_disp'], ':inicio'=>$dia_inicio, ':fin'=>$dia_fin, ':temp'=>$datos['temp']];
 
     $stmt->execute($parameters);
     echo "bien";

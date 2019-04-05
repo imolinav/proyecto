@@ -327,6 +327,12 @@ footer a, footer a:hover {
     left:0;
     margin-left: -20px;
 }
+
+/* MODIFICAR USUARIO */
+
+#user_data {
+}
+
 /* CONTROL DISPOSITIVOS */
 
 .dispositivos_list, .habitacion_list, .programas_list {
