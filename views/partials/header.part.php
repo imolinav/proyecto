@@ -37,7 +37,6 @@
                 <a class="dropdown-item" href="graficas.php">Gráficas</a>
                 <?php else: ?>
                 <a class="dropdown-item" href="cpanel.php">Panel de control</a>
-                <a class="dropdown-item" href="cpanel.php">Chat</a>
                 <?php endif; ?>
                 <hr>
                 <form class="dropdown-item" method="post" action="index.php">
@@ -54,3 +53,4 @@
     </form>
 </header>
 <script src="js/functions.js"></script>
+<script src="js/login.js"></script>

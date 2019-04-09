@@ -53,20 +53,15 @@
         <input type="submit" name="submit" class="btn btn-primary mt-3 offset-2" value="Enviar e-mail">
     </form>
 </div>
-
+<script src="js/login.js"></script>
 <script>
-    document.getElementById('logout').onclick = logout;
     document.getElementsByTagName('select')[0].onchange = habilitarInput;
 
     function habilitarInput(event) {
         if(event.target.value === "opcion6") {
-            document.getElementsByTagName('input')[4].disabled = false;
+            document.getElementsByName('opcion_contacto')[0].disabled = false;
         } else {
-            document.getElementsByTagName('input')[4].disabled = true;
+            document.getElementsByName('opcion_contacto')[0].disabled = true;
         }
-    }
-
-    function logout(event){
-        event.target.parentNode.submit();
     }
 </script>

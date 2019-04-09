@@ -20,15 +20,15 @@ if (isset($_POST['user'])) {
         <tr>
         <?php if ($mensaje['de'] == $_POST['user']) {
             if ($usuario->getAdmin() == 1):?>
-                <td class="msg_user"><?= $mensaje['texto'] ?></td><td></td>
+                <td class="msg_user"><?= $mensaje['texto'] ?></td>
             <?php else: ?>
-                <td></td><td class="msg_user"><?= $mensaje['texto'] ?></td>
+                <td class="msg_user"><?= $mensaje['texto'] ?></td>
             <?php endif;
         } else {
             if ($usuario->getAdmin() == 1):?>
-                <td></td><td class="msg_admin"><?= $mensaje['texto'] ?></td>
+                <td class="msg_admin"><?= $mensaje['texto'] ?></td>
             <?php else: ?>
-                <td class="msg_admin"><?= $mensaje['texto'] ?></td><td></td>
+                <td class="msg_admin"><?= $mensaje['texto'] ?></td>
             <?php endif;
         } ?>
         </tr>
@@ -48,9 +48,9 @@ if (isset($_POST['user'])) {
     $parameters_insert = [':texto'=>$mens, ':usuario'=>$datos['usuario']];
     $stmt_insert->execute($parameters_insert);
     if(isset($datos['mensaje_admin'])):?>
-<tr><td></td><td class="msg_admin"><?= $datos['mensaje_admin'] ?></td></tr>
+<tr><td class="msg_admin"><?= $datos['mensaje_admin'] ?></td></tr>
 <?php else: ?>
-<tr><td></td><td class="msg_user"><?= $datos['mensaje'] ?></td></tr>
+<tr><td class="msg_user"><?= $datos['mensaje'] ?></td></tr>
 <?php endif;
 }
 ?>

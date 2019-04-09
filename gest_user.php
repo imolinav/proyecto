@@ -16,7 +16,8 @@ if (isset($_POST['buscar'])) {
                 Cambiar Email:
             </div>
             <div class="col-6">
-                <input type="text" class="form-control" name="new_email">
+                <input type="text" class="form-control" name="new_email" required>
+                <div class="invalid-feedback">El campo email debe estar rellenado</div>
             </div>
             <div class="col-2">
                 <input type="button" class="btn btn-primary" value="Cambiar" id="btn_new_email">
@@ -46,7 +47,8 @@ if (isset($_POST['buscar'])) {
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <input type="text" class="form-control" name="new_su_hab_name[]">
+                        <input type="text" class="form-control" name="new_su_hab_name[]" required>
+                        <div class="invalid-feedback">El nombre de la habitacion debe estar rellenado</div>
                     </div>
                     <div class="col-6">
                         <input type="number" class="form-control" value="1" min="1" name="new_su_hab_cant_disp[]">
@@ -57,8 +59,18 @@ if (isset($_POST['buscar'])) {
                         <div class="col-6">
                             <p>Nombre del dispositivo: </p>
                         </div>
+                        <div class="col-6">
+                            <p>Pin: </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" class="form-control" name="new_su_disp_name[]" required>
+                            <div class="invalid-feedback">El nombre del dispositivo debe estar rellenado</div>
+                        </div>
                         <div class="col-5">
-                            <input type="text" class="form-control" name="new_su_disp_name[]">
+                            <input type="text" class="form-control" name="new_su_disp_pin[]" required>
+                            <div class="invalid-feedback">El pin del dispositivo debe estar rellenado</div>
                         </div>
                         <div class="col-1">
                             <input class="form-control" type="checkbox" value="si" name="new_su_disp_temp[]">

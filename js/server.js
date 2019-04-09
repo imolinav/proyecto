@@ -1,15 +1,3 @@
-let datos = {
-    'user':'ianmolinav@hotmail.com'
-    ,'dispositivos':{
-        'Cocina':{
-            'luces':23,
-            'cortinas':24
-        },
-        'Habitacion':{
-            'luces':25,
-            'cortinas':26
-        }
-    }};
 let Gpio = require('onoff').Gpio;
 let cant_disp = datos.dispositivos.length;
 let relays = [];

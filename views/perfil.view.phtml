@@ -1,10 +1,13 @@
 <div class="container datos_perfil mt-3">
     <div class="row">
         <div class="col-4 offset-2">
-            <form action="perfil.php" method="post" enctype="multipart/form-data"><img src="<?= $usuario->getFoto() ?>"><br><button type="button" class="btn btn-secondary btn-sm mt-3" id="update_foto">Cambiar foto</button></form>
+            <form action="perfil.php" method="post" enctype="multipart/form-data">
+                <img src="<?= $usuario->getFoto() ?>">
+                <br>
+                <button type="button" class="btn btn-secondary btn-sm mt-3" id="update_foto">Cambiar foto</button>
+            </form>
             <p class="mt-3">Nombre: <?= $usuario->getNombre() ?> <button type="button" class="btn btn-light btn-sm" name="chg_name">♪</button></p>
             <p>E-mail: <?= $usuario->getEmail() ?></p>
-            <p>DNI: <?= $usuario->getDni() ?> <button type="button" class="btn btn-light btn-sm" name="chg_dni">♫</button></p>
             <p>Dispositivos: <?= count($dispositivos) ?></p>
             <p>Escenas: <?= count($escenas) ?></p>
             <span class="glyphicon glyphicon-home"></span>
@@ -29,7 +32,7 @@
                         <p class="habitacion_list"><?= $habitacion['habitacion'] ?></p>
                         <?php foreach($dispositivos as $dispositivo) {
                             if($dispositivo['habitacion']==$habitacion['habitacion']):?>
-                                <p class="dispositivos_list" data-container=".dispositivos_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='Habitacion: <?= $habitacion['habitacion'] ?><br>Veces usado: <?= $dispositivo['num_encendidos'] ?><br>Tiempo encendido: <?= $dispositivo['tiempo_encendido'] ?>'><?= $dispositivo['nombre'] ?></p>
+                                <p class="dispositivos_list" data-container=".dispositivos_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='Habitacion: <?= $habitacion['habitacion'] ?><br>Veces usado: <?= $dispositivo['num_encendidos'] ?><br>Tiempo encendido: <?= $dispositivo['tiempo_encendido'] ?><br>Pin: <?= $dispositivo['pin'] ?>'><?= $dispositivo['nombre'] ?></p>
                                 <input type="hidden" value="<?= $dispositivo['id'] ?>">
                             <?php endif;
                         } endforeach; ?>
@@ -90,18 +93,18 @@
         let input = document.createElement('input');
         input.setAttribute('type', 'file');
         input.setAttribute('name', 'upd_foto');
-        input.setAttribute('class', 'mt-3 custom-file-input');
+        input.setAttribute('class', 'form-control-file mt-4');
         let salto = document.createElement('br');
         let input2 = document.createElement('input');
         input2.setAttribute('type', 'submit');
         input2.setAttribute('value', 'Cambiar');
-        input2.setAttribute('class', 'btn btn-primary mt-3 mr-3');
+        input2.setAttribute('class', 'btn btn-primary mt-1 mr-3');
         input2.setAttribute('disabled', 'true');
         input2.setAttribute('id', 'update_foto_sbm');
         let input3 = document.createElement('input');
         input3.setAttribute('type', 'button');
         input3.setAttribute('value', 'Cancelar');
-        input3.setAttribute('class', 'btn btn-secondary mt-3');
+        input3.setAttribute('class', 'btn btn-secondary mt-1');
         input3.setAttribute('id', 'cancel_foto');
         event.target.parentNode.appendChild(input);
         event.target.parentNode.appendChild(salto);

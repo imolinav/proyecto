@@ -209,6 +209,7 @@ footer a, footer a:hover {
 }
 #chat_wdw #cuerpo_chat table td {
     max-width: 100%;
+    font-size: 13px;
 }
 #chat_wdw #enviar_chat {
     height: 50px;
@@ -287,6 +288,10 @@ footer a, footer a:hover {
     width: 100%;
     display: inline-block;
     margin:0;
+}
+.user_chat img {
+    height: 40px;
+    margin-right: 20px;
 }
 #admin_chat_body .msg_user {
     padding: 5px 12px 5px 8px;

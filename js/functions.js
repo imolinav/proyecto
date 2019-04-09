@@ -1,10 +1,11 @@
 document.getElementsByTagName("button")[0].onclick = logout;
-
 /* CERRAR SESION */
 
 function logout(event) {
     event.target.parentNode.submit();
 }
+
+
 
 /* OBTENER XMLHTTP */
 
