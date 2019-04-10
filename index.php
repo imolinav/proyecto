@@ -35,7 +35,7 @@ if(isset($_POST['pass_chg'])) {
 
 $hora = date("H", time());
 include "views/partials/header.part.php";
-include "views/index_1.view.phtml";
+include "views/index.view.phtml";
 include "chat.php";
 include "views/partials/footer.part.php";
 ?>

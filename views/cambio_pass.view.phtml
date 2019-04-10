@@ -10,12 +10,14 @@
 </div>
 
 <script>
-    document.getElementsByName('submit_cambio_pass')[0].onclick = comprobarPass;
+    //document.getElementsByName('submit_cambio_pass')[0].onclick = comprobarPass;
+    $('[name=submit_cambio_pass').eq(0).click(comprobarPass);
 
     function comprobarPass(event) {
-        if(document.getElementsByName('pass_chg')[0].value!==document.getElementsByName('pass_chg_conf')[0].value) {
+        //if(document.getElementsByName('pass_chg')[0].value!==document.getElementsByName('pass_chg_conf')[0].value) {
+        if($('[name=pass_chg]').eq(0).val()!==$('[name=pass_chg_conf]').eq(0).val()) {
             if(document.getElementById('texto_error')) {
-                event.target.parentNode.removeChild(document.getElementById('texto_error'));
+                event.target.parentNode.removeChild($('#texto_error'));
             }
             let error = document.createElement('p');
             let texto_error = document.createTextNode('Las contraseñas no coinciden');

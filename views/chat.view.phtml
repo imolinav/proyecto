@@ -21,26 +21,27 @@
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    document.getElementById('cabecera_chat').onclick = minMax;
-    document.getElementsByName('chat_enviar')[0].onclick = enviarMsg;
-
-    let socket = io();
-    socket.on('message', addMessages);
+    //document.getElementById('cabecera_chat').onclick = minMax;
+    //document.getElementsByName('chat_enviar')[0].onclick = enviarMsg;
+    $('#cabecera_chat').click(minMax);
+    $('[name=chat_enviar]').eq(0).click(enviarMsg);
 
     function minMax() {
         if(document.getElementById('cuerpo_chat').style.display === "none") {
-            document.getElementById('cuerpo_chat').style.display = "block";
-            document.getElementById('enviar_chat').style.display = "block";
+            $('#cuerpo_chat').css('display', 'block');
+            $('#enviar_chat').css('display', 'block');
+            //document.getElementById('cuerpo_chat').style.display = "block";
+            //document.getElementById('enviar_chat').style.display = "block";
         } else {
-            document.getElementById('cuerpo_chat').style.display = "none";
-            document.getElementById('enviar_chat').style.display = "none";
+            $('#cuerpo_chat').css('display', 'none');
+            $('#enviar_chat').css('display', 'none');
         }
         cargarMsg();
     }
 
     function cargarMsg() {
         if(document.getElementById('new_msg_user')) {
-            document.getElementById('new_msg_user').parentNode.removeChild(document.getElementById('new_msg_user'));
+            document.getElementById('new_msg_user').parentNode.removeChild($('#new_msg_user'));
         }
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);
@@ -48,11 +49,12 @@
         httpRequest.onreadystatechange = function() {
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
-                    document.getElementById('cuerpo_chat').innerHTML = httpRequest.responseText;
+                    $('#cuerpo_chat').append(httpRequest.responseText);
+                    //document.getElementById('cuerpo_chat').innerHTML = httpRequest.responseText;
                     actualizarScroll();
                 }
             }
-        }
+        };
         httpRequest.send('user=<?= $usuario->getEmail() ?>');
     }
 
@@ -63,14 +65,16 @@
         httpRequest.onreadystatechange = function() {
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
-                    document.getElementById('texto_msg').value="";
-                    document.getElementById('cuerpo_chat').getElementsByTagName('table')[0].innerHTML += httpRequest.responseText;
+                    //document.getElementById('texto_msg').value="";
+                    $('#texto_msg').val("");
+                    $('#cuerpo_chat table').append(httpRequest.responseText);
+                    //document.getElementById('cuerpo_chat').getElementsByTagName('table')[0].innerHTML += httpRequest.responseText;
                     //cargarMsg();
                     actualizarScroll();
                 }
             }
-        }
-        let data = new Datos(document.getElementById('texto_msg').value, '<?= $usuario->getEmail() ?>');
+        };
+        let data = new Datos($('#texto_msg').val(), '<?= $usuario->getEmail() ?>');
         let datos = JSON.stringify(data);
         httpRequest.send('new_msg='+datos);
     }

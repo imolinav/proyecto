@@ -80,14 +80,18 @@
     </div>
 </div>
 <script>
-    document.body.onload = asignarActualizar;
-    document.getElementById('update_foto').onclick = actualizarFoto;
+    //document.body.onload = asignarActualizar;
+    //document.getElementById('update_foto').onclick = actualizarFoto;
+    //$(document).ready(asignarActualizar);
+    $('#update_foto').click(actualizarFoto);
+    $('.btn-light').eq(0).click(actualizarDato);
 
-    function asignarActualizar() {
+    /*function asignarActualizar() {
         for(let i = 0; i<document.getElementsByClassName('btn-light').length; i++) {
             document.getElementsByClassName('btn-light')[i].onclick = actualizarDato;
+            $('.btn-light').eq(i).click(actualizarDato);
         }
-    }
+    }*/
 
     function actualizarFoto(event) {
         let input = document.createElement('input');
@@ -110,13 +114,16 @@
         event.target.parentNode.appendChild(salto);
         event.target.parentNode.appendChild(input2);
         event.target.parentNode.appendChild(input3);
-        document.getElementsByName('upd_foto')[0].onchange = activarSbm;
-        document.getElementById('cancel_foto').onclick = cancelarFoto;
-        event.target.onclick = null;
+        //document.getElementsByName('upd_foto')[0].onchange = activarSbm;
+        //document.getElementById('cancel_foto').onclick = cancelarFoto;
+        $('[name=upd_foto]').eq(0).change(activarSbm);
+        $('#cancel_foto').click(cancelarFoto);
+        $('#update_foto').unbind('click');
     }
 
     function activarSbm() {
-        document.getElementById('update_foto_sbm').disabled = false;
+        //document.getElementById('update_foto_sbm').disabled = false;
+        $('#update_foto_sbm').prop('disabled', false);
     }
 
     function cancelarFoto(event) {
@@ -125,10 +132,12 @@
         foo.removeChild(foo.lastChild);
         foo.removeChild(foo.lastChild);
         foo.removeChild(foo.lastChild);
-        document.getElementById('update_foto').onclick = actualizarFoto;
+        //document.getElementById('update_foto').onclick = actualizarFoto;
+        $('#update_foto').click(actualizarFoto);
     }
 
     function actualizarDato(event) {
+        $('.btn-light').eq(0).unbind('click');
         let formulario = document.createElement('form');
         formulario.setAttribute('method', 'post');
         formulario.setAttribute('action', 'perfil.php');
@@ -155,14 +164,13 @@
         formulario.appendChild(subm);
         formulario.appendChild(cancel);
         event.target.parentNode.appendChild(formulario);
-        document.getElementById('cancel_update').onclick = cancelar;
-        asignarActualizar();
-        event.target.onclick = null;
+        //document.getElementById('cancel_update').onclick = cancelar;
+        $('#cancel_update').click(cancelar);
     }
 
     function cancelar(event) {
         event.target.parentNode.parentNode.removeChild(event.target.parentNode);
-        asignarActualizar();
+        $('.btn-light').eq(0).click(actualizarDato);
     }
 
     $('.dispositivos_list').on('click', function (e) {
