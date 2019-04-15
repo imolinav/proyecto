@@ -10,7 +10,6 @@
             <p>E-mail: <?= $usuario->getEmail() ?></p>
             <p>Dispositivos: <?= count($dispositivos) ?></p>
             <p>Escenas: <?= count($escenas) ?></p>
-            <span class="glyphicon glyphicon-home"></span>
         </div>
         <div class="col-4 offset-1 mt-3">
             <ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
@@ -33,7 +32,6 @@
                         <?php foreach($dispositivos as $dispositivo) {
                             if($dispositivo['habitacion']==$habitacion['habitacion']):?>
                                 <p class="dispositivos_list" data-container=".dispositivos_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='Habitacion: <?= $habitacion['habitacion'] ?><br>Veces usado: <?= $dispositivo['num_encendidos'] ?><br>Tiempo encendido: <?= $dispositivo['tiempo_encendido'] ?><br>Pin: <?= $dispositivo['pin'] ?>'><?= $dispositivo['nombre'] ?></p>
-                                <input type="hidden" value="<?= $dispositivo['id'] ?>">
                             <?php endif;
                         } endforeach; ?>
                     <?php if(!empty($camaras)) : ?>
@@ -50,7 +48,6 @@
                             foreach($dispositivos as $dispositivo) {
                                 if($programa['dispositivo_id']==$dispositivo['id']):?>
                                 <p class="programas_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='Dispositivo: <?= $dispositivo['nombre'] ?><br>Hora inicio: <?= $programa['inicio'] ?><br>Hora fin: <?= $programa['fin'] ?>'><?= $dispositivo['nombre'] ?></p>
-                                <input type="hidden" value="<?= $programa['id'] ?>">
                                 <?php endif;
                             }
                         }
@@ -66,7 +63,6 @@
                         <p class="habitacion_list">Escenas</p>
                         <?php foreach($escenas as $escena) : ?>
                             <p class="escenas_list" data-toggle="popover" data-trigger="focus" title="<?= $escena['nombre'] ?>" data-content="Datos"><?= $escena['nombre'] ?></p>
-                            <input type="hidden" value="<?= $escena['id'] ?>">
                         <?php endforeach;
                     else: ?>
                         <div style="text-align: center">
@@ -80,18 +76,8 @@
     </div>
 </div>
 <script>
-    //document.body.onload = asignarActualizar;
-    //document.getElementById('update_foto').onclick = actualizarFoto;
-    //$(document).ready(asignarActualizar);
     $('#update_foto').click(actualizarFoto);
     $('.btn-light').eq(0).click(actualizarDato);
-
-    /*function asignarActualizar() {
-        for(let i = 0; i<document.getElementsByClassName('btn-light').length; i++) {
-            document.getElementsByClassName('btn-light')[i].onclick = actualizarDato;
-            $('.btn-light').eq(i).click(actualizarDato);
-        }
-    }*/
 
     function actualizarFoto(event) {
         let input = document.createElement('input');
@@ -114,16 +100,9 @@
         event.target.parentNode.appendChild(salto);
         event.target.parentNode.appendChild(input2);
         event.target.parentNode.appendChild(input3);
-        //document.getElementsByName('upd_foto')[0].onchange = activarSbm;
-        //document.getElementById('cancel_foto').onclick = cancelarFoto;
-        $('[name=upd_foto]').eq(0).change(activarSbm);
+        $('[name=upd_foto]').eq(0).change(function() {$('#update_foto_sbm').prop('disabled', false);});
         $('#cancel_foto').click(cancelarFoto);
         $('#update_foto').unbind('click');
-    }
-
-    function activarSbm() {
-        //document.getElementById('update_foto_sbm').disabled = false;
-        $('#update_foto_sbm').prop('disabled', false);
     }
 
     function cancelarFoto(event) {
@@ -132,7 +111,6 @@
         foo.removeChild(foo.lastChild);
         foo.removeChild(foo.lastChild);
         foo.removeChild(foo.lastChild);
-        //document.getElementById('update_foto').onclick = actualizarFoto;
         $('#update_foto').click(actualizarFoto);
     }
 
@@ -164,7 +142,6 @@
         formulario.appendChild(subm);
         formulario.appendChild(cancel);
         event.target.parentNode.appendChild(formulario);
-        //document.getElementById('cancel_update').onclick = cancelar;
         $('#cancel_update').click(cancelar);
     }
 
@@ -173,27 +150,27 @@
         $('.btn-light').eq(0).click(actualizarDato);
     }
 
-    $('.dispositivos_list').on('click', function (e) {
+    $('.dispositivos_list').on('click', function () {
         $('.dispositivos_list').not(this).popover('hide');
     });
 
-    $('.programas_list').on('click', function (e) {
+    $('.programas_list').on('click', function () {
         $('.programas_list').not(this).popover('hide');
     });
 
-    $('#prg_tab').on('click', function (e) {
+    $('#prg_tab').on('click', function () {
         $('.dispositivos_list').popover('hide');
         $('.programas_list').popover('hide');
         $('.escenas_list').popover('hide');
     });
 
-    $('#disp_tab').on('click', function (e) {
+    $('#disp_tab').on('click', function () {
         $('.dispositivos_list').popover('hide');
         $('.programas_list').popover('hide');
         $('.escenas_list').popover('hide');
     });
 
-    $('#scn_tab').on('click', function (e) {
+    $('#scn_tab').on('click', function () {
         $('.dispositivos_list').popover('hide');
         $('.programas_list').popover('hide');
         $('.escenas_list').popover('hide');

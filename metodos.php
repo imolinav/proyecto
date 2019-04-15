@@ -36,6 +36,35 @@ if(isset($_POST['logout'])) {
     header('Location: index.php');
 }
 
+//Carga de API OpenWeather
+
+function cargaTiempo($latitud, $longitud) {
+    $clave = "http://api.openweathermap.org/data/2.5/forecast?lat=".$latitud."&lon=".$longitud."&APPID=d0cb0d8b429769a6e1105782251c99aa&units=metric&lang=es";
+    $data = file_get_contents($clave);
+    $data_parsed = json_decode($data, true);
+    return $data_parsed;
+}
+
+//Carga comunidades, provincias y municipios
+
+$stmt_com = $conexion->prepare("SELECT * FROM comunidades");
+$stmt_com->execute();
+$comunidades = $stmt_com->fetchAll(PDO::FETCH_ASSOC);
+
+function cargaProvincias($conexion, $comunidad) {
+    $stmt_prov = $conexion->prepare("SELECT * FROM provincias WHERE comunidad_id = $comunidad");
+    $stmt_prov->execute();
+    $provincias = $stmt_prov->fetchAll(PDO::FETCH_ASSOC);
+    return $provincias;
+}
+
+function cargaMunicipios($conexion, $provincia) {
+    $stmt_prov = $conexion->prepare("SELECT * FROM municipios WHERE provincia_id = $provincia");
+    $stmt_prov->execute();
+    $municipios = $stmt_prov->fetchAll(PDO::FETCH_ASSOC);
+    return $municipios;
+}
+
 //Cambio de idioma
 
 $ruta = "lengC.php";
@@ -49,7 +78,7 @@ if (isset($_POST['lengua'])) {
     }
 }
 
-//Cerrar sesión
+//Cerrar sesión con idioma mantenido (NOT USED)
 
 if (isset($_POST['cerrar'])) {
     $idioma = $_SESSION['idioma'];

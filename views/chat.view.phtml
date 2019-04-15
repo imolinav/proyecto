@@ -14,24 +14,21 @@
                 <input type="text" class="form-control" id="texto_msg">
             </div>
             <div class="col-4">
-                <input type="button" value="Enviar" class="btn btn-primary" name="chat_enviar">
+                <input type="button" value="Enviar" class="btn btn-primary" name="chat_enviar" disabled>
             </div>
         </div>
     </div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    //document.getElementById('cabecera_chat').onclick = minMax;
-    //document.getElementsByName('chat_enviar')[0].onclick = enviarMsg;
     $('#cabecera_chat').click(minMax);
     $('[name=chat_enviar]').eq(0).click(enviarMsg);
+    $('#texto_msg').keyup(comprobarText);
 
     function minMax() {
         if(document.getElementById('cuerpo_chat').style.display === "none") {
-            $('#cuerpo_chat').css('display', 'block');
-            $('#enviar_chat').css('display', 'block');
-            //document.getElementById('cuerpo_chat').style.display = "block";
-            //document.getElementById('enviar_chat').style.display = "block";
+            $('#cuerpo_chat').fadeIn(300, function() {$(this).css('display', 'block');});
+            $('#enviar_chat').fadeIn(300, function() {$(this).css('display', 'block');});
         } else {
             $('#cuerpo_chat').css('display', 'none');
             $('#enviar_chat').css('display', 'none');
@@ -56,6 +53,14 @@
             }
         };
         httpRequest.send('user=<?= $usuario->getEmail() ?>');
+    }
+
+    function comprobarText(event) {
+        if(event.target.value!=="") {
+            $('[name=chat_enviar]').eq(0).prop("disabled", false);
+        } else {
+            $('[name=chat_enviar]').eq(0).prop("disabled", true);
+        }
     }
 
     function enviarMsg() {

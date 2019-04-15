@@ -254,7 +254,8 @@
         httpRequest.onreadystatechange = function() {
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
-                    document.getElementById('modify_user').insertAdjacentHTML('beforeend', httpRequest.responseText);
+                    //document.getElementById('modify_user').insertAdjacentHTML('beforeend', httpRequest.responseText);
+                    $('#modify_user').append(httpRequest.responseText).children(':last').hide().fadeIn("slow");
                     document.getElementsByName('new_su_hab_num')[0].onchange = anyadirHab;
                     document.getElementsByName('new_su_hab_cant_disp[]')[0].onchange = anyadirDisp;
                     document.getElementsByName('new_submit_btn')[0].onclick = comprobarForm;
@@ -306,7 +307,7 @@
                     elemento.onclick = null;
                 }
             }
-        }
+        };
         httpRequest.send('user='+usuario);
     }
 
@@ -322,7 +323,7 @@
                     actualizarScroll();
                 }
             }
-        }
+        };
         let data = new Datos(document.getElementById('msg_admin').value, usuario);
         let datos = JSON.stringify(data);
         httpRequest.send('new_msg='+datos);

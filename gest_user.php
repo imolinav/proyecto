@@ -10,7 +10,7 @@ if (isset($_POST['buscar'])) {
     <div class="col-6 offset-3"><h4 style="color: red; text-align: center">El usuario introducido no existe</h4></div>
 </div>
 <?php else: ?>
-    <div id="modificar_usuario">
+    <div id="modificar_usuario" style="display: none;">
         <div class="row mt-4" id="new_user_email">
             <div class="col-2 offset-1">
                 Cambiar Email:

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/proyecto.iml" filepath="$PROJECT_DIR$/.idea/proyecto.iml" />
+      <module fileurl="file://C:/wamp64/www/tegas/.idea/tegas.iml" filepath="C:/wamp64/www/tegas/.idea/tegas.iml" />
     </modules>
   </component>
 </project>

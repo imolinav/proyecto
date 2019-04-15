@@ -59,6 +59,7 @@
 
     function habilitarInput(event) {
         if(event.target.value === "opcion6") {
+            $('[name="opcion_contacto"]').eq(0).prop("disabled", false);
             document.getElementsByName('opcion_contacto')[0].disabled = false;
         } else {
             document.getElementsByName('opcion_contacto')[0].disabled = true;

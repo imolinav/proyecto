@@ -25,7 +25,6 @@ if(isset($_POST['li_email'])) {
     }
 
     $mensajes_nl = comprobarMsgs($conexion, $_POST['li_email']);
-
 }
 
 //cambio pass

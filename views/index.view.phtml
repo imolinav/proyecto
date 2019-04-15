@@ -1,6 +1,6 @@
 <div class="container col-12 col-md-8">
     <div class="row">
-        <div class="col-12 imagen_index">
+        <div class="col-12 imagen_index mb-3">
             <?php if($hora>=00 && $hora<=05): ?>
                 <img src="imgs/index4.jpg" class="img-fluid img-index">
             <?php elseif($hora>=06 && $hora<=11): ?>
@@ -18,4 +18,80 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-4" id="info_tiempo">
+            <h3 class="mt-3">El tiempo en tu zona</h3>
+            <p class="text-muted">Consulta el tiempo que hara en tu zona en los próximos 5 dias</p>
+            <select class="form-control mt-3" id="selec_comunidad">
+                <option selected disabled class="text-muted">Elige la comunidad</option>
+                <option disabled class="text-muted">------------------------------</option>
+                <?php foreach($comunidades as $comunidad): ?>
+                <option value="<?= $comunidad['id'] ?>"><?= $comunidad['comunidad'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-8 mt-3" id="datos_tiempo">
+
+        </div>
+    </div>
 </div>
+<script>
+    $('#selec_comunidad').change(cargarProvincias);
+
+    function cargarProvincias(event) {
+        let httpRequest = new obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_tiempo.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    if(document.getElementById('select_provincia')) {
+                        document.getElementById('info_tiempo').removeChild(document.getElementById('select_provincia'));
+                    }
+                    if(document.getElementById('select_municipio')) {
+                        document.getElementById('info_tiempo').removeChild(document.getElementById('select_municipio'));
+                    }
+                    $('#info_tiempo').append(httpRequest.responseText);
+                    $('#select_provincia').change(cargarMunicipios);
+                }
+            }
+        };
+        httpRequest.send('comunidad='+event.target.value);
+    }
+
+    function cargarMunicipios(event) {
+        let httpRequest = new obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_tiempo.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    if(document.getElementById('select_municipio')) {
+                        document.getElementById('info_tiempo').removeChild(document.getElementById('select_municipio'));
+                    }
+                    $('#info_tiempo').append(httpRequest.responseText);
+                    $('#select_municipio').change(cargarTiempo);
+                }
+            }
+        };
+        httpRequest.send('provincia='+event.target.value);
+    }
+
+    function cargarTiempo(event) {
+        let httpRequest = new obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_tiempo.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    if(document.getElementById('myTabContent')) {
+                        document.getElementById('datos_tiempo').removeChild(document.getElementById('myTabContent'));
+                        document.getElementById('datos_tiempo').removeChild(document.getElementById('myTab'));
+                    }
+                    $('#datos_tiempo').append(httpRequest.responseText);
+                }
+            }
+        };
+        httpRequest.send('municipio='+event.target.value);
+    }
+</script>

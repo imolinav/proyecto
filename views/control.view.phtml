@@ -66,21 +66,22 @@
     </div>
 </div>
 <script>
-    document.getElementById('new_scene').onclick = nuevaEscena;
-    for(let i=0; i<document.getElementsByClassName('dispositivos_list').length; i++) {
-        document.getElementsByClassName('dispositivos_list')[i].onclick = seleccionarDisp;
+    $('#new_scene').click(nuevaEscena);
+    let $dispositivos = $('.dispositivos_list');
+    for(let i=0; i<$dispositivos.length; i++) {
+        $dispositivos.eq(i).click(seleccionarDisp);
     }
     let dispositivo = "";
 
     function seleccionarDisp(event) {
         dispositivo = event.target.nextElementSibling.value;
         seleccionar(dispositivo);
-        for(let i=0; i<document.getElementsByClassName('dispositivos_list').length; i++) {
-            if(event.target===document.getElementsByClassName('dispositivos_list')[i]) {
+        for(let i=0; i<$dispositivos.length; i++) {
+            if(event.target===$dispositivos[i]) {
                 event.target.classList.add("disp_act");
             } else {
-                if(document.getElementsByClassName('dispositivos_list')[i].classList.contains("disp_act")) {
-                    document.getElementsByClassName('dispositivos_list')[i].classList.remove("disp_act");
+                if($dispositivos[i].classList.contains("disp_act")) {
+                    $dispositivos[i].classList.remove("disp_act");
                 }
             }
         }
@@ -93,18 +94,15 @@
         httpRequest.onreadystatechange = function() {
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
-                    if(document.getElementById('datos_disp')!=null) {
-                        document.getElementById('datos_disp').parentNode.removeChild(document.getElementById('datos_disp'));
-                    }
-                    document.getElementById('div_datos').innerHTML += httpRequest.responseText;
-                    for(let i=0; i<document.getElementsByClassName('dispositivos_list').length; i++) {
-                        document.getElementsByClassName('dispositivos_list')[i].onclick = seleccionarDisp;
-                    }
-                    document.getElementById('controlador').onclick = cambiarEstado;
-                    document.getElementsByName('prg_enviar')[0].onclick = programarDisp;
+                    //$('#datos_disp').remove();
+                    $('#datos_disp').fadeOut(300, function() { $(this).remove();});
+                    $('#div_datos').append(httpRequest.responseText).children(':last').hide().fadeIn(900);
+                    $('#controlador').click(cambiarEstado);
+                    $('[name=prg_enviar]').eq(0).click(programarDisp);
+                    //document.getElementsByName('prg_enviar')[0].onclick = programarDisp;
                 }
             }
-        }
+        };
         httpRequest.send('disp='+dispositivo);
     }
 
@@ -124,7 +122,7 @@
                     }
                 }
             }
-        }
+        };
         httpRequest.send('activar='+dispositivo);
     }
 
@@ -142,7 +140,7 @@
 
                 }
             }
-        }
+        };
         if(!document.getElementsByName('prg_temp')[0]) {
             programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, null);
         } else {
