@@ -3,7 +3,7 @@
         <div id="new_msg_user"><?= count($mensajes_nl) ?></div>
     <?php endif; ?>
     <div id="cabecera_chat">
-        <p>Preguntanos lo que necesites!</p>
+        <p><?= $i_chat_texto1 ?></p>
     </div>
     <div id="cuerpo_chat" style="display: none">
 
@@ -14,7 +14,7 @@
                 <input type="text" class="form-control" id="texto_msg">
             </div>
             <div class="col-4">
-                <input type="button" value="Enviar" class="btn btn-primary" name="chat_enviar" disabled>
+                <input type="button" value="<?= $i_chat_boton1 ?>" class="btn btn-primary" name="chat_enviar" disabled>
             </div>
         </div>
     </div>

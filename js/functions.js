@@ -1,10 +1,20 @@
-document.getElementsByTagName("button")[0].onclick = logout;
+
 /* CERRAR SESION */
 
+document.getElementsByTagName("button")[0].onclick = logout;
 function logout(event) {
     event.target.parentNode.submit();
 }
 
+/* CAMBIAR IDIOMA */
+
+$('#castellano').click(cambiarIdioma);
+$('#ingles').click(cambiarIdioma);
+
+function cambiarIdioma(event) {
+    $('#idioma_selected').val(event.target.id);
+    event.target.parentNode.submit();
+}
 
 
 /* OBTENER XMLHTTP */

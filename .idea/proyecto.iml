@@ -5,5 +5,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="tegas" />
+    <orderEntry type="module" module-name="PHproject" />
+    <orderEntry type="module" module-name="tegas" />
+    <orderEntry type="module" module-name="DAW" />
+    <orderEntry type="module" module-name="precrm" />
   </component>
 </module>

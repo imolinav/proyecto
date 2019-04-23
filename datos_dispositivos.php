@@ -22,17 +22,17 @@ if (isset($_POST['disp'])) {
         <?php else:?>
         <img src="imgs/off.png" height="100px" class="mb-3" id="controlador">
             <?php endif; ?>
-        <p>Habitacion: <?= $dispositivo['habitacion'] ?></p>
-        <p>Dispositivo: <?= $dispositivo['nombre'] ?></p>
-        <p>Veces encendido: <?= $dispositivo['num_encendidos'] ?></p>
-        <p>Tiempo encendido: <?= $dispositivo['tiempo_encendido'] ?></p>
+        <p><?= $i_disp_texto1 ?><?= $dispositivo['habitacion'] ?></p>
+        <p><?= $i_disp_texto2 ?><?= $dispositivo['nombre'] ?></p>
+        <p><?= $i_disp_texto3 ?><?= $dispositivo['num_encendidos'] ?></p>
+        <p><?= $i_disp_texto4 ?><?= $dispositivo['tiempo_encendido'] ?></p>
 
         <hr>
 
         <?php if(!empty($programas)){
             foreach ($programas as $programa) {
                 if($programa['dispositivo_id']==$dispositivo['id']):?>
-                    <p>Programado para: </p>
+                    <p><?= $i_disp_texto5 ?></p>
                     <p><?=$programa['inicio'] ?></p>
                     <p><?=$programa['fin'] ?></p>
                     <hr>
@@ -40,17 +40,17 @@ if (isset($_POST['disp'])) {
             }
         } ?>
 
-        <p>Inicio: </p>
+        <p><?= $i_disp_texto6 ?></p>
         <input type="date" class="form-control mb-2" name="prg_date_start">
         <input type="time" class="form-control mb-2" name="prg_hour_start">
-        <p>Fin: </p>
+        <p><?= $i_disp_texto7 ?></p>
         <input type="date" class="form-control mb-2" name="prg_date_end">
         <input type="time" class="form-control mb-2" name="prg_hour_end">
         <?php if($dispositivo['temperatura']!=null):?>
-        <p>Temperatura: </p>
+        <p><?= $i_disp_texto8 ?></p>
         <input type="number" class="form-control mb-2" name="prg_temp" value="0" min="0" />
         <?php endif; ?>
-        <input type="button" class="btn btn-primary" value="Programar dispositivo" name="prg_enviar">
+        <input type="button" class="btn btn-primary" value="<?= $i_disp_boton1 ?>" name="prg_enviar">
     </div>
     <?php endif;
 } else if(isset($_POST['profile'])) {

@@ -7,6 +7,10 @@ require_once "metodos.php";
 $stmt_usuarios = $conexion->prepare("select U.nombre as usuario, U.email as email, U.foto as foto from usuario U, mensaje M where U.email = M.de and U.email<>'admin@smartliving.es' group by U.nombre");
 $stmt_usuarios->execute();
 $usuarios_chat = $stmt_usuarios->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt_users = $conexion->prepare("SELECT * FROM usuario WHERE email<>'admin@smartliving.es'");
+$stmt_users->execute();
+$usuarios = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
 include "views/partials/header.part.php";
 include "views/cpanel.view.phtml";
 include "views/partials/footer.part.php";

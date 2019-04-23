@@ -22,6 +22,7 @@
     "fs": "0.0.1-security",
     "gpio": "^0.2.10",
     "http": "0.0.0",
+    "material-design-icons": "^3.0.1",
     "mysql": "^2.16.0",
     "socket.io": "^2.2.0"
   },

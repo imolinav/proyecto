@@ -72,6 +72,7 @@ if (isset($_POST['lengua'])) {
     if ($_POST['lengua'] != "castellano") {
         $ruta = "lengI.php";
     }
+    header('Location: '.$_POST['page']);
 } else if (isset($_SESSION['idioma'])) {
     if ($_SESSION['idioma'] != "lengC.php") {
         $ruta = "lengI.php";

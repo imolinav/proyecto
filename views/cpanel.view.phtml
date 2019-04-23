@@ -1,13 +1,13 @@
 <div class="container mt-4 formulario_registro">
     <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user" aria-selected="true">Nuevo usuario</a>
+            <a class="nav-link active" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user" aria-selected="true"><?= $i_cpanel_tab1 ?></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="modify_user_tab" data-toggle="tab" href="#modify_user" role="tab" aria-controls="modify_user" aria-selected="true">Modificar usuario</a>
+            <a class="nav-link" id="modify_user_tab" data-toggle="tab" href="#modify_user" role="tab" aria-controls="modify_user" aria-selected="true"><?= $i_cpanel_tab2 ?></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="chat_tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Chat</a>
+            <a class="nav-link" id="chat_tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false"><?= $i_cpanel_tab3 ?></a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -16,37 +16,37 @@
                 <form action="cpanel.php" method="post" id="form_reg">
                     <div class="row">
                         <div class="col-6">
-                            <p>Nombre de usuario: </p>
+                            <p><?= $i_cpanel_form1 ?></p>
                         </div>
                         <div class="col-6">
-                            <p>E-mail: </p>
+                            <p><?= $i_cpanel_form2 ?></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
                             <input type="text" name="su_name" class="form-control" required>
-                            <div class="invalid-feedback">El campo nombre debe estar rellenado</div>
+                            <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                         <div class="col-6">
                             <input type="text" name="su_email" class="form-control" required>
-                            <div class="invalid-feedback">El campo email debe estar rellenado</div>
+                            <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-6">
-                            <p>IP RaspBerry: </p>
+                            <p><?= $i_cpanel_form3 ?></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
                             <input type="text" name="su_rbip" class="form-control" required>
-                            <div class="invalid-feedback">Debe añadir la IP de la RaspBerry</div>
+                            <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                     </div>
                     <hr>
                     <div class="row mt-4">
                         <div class="col-6">
-                            <p>Cantidad de habitaciones:</p>
+                            <p><?= $i_cpanel_form4 ?></p>
                         </div>
                         <div class="col-6">
                             <input type="number" class="form-control" value="1" min="1" name="su_hab_num">
@@ -56,16 +56,16 @@
                         <hr>
                         <div class="row mt-4">
                             <div class="col-6">
-                                <p>Habitación: </p>
+                                <p><?= $i_cpanel_form5 ?></p>
                             </div>
                             <div class="col-6">
-                                <p>Cantidad de dispositivos: </p>
+                                <p><?= $i_cpanel_form6 ?></p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <input type="text" class="form-control" name="su_hab_name[]" required>
-                                <div class="invalid-feedback">Debe especificar un nombre para la habitacion</div>
+                                <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                             </div>
                             <div class="col-6">
                                 <input type="number" class="form-control" value="1" min="1" name="su_hab_cant_disp[]">
@@ -74,20 +74,20 @@
                         <div class="dispositivos">
                             <div class="row mt-4">
                                 <div class="col-6">
-                                    <p>Nombre del dispositivo: </p>
+                                    <p><?= $i_cpanel_form7 ?></p>
                                 </div>
                                 <div class="col-6">
-                                    <p>Pin: </p>
+                                    <p><?= $i_cpanel_form8 ?></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <input type="text" class="form-control" name="su_disp_name[]" required>
-                                    <div class="invalid-feedback">El campo nombre debe estar rellenado</div>
+                                    <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                                 </div>
                                 <div class="col-5">
                                     <input type="text" class="form-control" name="su_disp_pin[]" required>
-                                    <div class="invalid-feedback">El pin del dispositivo debe estar rellenado</div>
+                                    <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                                 </div>
                                 <div class="col-1">
                                     <input class="form-control" type="checkbox" value="si" name="su_disp_temp[]">
@@ -105,9 +105,9 @@
                 <div class="col-6 offset-3">
                     <div class="input-group">
                         <select class="form-control" id="select_user">
-                            <option selected disabled>-- Elige un usuario --</option>
-                            <?php foreach($usuarios_chat as $user) : ?>
-                            <option value="<?= $user['email'] ?>"><?= $user['usuario'] ?></option>
+                            <option selected disabled><?= $i_cpanel_option1 ?></option>
+                            <?php foreach($usuarios as $user) : ?>
+                            <option value="<?= $user['email'] ?>"><?= $user['nombre'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -143,7 +143,7 @@
                                 <input type="text" class="form-control" disabled id="msg_admin">
                             </div>
                             <div class="col-2 mt-3">
-                                <input type="button" class="btn btn-primary" value="Enviar" disabled id="enviar_admin">
+                                <input type="button" class="btn btn-primary" value="<?= $i_cpanel_boton1 ?>" disabled id="enviar_admin">
                             </div>
                         </div>
                     </div>
