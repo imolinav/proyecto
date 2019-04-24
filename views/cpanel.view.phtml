@@ -24,11 +24,21 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <input type="text" name="su_name" class="form-control" required>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="far fa-user"></i></span>
+                                </div>
+                                <input type="text" name="su_name" class="form-control" required>
+                            </div>
                             <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                         <div class="col-6">
-                            <input type="text" name="su_email" class="form-control" required>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
+                                </div>
+                                <input type="text" name="su_email" class="form-control" required>
+                            </div>
                             <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                     </div>
@@ -39,7 +49,12 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <input type="text" name="su_rbip" class="form-control" required>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fab fa-raspberry-pi"></i></span>
+                                </div>
+                                <input type="text" name="su_rbip" class="form-control" required>
+                            </div>
                             <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                     </div>
@@ -104,12 +119,17 @@
             <div class="row mt-4">
                 <div class="col-6 offset-3">
                     <div class="input-group">
-                        <select class="form-control" id="select_user">
-                            <option selected disabled><?= $i_cpanel_option1 ?></option>
-                            <?php foreach($usuarios as $user) : ?>
-                            <option value="<?= $user['email'] ?>"><?= $user['nombre'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="select_user"><i class="fas fa-user-friends"></i></label>
+                            </div>
+                            <select class="form-control" id="select_user">
+                                <option selected disabled><?= $i_cpanel_option1 ?></option>
+                                <?php foreach($usuarios as $user) : ?>
+                                <option value="<?= $user['email'] ?>"><?= $user['nombre'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -258,13 +278,30 @@
                     $('#modify_user').append(httpRequest.responseText).children(':last').hide().fadeIn("slow");
                     document.getElementsByName('new_su_hab_num')[0].onchange = anyadirHab;
                     document.getElementsByName('new_su_hab_cant_disp[]')[0].onchange = anyadirDisp;
-                    document.getElementsByName('new_submit_btn')[0].onclick = comprobarForm;
+                    document.getElementsByName('new_submit_btn')[0].onclick = modificarHabitaciones;
+                    document.getElementById('btn_new_email').onclick = modificarEmail;
+                    document.getElementsByName('new_delete_btn')[0].onclick = confirmarDelete;
                     new_div_hab = document.getElementsByClassName('new_habitaciones')[0].cloneNode(true);
                     new_div_disp = document.getElementsByClassName('new_dispositivos')[0].cloneNode(true);
                 }
             }
         };
         httpRequest.send('buscar='+user);
+    }
+
+    function confirmarDelete() {
+        document.getElementsByName('user_mod_option')[0].value = "delete";
+        document.getElementById('new_form_reg').submit();
+    }
+
+    function modificarHabitaciones() {
+        document.getElementsByName('user_mod_option')[0].value = "add";
+        document.getElementById('new_form_reg').submit();
+    }
+
+    function modificarEmail() {
+        document.getElementsByName('user_mod_option')[0].value = "update";
+        document.getElementById('new_form_reg').submit();
     }
 
     function selecUser(event) {

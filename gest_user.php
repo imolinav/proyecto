@@ -11,22 +11,25 @@ if (isset($_POST['buscar'])) {
 </div>
 <?php else: ?>
     <div id="modificar_usuario" style="display: none;">
-        <div class="row mt-4" id="new_user_email">
-            <div class="col-2 offset-1">
-                <?= $i_guser_texto1 ?>
-            </div>
-            <div class="col-6">
-                <input type="text" class="form-control" name="new_email" required>
-                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
-            </div>
-            <div class="col-2">
-                <input type="button" class="btn btn-primary" value="<?= $i_guser_boton1 ?>" id="btn_new_email">
-            </div>
-        </div>
-
-        <hr>
-
         <form action="cpanel.php" method="post" id="new_form_reg">
+            <div class="row mt-4" id="new_user_email">
+                <div class="col-2 offset-1">
+                    <?= $i_guser_texto1 ?>
+                </div>
+                <div class="col-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="new_email" required>
+                    </div>
+                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+                </div>
+                <div class="col-2">
+                    <input type="button" class="btn btn-primary" value="<?= $i_guser_boton1 ?>" id="btn_new_email">
+                </div>
+            </div>
+            <hr>
             <div class="row mt-4">
                 <div class="col-6">
                     <p><?= $i_guser_texto2 ?></p>
@@ -80,8 +83,9 @@ if (isset($_POST['buscar'])) {
             </div>
             <hr>
             <input type="hidden" name="user_mod_email" value="<?= $_POST['buscar'] ?>">
+            <input type="hidden" name="user_mod_option" value="">
             <input type="button" class="btn btn-primary mt-2" value="<?= $i_guser_boton2 ?>" name="new_submit_btn">
-
+            <button type="button" class="btn btn-danger mt-2" name="new_delete_btn">Eliminar usuario</button>
         </form>
     </div>
 

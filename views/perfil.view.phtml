@@ -6,7 +6,7 @@
                 <br>
                 <button type="button" class="btn btn-secondary btn-sm mt-3" id="update_foto"><?= $i_perfil_boton1 ?></button>
             </form>
-            <p class="mt-3"><?= $i_perfil_texto1 ?><?= $usuario->getNombre() ?> <button type="button" class="btn btn-light btn-sm" name="chg_name">♪</button></p>
+            <p class="mt-3"><?= $i_perfil_texto1 ?><?= $usuario->getNombre() ?> <i class="btn btn-light far fa-edit"></i></p>
             <p><?= $i_perfil_texto2 ?><?= $usuario->getEmail() ?></p>
             <p><?= $i_perfil_texto3 ?><?= count($dispositivos) ?></p>
             <p><?= $i_perfil_texto4 ?><?= count($escenas) ?></p>
@@ -117,6 +117,8 @@
     }
 
     function actualizarDato(event) {
+        event.stopPropagation();
+        //event.cancelBubble = true;
         $('.btn-light').eq(0).unbind('click');
         let formulario = document.createElement('form');
         formulario.setAttribute('method', 'post');

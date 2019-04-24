@@ -18,6 +18,9 @@ body {
 .dropdown-menu a {
     color: black;
 }
+.dropdown-item i {
+    margin-right: 10px;
+}
 #logout {
     outline: none;
     text-align: left;
@@ -135,15 +138,18 @@ footer a, footer a:hover {
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+#separator {
+    height: 100px;
+}
 
 /* ICONOS TEMPERATURA */
-
+/*
 .icon {
     position: absolute;
     display: inline-block;
     width: 12em;
     height: 10em;
-    font-size: 1.5em; /* control icon size here */
+    font-size: 1.5em;
     top: -12.5%;
     left:-5%;
     background: transparent;
@@ -354,7 +360,7 @@ footer a, footer a:hover {
     opacity: 0.4;
     animation: spin 16s linear infinite reverse;
 }
-
+*/
 
 /* Animations */
 

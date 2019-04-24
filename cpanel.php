@@ -2,19 +2,6 @@
 //session_start();
 require_once "metodos.php";
 
-//Busqueda de usuarios que se han puesto en contacto con el administrador
-
-$stmt_usuarios = $conexion->prepare("select U.nombre as usuario, U.email as email, U.foto as foto from usuario U, mensaje M where U.email = M.de and U.email<>'admin@smartliving.es' group by U.nombre");
-$stmt_usuarios->execute();
-$usuarios_chat = $stmt_usuarios->fetchAll(PDO::FETCH_ASSOC);
-
-$stmt_users = $conexion->prepare("SELECT * FROM usuario WHERE email<>'admin@smartliving.es'");
-$stmt_users->execute();
-$usuarios = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
-include "views/partials/header.part.php";
-include "views/cpanel.view.phtml";
-include "views/partials/footer.part.php";
-
 //Registro de usuarios
 
 if(isset($_POST['su_name'])) {
@@ -214,19 +201,46 @@ if(isset($_POST['su_name'])) {
     fwrite($fichero, $text);
     fclose($fichero);
 
-} else if(isset($_POST['new_su_hab_num'])) {
-    $dispositivos = $_POST['new_su_disp_name'];
-    for($i=0; $i<$_POST['new_su_hab_num'];$i++) {
-        for($j=0; $j<$_POST['new_su_hab_cant_disp'][$i]; $j++) {
-            $dispositivo = array_shift($dispositivos);
-            $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, temperatura, usuario_email) VALUES (:nombre, :habitacion, 0, 0, 0, :temperatura, :usuario)");
-            if($_POST['new_su_disp_temp'][$i]=="si") {
-                $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>0,':usuario'=>$_POST['user_mod_email']];
-            } else {
-                $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>null, ':usuario'=>$_POST['user_mod_email']];
+//Modificacion de usuarios
+
+} else if(isset($_POST['user_mod_option'])) {
+    $option = $_POST['user_mod_option'];
+    $email = $_POST['user_mod_email'];
+    if($option == "delete") {
+        $stmt_delete = $conexion->prepare("DELETE FROM usuario WHERE email = '$email'");
+        $stmt_delete->execute();
+    } else if($option == "add") {
+        $dispositivos = $_POST['new_su_disp_name'];
+        for($i=0; $i<$_POST['new_su_hab_num'];$i++) {
+            for($j=0; $j<$_POST['new_su_hab_cant_disp'][$i]; $j++) {
+                $dispositivo = array_shift($dispositivos);
+                $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, temperatura, usuario_email) VALUES (:nombre, :habitacion, 0, 0, 0, :temperatura, :usuario)");
+                if($_POST['new_su_disp_temp'][$i]=="si") {
+                    $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>0,':usuario'=>$_POST['user_mod_email']];
+                } else {
+                    $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>null, ':usuario'=>$_POST['user_mod_email']];
+                }
+                $stmt_disp->execute($parameters_disp);
             }
-            $stmt_disp->execute($parameters_disp);
         }
+    } else if($option == "update") {
+        $new_email = $_POST['new_email'];
+        $stmt_update = $conexion->prepare("UPDATE usuario SET email = '$new_email' WHERE email = '$email'");
+        $stmt_update->execute($parameters);
     }
 }
+
+//Busqueda de usuarios que se han puesto en contacto con el administrador
+
+$stmt_usuarios = $conexion->prepare("select U.nombre as usuario, U.email as email, U.foto as foto from usuario U, mensaje M where U.email = M.de and U.email<>'admin@smartliving.es' group by U.nombre");
+$stmt_usuarios->execute();
+$usuarios_chat = $stmt_usuarios->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt_users = $conexion->prepare("SELECT * FROM usuario WHERE email<>'admin@smartliving.es'");
+$stmt_users->execute();
+$usuarios = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
+
+include "views/partials/header.part.php";
+include "views/cpanel.view.phtml";
+include "views/partials/footer.part.php";
 ?>

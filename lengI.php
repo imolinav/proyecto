@@ -82,7 +82,7 @@ $i_guser_texto3 = "Room: ";
 $i_guser_texto4 = "Number of devices: ";
 $i_guser_texto5 = "Name of device: ";
 $i_guser_texto6 = "Pin: ";
-$i_guser_boton2 = "Change user: ";
+$i_guser_boton2 = "Change user";
 
 /* header.part.php */
 $i_header_login = "Log in";

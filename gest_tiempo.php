@@ -89,11 +89,6 @@ if(isset($_POST['comunidad'])) {
 
                                         <?php if($data_aux['list'][$k]['weather'][0]['main'] == "Clear") :?>
                                         <div class="temp_fondo" style="background-color: <?= $colores[0] ?>"></div>
-                                        <div class="icon sunny">
-                                            <div class="sun">
-                                                <div class="rays"></div>
-                                            </div>
-                                        </div>
                                         <?php elseif($data_aux['list'][$k]['weather'][0]['id'] == 800) :?>
                                         <div class="temp_fondo" style="background-color: <?= $colores[1] ?>"></div>
                                         <div class="icon cloudy">

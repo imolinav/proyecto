@@ -41,14 +41,39 @@ if (isset($_POST['disp'])) {
         } ?>
 
         <p><?= $i_disp_texto6 ?></p>
-        <input type="date" class="form-control mb-2" name="prg_date_start">
-        <input type="time" class="form-control mb-2" name="prg_hour_start">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+            </div>
+            <input type="date" class="form-control" name="prg_date_start">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2"><i class="far fa-clock"></i></span>
+            </div>
+            <input type="time" class="form-control" name="prg_hour_start" aria-describedby="basic-addon2">
+        </div>
         <p><?= $i_disp_texto7 ?></p>
-        <input type="date" class="form-control mb-2" name="prg_date_end">
-        <input type="time" class="form-control mb-2" name="prg_hour_end">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+            </div>
+            <input type="date" class="form-control" name="prg_date_end">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="far fa-clock"></i></span>
+            </div>
+            <input type="time" class="form-control" name="prg_hour_end">
+        </div>
         <?php if($dispositivo['temperatura']!=null):?>
         <p><?= $i_disp_texto8 ?></p>
-        <input type="number" class="form-control mb-2" name="prg_temp" value="0" min="0" />
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fas fa-thermometer-quarter"></i></span>
+            </div>
+            <input type="number" class="form-control" name="prg_temp" value="0" min="0" />
+        </div>
         <?php endif; ?>
         <input type="button" class="btn btn-primary" value="<?= $i_disp_boton1 ?>" name="prg_enviar">
     </div>

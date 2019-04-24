@@ -82,7 +82,7 @@ $i_guser_texto3 = "Habitacion: ";
 $i_guser_texto4 = "Cantidad de dispositivos: ";
 $i_guser_texto5 = "Nombre del dispositivo: ";
 $i_guser_texto6 = "Pin: ";
-$i_guser_boton2 = "Modificar usuario: ";
+$i_guser_boton2 = "Modificar usuario";
 
 /* header.part.php */
 $i_header_login = "Iniciar sesión";

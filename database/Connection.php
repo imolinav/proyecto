@@ -12,7 +12,7 @@ class Connection {
             $opciones=[PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8",
                 PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_PERSISTENT=>true];
-            $connection = new PDO('mysql:host=127.0.0.1;dbname=proyecto', 'becario', "1111", $opciones);
+            $connection = new PDO('mysql:host=127.0.0.1;dbname=proyecto5', 'becario', "1111", $opciones);
         } catch (PDOException $PDOException) {
             die($PDOException->getMessage());
         }

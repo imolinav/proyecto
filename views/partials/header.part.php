@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>Smart Living</title>
 </head>
 <!-- <script src="js/bootstrap.bundle.js"></script> -->
@@ -35,15 +36,15 @@
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuId">
                 <?php if($usuario->getAdmin()==0): ?>
-                <a class="dropdown-item" href="control.php"><?= $i_header_control ?></a>
-                <a class="dropdown-item" href="perfil.php"><?= $i_header_perfil ?></a>
-                <a class="dropdown-item" href="graficas.php"><?= $i_header_graficas ?></a>
+                <a class="dropdown-item" href="control.php"><i class="far fa-lightbulb"></i> <?= $i_header_control ?></a>
+                <a class="dropdown-item" href="perfil.php"><i class="far fa-user"></i> <?= $i_header_perfil ?></a>
+                <a class="dropdown-item" href="graficas.php"><i class="far fa-chart-bar"></i> <?= $i_header_graficas ?></a>
                 <?php else: ?>
-                <a class="dropdown-item" href="cpanel.php"><?= $i_header_panel ?></a>
+                <a class="dropdown-item" href="cpanel.php"><i class="fas fa-cog"></i> <?= $i_header_panel ?></a>
                 <?php endif; ?>
                 <hr>
                 <form class="dropdown-item" method="post" action="index.php">
-                    <button type="button" id="logout"><?= $i_header_logout ?></button>
+                    <button type="button" id="logout"><i class="fas fa-power-off"></i> <?= $i_header_logout ?></button>
                     <input type="hidden" name="logout">
                 </form>
             </div>

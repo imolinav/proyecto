@@ -1,7 +1,7 @@
 <br id="separador">
 <footer class="bg-dark footer mt-5">
     <div class="footer-copyright text-center py-3 text-light text-muted">© 2019 Copyright:
-        <a href="https://github.com/imolinav" style="text-decoration: none;">Ian Molina</a>
+        <a href="https://github.com/imolinav" style="text-decoration: none;">Ian Molina <i class="fab fa-github"></i></a>
     </div>
 </footer>
 </body>
