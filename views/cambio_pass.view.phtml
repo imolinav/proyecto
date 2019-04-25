@@ -1,11 +1,19 @@
-<div class="container cambio_pass mt-5 mb-5">
+<div class="container mt-5 mb-5">
     <form method="post" action="index.php">
-        <p><?= $i_cambio_pass_texto1 ?></p>
-        <input type="password" class="form-control" name="pass_chg">
-        <p class="mt-3"><?= $i_cambio_pass_texto2 ?></p>
-        <input type="password" class="form-control" name="pass_chg_conf">
-        <small class="form-text text-muted"><?= $i_cambio_pass_texto3 ?></small>
-        <input type="button" name="submit_cambio_pass" class="btn btn-primary mt-3" value="<?= $i_cambio_pass_boton1 ?>">
+        <div class="row">
+            <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-2">
+                <label><?= $i_cambio_pass_texto1 ?></label>
+                <input type="password" class="form-control" name="pass_chg">
+            </div>
+            <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-0">
+                <label class="mt-3 mt-lg-0"><?= $i_cambio_pass_texto2 ?></label>
+                <input type="password" class="form-control" name="pass_chg_conf">
+                <small class="form-text text-muted"><?= $i_cambio_pass_texto3 ?></small>
+            </div>
+            <div class="col-12 offset-md-2">
+                <input type="button" name="submit_cambio_pass" class="btn btn-primary mt-3" value="<?= $i_cambio_pass_boton1 ?>">
+            </div>
+        </div>
     </form>
 </div>
 

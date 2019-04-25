@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>Smart Living</title>
 </head>
@@ -21,7 +22,8 @@
 
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
-    <h1 class="navbar-brand"><a href="index.php"">Smart Living</a></h1>
+    <h1 class="navbar-brand d-none d-sm-block"><a href="index.php">Smart Living</a></h1>
+    <!-- <a href="index.php" ><h1 class="navbar-brand d-none d-sm-block">Smart Living</h1></a> -->
     <?php if(!isset($_SESSION['email'])): ?>
         <button type="button" class="btn btn-light ml-auto mr-3"><?= $i_header_login ?></button>
     <?php else: ?>
@@ -31,8 +33,11 @@
                 <div class="msgs_nl_admin"><?= count($mensajes_nl) ?></div>
                 <?php endif;
             } ?>
-            <div class="dropdown-toggle" id="dropdownMenuId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
+            <div class="dropdown-toggle d-none d-md-block" id="dropdownMenuId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
                 <img class="mr-3" src="<?= $usuario->getFoto() ?>"><?= $usuario->getNombre() ?>
+            </div>
+            <div class="dropdown-toggle d-md-none" id="dropdownMenuId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
+                <img class="mr-3" src="<?= $usuario->getFoto() ?>">
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuId">
                 <?php if($usuario->getAdmin()==0): ?>

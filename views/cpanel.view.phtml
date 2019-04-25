@@ -12,18 +12,11 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="add_user" role="tabpanel" aria-labelledby="add_user_tab">
-            <div class="container w-75 mt-4">
+            <div class="container mt-4">
                 <form action="cpanel.php" method="post" id="form_reg">
                     <div class="row">
-                        <div class="col-6">
-                            <p><?= $i_cpanel_form1 ?></p>
-                        </div>
-                        <div class="col-6">
-                            <p><?= $i_cpanel_form2 ?></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
+                        <div class="col-12 col-md-6 mb-3">
+                            <label><?= $i_cpanel_form1 ?></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="far fa-user"></i></span>
@@ -32,7 +25,8 @@
                             </div>
                             <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12 col-md-6 mb-3">
+                            <label><?= $i_cpanel_form2 ?></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
@@ -42,13 +36,9 @@
                             <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <p><?= $i_cpanel_form3 ?></p>
-                        </div>
-                    </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12 col-md-6 mb-3">
+                            <label><?= $i_cpanel_form3 ?></label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="fab fa-raspberry-pi"></i></span>
@@ -60,52 +50,45 @@
                     </div>
                     <hr>
                     <div class="row mt-4">
-                        <div class="col-6">
+                        <div class="col-12 col-md-6 mb-3">
                             <p><?= $i_cpanel_form4 ?></p>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12 col-md-6 mb-3">
                             <input type="number" class="form-control" value="1" min="1" name="su_hab_num">
                         </div>
                     </div>
                     <div class="habitaciones">
                         <hr>
-                        <div class="row mt-4">
-                            <div class="col-6">
-                                <p><?= $i_cpanel_form5 ?></p>
-                            </div>
-                            <div class="col-6">
-                                <p><?= $i_cpanel_form6 ?></p>
-                            </div>
-                        </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12 col-md-6 mb-3">
+                                <label><?= $i_cpanel_form5 ?></label>
                                 <input type="text" class="form-control" name="su_hab_name[]" required>
                                 <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12 col-md-6 mb-3">
+                                <label><?= $i_cpanel_form6 ?></label>
                                 <input type="number" class="form-control" value="1" min="1" name="su_hab_cant_disp[]">
                             </div>
                         </div>
                         <div class="dispositivos">
-                            <div class="row mt-4">
-                                <div class="col-6">
-                                    <p><?= $i_cpanel_form7 ?></p>
-                                </div>
-                                <div class="col-6">
-                                    <p><?= $i_cpanel_form8 ?></p>
-                                </div>
-                            </div>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label><?= $i_cpanel_form7 ?></label>
                                     <input type="text" class="form-control" name="su_disp_name[]" required>
                                     <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                                 </div>
-                                <div class="col-5">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label><?= $i_cpanel_form8 ?></label>
                                     <input type="text" class="form-control" name="su_disp_pin[]" required>
                                     <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                                 </div>
-                                <div class="col-1">
-                                    <input class="form-control" type="checkbox" value="si" name="su_disp_temp[]">
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                        <input class="custom-control-input" id="customControlInline" type="checkbox" value="si" name="su_disp_temp[]">
+                                        <label class="custom-control-label" for="customControlInline"><?= $i_cpanel_form9 ?></label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +100,7 @@
         </div>
         <div class="tab-pane fade" id="modify_user" role="tabpanel" aria-labelledby="modify_user_tab">
             <div class="row mt-4">
-                <div class="col-6 offset-3">
+                <div class="col-12 col-md-6 offset-md-3">
                     <div class="input-group">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -175,7 +158,7 @@
 <script>
     let div_hab = document.getElementsByClassName('habitaciones')[0].cloneNode(true);
     let div_disp = document.getElementsByClassName('dispositivos')[0].cloneNode(true);
-    let new_div_hab, new_div_disp;
+    let new_div_hab, new_div_disp, usuario, elemento, user;
     document.getElementsByName('su_hab_num')[0].onchange = anyadirHab;
     document.getElementsByName('su_hab_cant_disp[]')[0].onchange = anyadirDisp;
     document.getElementsByName('submit_btn')[0].onclick = comprobarForm;
@@ -184,8 +167,6 @@
     }
     document.getElementById('enviar_admin').onclick = enviarMensaje;
     document.getElementById('select_user').onchange = buscarUser;
-
-    let usuario, elemento, user;
 
     function anyadirHab(event) {
         let aux="";
@@ -279,8 +260,8 @@
                     document.getElementsByName('new_su_hab_num')[0].onchange = anyadirHab;
                     document.getElementsByName('new_su_hab_cant_disp[]')[0].onchange = anyadirDisp;
                     document.getElementsByName('new_submit_btn')[0].onclick = modificarHabitaciones;
-                    document.getElementById('btn_new_email').onclick = modificarEmail;
-                    document.getElementsByName('new_delete_btn')[0].onclick = confirmarDelete;
+                    //document.getElementById('btn_new_email').onclick = modificarEmail;
+                    //document.getElementsByName('new_delete_btn')[0].onclick = confirmarDelete;
                     new_div_hab = document.getElementsByClassName('new_habitaciones')[0].cloneNode(true);
                     new_div_disp = document.getElementsByClassName('new_dispositivos')[0].cloneNode(true);
                 }
@@ -295,11 +276,13 @@
     }
 
     function modificarHabitaciones() {
+        //for que recorra nombres de habitaciones y de dispositivos y solo lo lance si estan todos rellenos
         document.getElementsByName('user_mod_option')[0].value = "add";
         document.getElementById('new_form_reg').submit();
     }
 
     function modificarEmail() {
+        //Aqui la expresion regular, if buena, cambiamos, else, mensaje de error
         document.getElementsByName('user_mod_option')[0].value = "update";
         document.getElementById('new_form_reg').submit();
     }

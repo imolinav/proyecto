@@ -1,4 +1,4 @@
-<div class="container col-12 col-md-8">
+<div class="container-fluid col-12">
     <div class="row">
         <div class="col-12 imagen_index mb-3">
             <?php if($hora>=00 && $hora<=05): ?>
@@ -18,8 +18,10 @@
             </div>
         </div>
     </div>
+</div>
+<div class="container col-12 col-md-8">
     <div class="row">
-        <div class="col-4" id="info_tiempo">
+        <div class="col-12 col-lg-4" id="info_tiempo">
             <h3 class="mt-3"><?= $i_index_texto3 ?></h3>
             <p class="text-muted"><?= $i_index_texto4 ?></p>
             <select class="form-control mt-3" id="selec_comunidad">
@@ -30,14 +32,62 @@
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="col-8 mt-3" id="datos_tiempo">
+        <div class="col-12 col-lg-8 mt-3" id="datos_tiempo">
 
         </div>
     </div>
+    <div class="row">
+        <div class="col-12 mt-5">
+            <iframe id="videoYT" width="100%" src="https://www.youtube.com/embed/UPGir81FUpY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
 </div>
-<div id="separator"></div>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-6">
+            <i class="fas fa-quote-left"></i>
+            <div class="quote_container">
+                <hr>
+                <p>"La mejor empresa para que tu casa funcione de la forma mas eficiente posible"</p>
+                <hr>
+                <i>New York Times</i>
+            </div>
+        </div>
+        <div class="col-6">
+            <i class="fas fa-quote-left"></i>
+            <div class="quote_container">
+                <hr>
+                <p>"Opiniones buenas de mentira para hacer que la pagina quede mejor de lo que es ya en realidad"</p>
+                <hr>
+                <i>Tim Cook - Apple CEO</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-3">
+    <div class="row pide_presupuesto">
+        <div class="col-6">
+            <img src="imgs/dibujo.jpg" style="width: 100%" >
+        </div>
+        <div class="col-6 info_presupuesto align-self-center">
+            <p>Cuidamos el medio ambiente</p>
+            <p>Utilizamos tecnologia puntera</p>
+            <p>Cuidamos a nuestros clientes</p>
+            <p>Cumplimos nuestras promesas</p>
+            <p>Algo mas</p>
+            <p>Algo mas</p>
+        </div>
+    </div>
+</div>
 <script>
+    document.body.onload = resizeIframe;
+    document.body.onresize = resizeIframe;
     $('#selec_comunidad').change(cargarProvincias);
+
+    function resizeIframe() {
+        let anchura = document.getElementById('videoYT').scrollWidth;
+        document.getElementById('videoYT').height = anchura*0.5625;
+    }
 
     function cargarProvincias(event) {
         let httpRequest = new obtainXMLHttpRequest();
@@ -95,4 +145,5 @@
         };
         httpRequest.send('municipio='+event.target.value);
     }
+
 </script>

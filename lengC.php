@@ -35,6 +35,7 @@ $i_cpanel_form5 = "Habitación: ";
 $i_cpanel_form6 = "Cantidad de dispositivos: ";
 $i_cpanel_form7 = "Nombre del dispositivo: ";
 $i_cpanel_form8 = "Pin: ";
+$i_cpanel_form9 = "Temperatura";
 $i_cpanel_submit1 = "Registrar usuario";
 $i_cpanel_option1 = "-- Elige un usuario --";
 $i_cpanel_boton1 = "Enviar";
@@ -82,6 +83,13 @@ $i_guser_texto3 = "Habitacion: ";
 $i_guser_texto4 = "Cantidad de dispositivos: ";
 $i_guser_texto5 = "Nombre del dispositivo: ";
 $i_guser_texto6 = "Pin: ";
+$i_guser_texto7 = "¡Atención!";
+$i_guser_texto8 = "Va a modificar el email del usuario ";
+$i_guser_texto9 = "Va a eliminar el usuario ";
+$i_guser_texto10 = "¿Desea continuar?";
+$i_guser_texto11 = "Cancelar";
+$i_guser_texto12 = "Confirmar";
+$i_guser_form7 = "Temperatura";
 $i_guser_boton2 = "Modificar usuario";
 
 /* header.part.php */

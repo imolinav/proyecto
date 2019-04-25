@@ -35,6 +35,7 @@ $i_cpanel_form5 = "Room: ";
 $i_cpanel_form6 = "Number of devices: ";
 $i_cpanel_form7 = "Name of the device: ";
 $i_cpanel_form8 = "Pin: ";
+$i_cpanel_form9 = "Temperature";
 $i_cpanel_submit1 = "Register user";
 $i_cpanel_option1 = "-- Choose an user --";
 $i_cpanel_boton1 = "Send";
@@ -82,6 +83,13 @@ $i_guser_texto3 = "Room: ";
 $i_guser_texto4 = "Number of devices: ";
 $i_guser_texto5 = "Name of device: ";
 $i_guser_texto6 = "Pin: ";
+$i_guser_texto7 = "Caution!";
+$i_guser_texto8 = "You are modifying the email of the user ";
+$i_guser_texto9 = "You are going to delete user ";
+$i_guser_texto10 = "Do you want to continue?";
+$i_guser_texto11 = "Cancel";
+$i_guser_texto12 = "Confirm";
+$i_guser_form7 = "Temperature";
 $i_guser_boton2 = "Change user";
 
 /* header.part.php */
