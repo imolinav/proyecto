@@ -1,4 +1,5 @@
 <?php
+require_once "metodos.php";
 /* footer.part.php */
 
 /* cambio_pass.view.phtml */
@@ -101,7 +102,7 @@ $i_header_panel = "Control panel";
 $i_header_logout = "Log out";
 
 /* index.view.phtml */
-$i_index_texto1 = "Where your house comes to life";
+$i_index_texto1 = "Where your home comes to life";
 $i_index_texto2 = "Contact us";
 $i_index_texto3 = "Weather in your zone";
 $i_index_texto4 = "Check the weather on your zone for the next 5 days";

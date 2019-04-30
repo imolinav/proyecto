@@ -1,4 +1,3 @@
-
 /* CERRAR SESION */
 
 document.getElementsByTagName("button")[0].onclick = logout;
@@ -15,7 +14,6 @@ function cambiarIdioma(event) {
     $('#idioma_selected').val(event.target.id);
     event.target.parentNode.submit();
 }
-
 
 /* OBTENER XMLHTTP */
 

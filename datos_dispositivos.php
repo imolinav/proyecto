@@ -18,9 +18,9 @@ if (isset($_POST['disp'])) {
     if(!empty($dispositivo)):?>
     <div class="col-12 col-md-6 col-lg-5 col-xl-4 mt-5 mt-md-0 offset-lg-1 offset-xl-2 pl-5" id="datos_disp">
         <?php if($dispositivo['encendido']==1):?>
-        <img src="imgs/on.png" height="100px" class="mb-5" id="controlador">
+        <img src="imgs/on.png" height="100px" class="mb-5 hvr-grow" id="controlador">
         <?php else:?>
-        <img src="imgs/off.png" height="100px" class="mb-5" id="controlador">
+        <img src="imgs/off.png" height="100px" class="mb-5 hvr-grow" id="controlador">
             <?php endif; ?>
         <p><?= $i_disp_texto1 ?><?= $dispositivo['habitacion'] ?></p>
         <p><?= $i_disp_texto2 ?><?= $dispositivo['nombre'] ?></p>

@@ -1,0 +1,12 @@
+ErrorDocument 401 /proyecto/error_pages/401.html
+ErrorDocument 403 /proyecto/error_pages/403.html
+ErrorDocument 404 /proyecto/error_pages/404.html
+ErrorDocument 500 /proyecto/error_pages/500.html
+
+SetEnv TZ Europe/Madrid
+
+<FilesMatch "^php5?\.(ini|cgi)$">
+Order Deny,Allow
+Deny from All
+Allow from env=REDIRECT_STATUS
+</FilesMatch>

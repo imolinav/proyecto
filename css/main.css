@@ -183,7 +183,7 @@ footer a, footer a:hover {
     padding:0;
 
 }
-.pide_presupuesto img {
+.pide_presupuesto div:first-child img {
     border-bottom-left-radius: 20px;
     border-top-left-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(14, 116, 153, 0.2), 0 6px 20px 0 rgba(14, 116, 153, 0.19);
@@ -200,6 +200,14 @@ footer a, footer a:hover {
     margin-bottom: 40px;
     text-transform: uppercase;
     font-family: BebasNeue;
+}
+.info_presupuesto img {
+    height: 50px;
+    float: left;
+    margin-left: 50px;
+}
+.info_presupuesto img:first-child {
+    margin-top: 40px;
 }
 
 /* FORMULARIO INICIO SESION */

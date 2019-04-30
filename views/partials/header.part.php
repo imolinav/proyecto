@@ -7,23 +7,19 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/hover.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>Smart Living</title>
 </head>
-<!-- <script src="js/bootstrap.bundle.js"></script> -->
 <script src="js/jquery-3.3.1.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
-<!-- <script src="js/socket.io/socket.io.js"></script> -->
-<!-- <script src="js/util.js"></script> -->
-
 <script src="js/canvasjs.min.js"></script>
 
 
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
     <h1 class="navbar-brand d-none d-sm-block"><a href="index.php">Smart Living</a></h1>
-    <!-- <a href="index.php" ><h1 class="navbar-brand d-none d-sm-block">Smart Living</h1></a> -->
     <?php if(!isset($_SESSION['email'])): ?>
         <button type="button" class="btn btn-light ml-auto mr-3"><?= $i_header_login ?></button>
     <?php else: ?>
@@ -41,15 +37,15 @@
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuId">
                 <?php if($usuario->getAdmin()==0): ?>
-                <a class="dropdown-item" href="control.php"><i class="far fa-lightbulb"></i> <?= $i_header_control ?></a>
-                <a class="dropdown-item" href="perfil.php"><i class="far fa-user"></i> <?= $i_header_perfil ?></a>
-                <a class="dropdown-item" href="graficas.php"><i class="far fa-chart-bar"></i> <?= $i_header_graficas ?></a>
+                <a class="dropdown-item hvr-icon-forward" href="control.php"><i class="far fa-lightbulb hvr-icon"></i> <?= $i_header_control ?></a>
+                <a class="dropdown-item hvr-icon-forward" href="perfil.php"><i class="far fa-user hvr-icon"></i> <?= $i_header_perfil ?></a>
+                <a class="dropdown-item hvr-icon-forward" href="graficas.php"><i class="far fa-chart-bar hvr-icon"></i> <?= $i_header_graficas ?></a>
                 <?php else: ?>
-                <a class="dropdown-item" href="cpanel.php"><i class="fas fa-cog"></i> <?= $i_header_panel ?></a>
+                <a class="dropdown-item hvr-icon-forward" href="cpanel.php"><i class="fas fa-cog hvr-icon"></i> <?= $i_header_panel ?></a>
                 <?php endif; ?>
                 <hr>
-                <form class="dropdown-item" method="post" action="index.php">
-                    <button type="button" id="logout"><i class="fas fa-power-off"></i> <?= $i_header_logout ?></button>
+                <form class="dropdown-item hvr-icon-forward" method="post" action="index.php">
+                    <button type="button" id="logout"><i class="fas fa-power-off hvr-icon"></i> <?= $i_header_logout ?></button>
                     <input type="hidden" name="logout">
                 </form>
             </div>

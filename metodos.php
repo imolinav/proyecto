@@ -17,6 +17,15 @@ if (isset($_SESSION['email'])) {
 
     $mensajes_nl = comprobarMsgs($conexion, $usuario->getEmail());
 
+
+} else {
+    if($_SERVER['PHP_SELF']!='/proyecto/index.php') {
+        header('Location: index.php');
+    }
+}
+
+if(!isset($_SESSION['email']) && $_SERVER['PHP_SELF']!='/proyecto/index.php') {
+    header('Location: index.php');
 }
 
 //Comprobar mensajes

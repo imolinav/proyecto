@@ -1,4 +1,5 @@
 <?php
+require_once "metodos.php";
 /* footer.part.php */
 
 /* cambio_pass.view.phtml */
