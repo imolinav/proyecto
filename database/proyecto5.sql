@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-04-2019 a las 12:44:17
+-- Tiempo de generación: 02-05-2019 a las 18:19:49
 -- Versión del servidor: 10.1.35-MariaDB
 -- Versión de PHP: 7.2.9
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `proyecto`
+-- Base de datos: `proyecto5`
 --
 
 -- --------------------------------------------------------
@@ -34,14 +34,6 @@ CREATE TABLE `camara` (
   `usuario_email` varchar(255) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `camara`
---
-
-INSERT INTO `camara` (`id`, `nombre`, `usuario_email`) VALUES
-(1, 'Comedor', 'echofox@hotmail.com'),
-(2, 'Habitacion', 'echofox@hotmail.com');
-
 -- --------------------------------------------------------
 
 --
@@ -52,6 +44,18 @@ CREATE TABLE `compuesta` (
   `escena_id` int(8) NOT NULL,
   `programa_id` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `compuesta`
+--
+
+INSERT INTO `compuesta` (`escena_id`, `programa_id`) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 5),
+(3, 6);
 
 -- --------------------------------------------------------
 
@@ -114,40 +118,22 @@ CREATE TABLE `dispositivo` (
 --
 
 INSERT INTO `dispositivo` (`id`, `nombre`, `habitacion`, `encendido`, `num_encendidos`, `tiempo_encendido`, `temperatura`, `usuario_email`, `pin`) VALUES
-(2, 'Luces', 'Comedor', 1, 0, 0, NULL, 'echofox@hotmail.com', 0),
-(3, 'Enchufe 1', 'Comedor', 0, 0, 0, NULL, 'echofox@hotmail.com', 0),
-(4, 'Luces', 'Dormitorio', 0, 0, 0, '0.00', 'echofox@hotmail.com', 0),
-(5, 'Lavadora', 'Cocina', 0, 0, 0, NULL, 'echofox@hotmail.com', 0),
-(6, 'Nevera', 'Cocina', 0, 0, 0, NULL, 'echofox@hotmail.com', 0),
-(7, 'Luces', 'Cocina', 0, 0, 0, NULL, 'echofox@hotmail.com', 0),
-(8, 'Luces', 'Comedor', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(9, 'Enchufe', 'Comedor', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(10, 'Television', 'Comedor', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(11, 'Persianas', 'Comedor', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(12, 'Ventilador', 'Comedor', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(13, 'Luces', 'Cocina', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(14, 'Nevera', 'Cocina', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(15, 'Persianas', 'Cocina', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(16, 'Luces', 'Habitacion', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(17, 'Persiana', 'Habitacion', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(18, 'Ventilador', 'Habitacion', 0, 0, 0, '0.00', 'ianmolinav@hotmail.com', 0),
-(19, 'Ordenador', 'Habitacion', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(20, 'Luces', 'Baño', 0, 4, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(21, 'Enchufes', 'Baño', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(22, 'Calefactor', 'Baño', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(23, 'Luces2', 'Comedor', 0, 0, 0, NULL, 'ianmolinav@hotmail.com', 0),
-(84, 'erwergtgewg', 'Comedor', 0, 0, 0, NULL, 'mrajoy@hotmail.com', 20),
-(85, 'asdfasdfsadf', 'Comedor', 0, 0, 0, NULL, 'mrajoy@hotmail.com', 21),
-(86, 'asdfasdfwef', 'Comedor', 0, 0, 0, NULL, 'mrajoy@hotmail.com', 22),
-(87, 'erverver', 'Cocina', 0, 0, 0, '0.00', 'mrajoy@hotmail.com', 23),
-(88, 'sdvservesv', 'Cocina', 0, 0, 0, '0.00', 'mrajoy@hotmail.com', 24),
-(89, 'vdsfvsdfvdsfv', 'Cocina', 0, 0, 0, '0.00', 'mrajoy@hotmail.com', 25),
-(90, 'axvdfvsdf', 'Cocina', 0, 0, 0, '0.00', 'mrajoy@hotmail.com', 26),
-(91, 'servsrdv', 'Dormitorio', 0, 0, 0, NULL, 'mrajoy@hotmail.com', 27),
-(92, 'sdfvsdrvserv', 'Dormitorio', 0, 0, 0, NULL, 'mrajoy@hotmail.com', 28),
-(93, 'sdfvsdfv', 'Dormitorio', 0, 0, 0, NULL, 'mrajoy@hotmail.com', 29),
-(94, 'vsdfverv', 'Dormitorio', 0, 0, 0, NULL, 'mrajoy@hotmail.com', 30),
-(95, 'dsafdasdv', 'Dormitorio', 0, 0, 0, NULL, 'mrajoy@hotmail.com', 31);
+(8, 'Luces', 'Comedor', 0, 23, 75, NULL, 'ianmolinav@hotmail.com', 0),
+(9, 'Enchufe', 'Comedor', 0, 30, 65, NULL, 'ianmolinav@hotmail.com', 0),
+(10, 'Television', 'Comedor', 0, 22, 66, NULL, 'ianmolinav@hotmail.com', 0),
+(11, 'Persianas', 'Comedor', 0, 15, 36, NULL, 'ianmolinav@hotmail.com', 0),
+(12, 'Ventilador', 'Comedor', 0, 7, 36, NULL, 'ianmolinav@hotmail.com', 0),
+(13, 'Luces', 'Cocina', 0, 44, 88, NULL, 'ianmolinav@hotmail.com', 0),
+(14, 'Nevera', 'Cocina', 0, 56, 65, NULL, 'ianmolinav@hotmail.com', 0),
+(15, 'Persianas', 'Cocina', 0, 47, 74, NULL, 'ianmolinav@hotmail.com', 0),
+(16, 'Luces', 'Habitacion', 0, 36, 63, NULL, 'ianmolinav@hotmail.com', 0),
+(17, 'Persiana', 'Habitacion', 0, 45, 54, NULL, 'ianmolinav@hotmail.com', 0),
+(18, 'Ventilador', 'Habitacion', 0, 34, 43, '0.00', 'ianmolinav@hotmail.com', 0),
+(19, 'Ordenador', 'Habitacion', 0, 67, 76, NULL, 'ianmolinav@hotmail.com', 0),
+(20, 'Luces', 'Baño', 1, 59, 54, NULL, 'ianmolinav@hotmail.com', 0),
+(21, 'Enchufes', 'Baño', 1, 46, 67, NULL, 'ianmolinav@hotmail.com', 0),
+(22, 'Calefactor', 'Baño', 1, 24, 56, NULL, 'ianmolinav@hotmail.com', 0),
+(23, 'Luces2', 'Comedor', 0, 34, 43, NULL, 'ianmolinav@hotmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -161,6 +147,15 @@ CREATE TABLE `escena` (
   `activa` tinyint(1) NOT NULL,
   `usuario_email` varchar(255) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `escena`
+--
+
+INSERT INTO `escena` (`id`, `nombre`, `activa`, `usuario_email`) VALUES
+(1, 'dfsghswht', 1, 'ianmolinav@hotmail.com'),
+(2, 'dfsghswht', 0, 'ianmolinav@hotmail.com'),
+(3, 'dfsghswht', 1, 'ianmolinav@hotmail.com');
 
 -- --------------------------------------------------------
 
@@ -182,18 +177,6 @@ CREATE TABLE `mensaje` (
 --
 
 INSERT INTO `mensaje` (`id`, `texto`, `de`, `para`, `fecha`, `leido`) VALUES
-(1, 'Hola que tal?', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-02 11:30:21', 1),
-(2, 'Muy bien y tu?', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-02 12:50:00', 1),
-(3, 'Bien', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-02 13:18:00', 1),
-(4, 'Vale', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-02 13:36:32', 1),
-(5, 'De acuerdo', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-02 17:14:57', 1),
-(6, 'Muy bien', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-02 17:20:10', 1),
-(7, 'Muy guapo', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-02 17:24:34', 1),
-(8, 'Vale guay', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-02 17:28:23', 1),
-(9, 'To flama', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-02 17:28:31', 1),
-(10, 'Me parece bien', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-02 17:40:03', 1),
-(11, 'qwer', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-02 17:40:22', 1),
-(12, 'ertyrety', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-02 17:40:49', 1),
 (13, 'qewrqwer', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-02 18:09:40', 1),
 (14, 'qwerqwerqwer', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-02 18:09:42', 1),
 (15, 'qwerqwerqwer', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-02 18:09:50', 1),
@@ -203,46 +186,21 @@ INSERT INTO `mensaje` (`id`, `texto`, `de`, `para`, `fecha`, `leido`) VALUES
 (20, 'asdfasdf', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-02 18:24:57', 1),
 (21, 'ianmolinav@hotmail.com', 'admin@smartliving.es', 'ianmolinav@hotmail.com', '2019-04-02 18:28:02', 1),
 (22, 'qwerqwer', 'admin@smartliving.es', 'ianmolinav@hotmail.com', '2019-04-03 09:35:35', 1),
-(23, 'sdfgsdgf', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 09:56:50', 1),
-(24, 'asdfasdf', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 10:26:32', 1),
-(25, 'aqawretrewt', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 10:26:37', 1),
-(26, 'cvbncvbn', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 10:26:54', 1),
-(27, 'xzcvbxcvbxcvb', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 10:31:03', 1),
-(28, 'sdfgdsfgdsfgs', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 10:32:12', 1),
-(29, 'wertwertewrt', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 10:32:35', 1),
-(30, 'hgdghdfghdfgh', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 11:12:33', 1),
-(31, 'mnvmbvnmvbnm', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 15:25:10', 1),
-(32, 'asdfasdfasdf', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-03 16:23:27', 1),
 (33, 'fgdsdgfsdgf', 'admin@smartliving.es', 'ianmolinav@hotmail.com', '2019-04-04 10:04:04', 1),
 (34, 'puipuiopuio', 'admin@smartliving.es', 'ianmolinav@hotmail.com', '2019-04-04 10:08:37', 1),
 (35, 'sdfgdsfgdsfg', 'admin@smartliving.es', 'ianmolinav@hotmail.com', '2019-04-04 10:12:05', 1),
 (36, 'sdgfdsfgdsfg', 'admin@smartliving.es', 'ianmolinav@hotmail.com', '2019-04-04 10:13:08', 1),
-(37, 'goltuilulgli', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-04 13:24:58', 1),
-(38, 'pedro sanchez presidente', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-05 13:56:07', 1),
-(39, 'lo se lo se', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-05 13:56:28', 1),
-(40, 'asdfasdfasdf', 'admin@smartliving.es', 'echofox@hotmail.com', '2019-04-05 18:11:53', 1),
 (41, 'ghkj', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:17:36', 1),
 (42, 'sdfgdsfg', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:20:30', 1),
 (43, 'asdf', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:27:58', 1),
 (44, 'qwerqwerqwer', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:28:00', 1),
-(45, 'zxcvxzcvxzcv', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:28:15', 1),
-(46, 'fweqfqwefwqef', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:28:16', 1),
 (47, 'asdfasdfasdf', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:33:40', 1),
 (48, 'asdfasdfasdfasdf', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:33:42', 1),
-(49, 'asdfasdfasdf', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:33:57', 1),
-(50, 'zxcvzxvczxcv', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:33:59', 1),
 (51, 'zxcvzxcvzxcv', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:36:02', 1),
 (52, 'zxcvzxcvzxcv', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:36:03', 1),
-(53, 'qwerqwerqwer', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:36:11', 1),
-(54, '123412341234', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:36:13', 1),
-(55, 'qwerqwer', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:36:15', 1),
 (56, 'xcvbxcvbxcvbcvxb', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:39:24', 1),
 (57, 'sgsdfgsdfg', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:39:26', 1),
 (58, 'wtrwerwer', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:39:27', 1),
-(59, 'fghjfgjfgj', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:39:37', 1),
-(60, 'fyturtu', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:39:39', 1),
-(61, 'asdfasdfasdfasdfsadf', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:40:37', 1),
-(62, 'werqwerqwer', 'echofox@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:40:38', 1),
 (63, 'sadfasdf', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-09 15:58:54', 1),
 (64, 'yiy', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-10 09:28:26', 1),
 (65, 'uipuip', 'ianmolinav@hotmail.com', 'admin@smartliving.es', '2019-04-10 09:37:48', 1),
@@ -8407,8 +8365,10 @@ INSERT INTO `municipios` (`provincia_id`, `municipio`, `id`, `slug`, `latitud`, 
 CREATE TABLE `programa` (
   `id` int(8) NOT NULL,
   `dispositivo_id` int(8) NOT NULL,
-  `inicio` datetime NOT NULL,
-  `fin` datetime NOT NULL,
+  `dia_inicio` date NOT NULL,
+  `hora_inicio` time NOT NULL,
+  `dia_fin` date DEFAULT NULL,
+  `hora_fin` time DEFAULT NULL,
   `temperatura` int(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -8416,9 +8376,14 @@ CREATE TABLE `programa` (
 -- Volcado de datos para la tabla `programa`
 --
 
-INSERT INTO `programa` (`id`, `dispositivo_id`, `inicio`, `fin`, `temperatura`) VALUES
-(1, 5, '2019-04-10 14:25:00', '2019-04-17 14:25:00', NULL),
-(2, 3, '2019-04-10 14:25:00', '2019-04-24 14:25:00', NULL);
+INSERT INTO `programa` (`id`, `dispositivo_id`, `dia_inicio`, `hora_inicio`, `dia_fin`, `hora_fin`, `temperatura`) VALUES
+(1, 11, '2019-06-15', '00:00:00', NULL, NULL, NULL),
+(2, 18, '2019-06-15', '00:00:00', NULL, NULL, 25),
+(3, 11, '0000-00-00', '00:00:00', NULL, NULL, NULL),
+(4, 18, '0000-00-00', '00:00:00', NULL, NULL, 25),
+(5, 11, '0000-00-00', '00:00:00', NULL, NULL, NULL),
+(6, 18, '0000-00-00', '00:00:00', NULL, NULL, 25),
+(7, 21, '2019-05-16', '14:04:00', '2019-06-06', '04:54:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -8515,9 +8480,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`email`, `nombre`, `foto`, `pass`, `activo`, `puerto`, `admin`, `rb_ip`) VALUES
 ('admin@smartliving.es', 'Admin. Smart Living', './imgs/generic.png', '$2y$10$GOPSNBJqoZi1h04G7kD10uy4xUG0BdpucF14R0SBxCGSvl4c6aZcq', 1, 45999, 1, ''),
-('echofox@hotmail.com', 'Pedro Sanchez', 'imgs/users/1554391939_generic.png', '$2y$10$/ZxLLxeTb7uLF0zGKmvrO.0RG5hnPSil5nRBtvuEoZJwnmjyCWftO', 1, 37174, 0, ''),
-('ianmolinav@hotmail.com', 'Ian Molina', './imgs/generic.png', '$2y$10$DtKoKEMFaa4N4B0TOfPT7OBFGsYk7OkRPgue2QzTgOedmS9MjKb0q', 1, 36160, 0, ''),
-('mrajoy@hotmail.com', 'Mariano Rajoy', './imgs/generic.png', '$2y$10$24RGhoTB26FtEchUI1ej8OeTh61joHLHqwY7QXeVARRc0Krv8yPTO', 0, 62425, 0, '217.186.12.5');
+('ianmolinav@hotmail.com', 'Ian Molina', './imgs/generic.png', '$2y$10$DtKoKEMFaa4N4B0TOfPT7OBFGsYk7OkRPgue2QzTgOedmS9MjKb0q', 1, 36160, 0, '');
 
 --
 -- Índices para tablas volcadas
@@ -8556,13 +8519,13 @@ ALTER TABLE `dispositivo`
 -- Indices de la tabla `escena`
 --
 ALTER TABLE `escena`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_email` (`usuario_email`);
 
 --
 -- Indices de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `de` (`de`),
   ADD KEY `para` (`para`);
 
@@ -8603,25 +8566,19 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `camara`
 --
 ALTER TABLE `camara`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `dispositivo`
 --
 ALTER TABLE `dispositivo`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `escena`
 --
 ALTER TABLE `escena`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `mensaje`
---
-ALTER TABLE `mensaje`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `municipios`
@@ -8633,7 +8590,7 @@ ALTER TABLE `municipios`
 -- AUTO_INCREMENT de la tabla `programa`
 --
 ALTER TABLE `programa`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `provincias`
@@ -8649,34 +8606,39 @@ ALTER TABLE `provincias`
 -- Filtros para la tabla `camara`
 --
 ALTER TABLE `camara`
-  ADD CONSTRAINT `camara_ibfk_1` FOREIGN KEY (`usuario_email`) REFERENCES `usuario` (`email`);
+  ADD CONSTRAINT `camara_ibfk_1` FOREIGN KEY (`usuario_email`) REFERENCES `usuario` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `compuesta`
 --
 ALTER TABLE `compuesta`
-  ADD CONSTRAINT `compuesta_ibfk_1` FOREIGN KEY (`escena_id`) REFERENCES `escena` (`id`),
-  ADD CONSTRAINT `compuesta_ibfk_2` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`);
+  ADD CONSTRAINT `compuesta_ibfk_1` FOREIGN KEY (`escena_id`) REFERENCES `escena` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `compuesta_ibfk_2` FOREIGN KEY (`programa_id`) REFERENCES `programa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `dispositivo`
 --
 ALTER TABLE `dispositivo`
-  ADD CONSTRAINT `dispositivo_ibfk_1` FOREIGN KEY (`usuario_email`) REFERENCES `usuario` (`email`),
-  ADD CONSTRAINT `dispositivo_ibfk_2` FOREIGN KEY (`usuario_email`) REFERENCES `usuario` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `dispositivo_ibfk_1` FOREIGN KEY (`usuario_email`) REFERENCES `usuario` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `escena`
+--
+ALTER TABLE `escena`
+  ADD CONSTRAINT `escena_ibfk_1` FOREIGN KEY (`usuario_email`) REFERENCES `usuario` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  ADD CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`de`) REFERENCES `usuario` (`email`),
-  ADD CONSTRAINT `mensaje_ibfk_2` FOREIGN KEY (`para`) REFERENCES `usuario` (`email`);
+  ADD CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`de`) REFERENCES `usuario` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mensaje_ibfk_2` FOREIGN KEY (`para`) REFERENCES `usuario` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `programa`
 --
 ALTER TABLE `programa`
-  ADD CONSTRAINT `programa_ibfk_1` FOREIGN KEY (`dispositivo_id`) REFERENCES `dispositivo` (`id`);
+  ADD CONSTRAINT `programa_ibfk_1` FOREIGN KEY (`dispositivo_id`) REFERENCES `dispositivo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
