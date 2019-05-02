@@ -1,7 +1,9 @@
 <?php
 require_once "metodos.php";
 if(isset($_POST['disp'])) {
-    $parameters = [':id'=>$_POST['disp']];
+    $parameters = [':id' => $_POST['disp']];
+} else if(isset($_POST['scn'])) {
+    $parameters = [':id'=>$_POST['scn']];
 } else {
     $parameters = [':id'=>$_POST['profile']];
 }
@@ -13,6 +15,15 @@ $dispositivo = $stmt_disp->fetch(PDO::FETCH_ASSOC);
 $stmt_prog = $conexion->prepare("SELECT * FROM programa WHERE dispositivo_id = :id");
 $stmt_prog->execute($parameters);
 $programas = $stmt_prog->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt_scn = $conexion->prepare("SELECT * FROM escena WHERE id = :id");
+$stmt_scn->execute($parameters);
+$escenas = $stmt_scn->fetchAll(PDO::FETCH_ASSOC);
+
+$disp_scn = $conexion->prepare("SELECT D.id, D.nombre, D.habitacion, P.dia_inicio, P.hora_inicio, P.dia_fin, P.hora_fin, P.temperatura FROM dispositivo D, programa P, compuesta C, escena E WHERE D.id = P.dispositivo_id AND P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
+$disp_scn->execute($parameters);
+$disp_escenas = $disp_scn->fetchAll(PDO::FETCH_ASSOC);
+
 
 if (isset($_POST['disp'])) {
     if(!empty($dispositivo)):?>
@@ -33,8 +44,8 @@ if (isset($_POST['disp'])) {
             foreach ($programas as $programa) {
                 if($programa['dispositivo_id']==$dispositivo['id']):?>
                     <p><?= $i_disp_texto5 ?></p>
-                    <p><?=$programa['inicio'] ?></p>
-                    <p><?=$programa['fin'] ?></p>
+                    <p><?=$programa['dia_inicio'] ." ".$programa['hora_inicio'] ?></p>
+                    <p><?=$programa['dia_fin'] ." ".$programa['hora_fin'] ?></p>
                     <hr>
                 <?php endif;
             }
@@ -78,9 +89,28 @@ if (isset($_POST['disp'])) {
         <input type="button" class="btn btn-primary" value="<?= $i_disp_boton1 ?>" name="prg_enviar">
     </div>
     <?php endif;
-} else if(isset($_POST['profile'])) {
-    if (!empty($dispositivo)) : ?>
+}  else if(isset($_POST['scn'])) {
+    if(!empty($escenas)): ?>
 
-    <?php endif;
+        <div class="col-12 col-md-6 col-lg-5 col-xl-4 mt-5 mt-md-0 offset-lg-1 offset-xl-2 pl-5" id="datos_scn">
+            <?php if($escenas[0]['activa']==1):?>
+                <img src="imgs/on.png" height="100px" class="mb-5 hvr-grow" id="controlador_scns">
+            <?php else:?>
+                <img src="imgs/off.png" height="100px" class="mb-5 hvr-grow" id="controlador_scns">
+                <input type="date" name="reuse_scn_date" class="form-control mb-3">
+                <button type="button" name="reuse_scn_btn" class="btn btn-primary mb-3">Actualizar escena</button>
+            <?php endif;
+            foreach($disp_escenas as $disp) :?>
+            <p><?= $disp['habitacion']." - ".$disp['nombre'] ?></p>
+            <p><?= $disp['dia_inicio'] . " " . $disp['hora_inicio']?></p>
+            <p><?= $disp['dia_fin'] . " " . $disp['hora_fin']?></p>
+            <?php endforeach; ?>
+            <hr>
+            <button type="button" class="btn btn-primary mb-3" id="scn_modify">Modificar escena</button>
+            <button type="button" class="btn btn-danger mb-3" id="scn_delete"><i class="far fa-trash-alt"></i></button>
+
+        </div>
+
+<?php endif;
 }
 ?>

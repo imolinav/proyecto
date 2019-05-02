@@ -89,28 +89,38 @@ if(isset($_POST['comunidad'])) {
 
                                         if($data_aux['list'][$k]['weather'][0]['main'] == "Clear") :?>
                                         <div class="temp_fondo" style="background-color: <?= $colores[0] ?>"></div>
-
-                                        <?php elseif($data_aux['list'][$k]['weather'][0]['id'] == 800) :?>
+                                        <?php if($dia[1]=='00:00:00' || $dia[1]=='03:00:00' || $dia[1]=='21:00:00') :?>
+                                        <i class="wi wi-night-clear"></i>
+                                        <?php else : ?>
+                                        <i class="wi wi-day-sunny"></i>
+                                        <?php endif;
+                                        elseif($data_aux['list'][$k]['weather'][0]['id'] == 800) :?>
                                         <div class="temp_fondo" style="background-color: <?= $colores[1] ?>"></div>
+                                        <i class="wi wi-day-cloudy"></i>
 
                                         <?php elseif($data_aux['list'][$k]['weather'][0]['main'] == "Clouds") :?>
                                         <div class="temp_fondo" style="background-color: <?= $colores[1] ?>"></div>
+                                        <i class="wi wi-day-cloudy"></i>
 
                                         <?php elseif($data_aux['list'][$k]['weather'][0]['id'] >= 500 && $data_aux['list'][$k]['weather'][0]['id'] <= 504) :?>
                                         <div class="temp_fondo" style="background-color: <?= $colores[4] ?>"></div>
+                                        <i class="wi wi-day-rain" style="color: black"></i>
 
                                         <?php elseif($data_aux['list'][$k]['weather'][0]['main'] == "Rain") :?>
                                         <div class="temp_fondo" style="background-color: <?= $colores[2] ?>"></div>
+                                        <i class="wi wi-rain"></i>
 
                                         <?php elseif($data_aux['list'][$k]['weather'][0]['main'] == "Snow") :?>
                                         <div class="temp_fondo" style="background-color: <?= $colores[3] ?>"></div>
+                                        <i class="wi wi-snow" style="color: black"></i>
 
                                         <?php elseif($data_aux['list'][$k]['weather'][0]['main'] == "Thunderstorm") :?>
                                         <div class="temp_fondo" style="background-color: <?= $colores[2] ?>"></div>
+                                        <i class="wi wi-storm-showers"></i>
 
-                                        <?php endif; ?>
+                                        <?php endif;
 
-                                        <?php if(($data_aux['list'][$k]['weather'][0]['id']>=500 && $data_aux['list'][$k]['weather'][0]['id'] <= 504) || $data_aux['list'][$k]['weather'][0]['main'] == "Snow"):?>
+                                        if(($data_aux['list'][$k]['weather'][0]['id']>=500 && $data_aux['list'][$k]['weather'][0]['id'] <= 504) || $data_aux['list'][$k]['weather'][0]['main'] == "Snow"):?>
                                         <div class="temp_info" style="color: black">
                                             <h1 style="color: black"><?= $data_aux['list'][$k]['main']['temp'] ?>ºC</h1>
                                         <?php else: ?>
@@ -120,8 +130,8 @@ if(isset($_POST['comunidad'])) {
 
                                             <div style="text-transform: capitalize"><?= $data_aux['list'][$k]['weather'][0]['description'] ?></div>
                                             Min: <?= $data_aux['list'][$k]['main']['temp_min'] ?>ºC - Max: <?= $data_aux['list'][$k]['main']['temp_max'] ?>ºC<br>
-                                            <?= $i_gtiempo_texto1 ?><?= $data_aux['list'][$k]['main']['humidity'] ?>% <br>
-                                            <?= $i_gtiempo_texto2 ?><?= $data_aux['list'][$k]['wind']['speed'] ?>m/s <br>
+                                            <?= $i_gtiempo_texto1 . $data_aux['list'][$k]['main']['humidity'] ?>% <br>
+                                            <?= $i_gtiempo_texto2 . $data_aux['list'][$k]['wind']['speed'] ?>m/s <br>
                                             <?= $dia[1] ?><br>
                                         </div>
                                     </div>

@@ -22,3 +22,9 @@
     font-family: "Roboto-Regular";
     src: url("fonts/Roboto-Regular.ttf");
 }
+@font-face {
+    font-family: 'MeteoconsRegular';
+    url('fonts/meteocons-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -29,19 +29,25 @@
         </div>
 
         <div class="tab-pane fade" id="escenas" role="tabpanel" aria-labelledby="escenas_tab">
+            <div class="container w-75 mt-4">
+
             <?php if(!empty($escenas)) : ?>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <?php foreach ($escenas as $escena) : ?>
-                    <p><?= $escena['nombre'] ?></p>
-                    <?php endforeach; ?>
+                <div class="row mt-5" id="div_scns">
+                    <div class="col-12 col-md-6 mt-3">
+                        <p class="scene_title">Escenas</p>
+                        <?php foreach($escenas as $escena) :?>
+                        <p class="scenes_list"><?= $escena['nombre'] ?></p>
+                        <input type="hidden" value="<?= $escena['id'] ?>">
+                        <?php endforeach; ?>
+                        <a href="nueva_escena.php" class="btn btn-primary mt-3">Escena nueva</a>
+                    </div>
                 </div>
             </div>
             <?php else: ?>
             <div align="center" class="mt-5">
                 <h2 class="mt-3"><?= $i_control_texto1 ?></h2>
                 <h3 class="mt-3"><?= $i_control_texto2 ?></h3>
-                <button type="button" class="btn btn-primary mt-3 mb-3" id="new_scene"><?= $i_control_boton1 ?></button>
+                <a href="nueva_escena.php" class="btn btn-primary mt-3 mb-3"><?= $i_control_boton1 ?></a>
             </div>
             <?php endif;?>
         </div>
@@ -68,10 +74,15 @@
 <script>
     $('#new_scene').click(nuevaEscena);
     let $dispositivos = $('.dispositivos_list');
+    let $escenas = $('.scenes_list');
     for(let i=0; i<$dispositivos.length; i++) {
         $dispositivos.eq(i).click(seleccionarDisp);
     }
+    for(let i=0; i<$escenas.length; i++) {
+        $escenas.eq(i).click(seleccionarScn);
+    }
     let dispositivo = "";
+    let escena = "";
 
     function seleccionarDisp(event) {
         dispositivo = event.target.nextElementSibling.value;
@@ -87,6 +98,20 @@
         }
     }
 
+    function seleccionarScn(event) {
+        escena = event.target.nextElementSibling.value;
+        seleccionarEscena(escena);
+        for(let i=0; i<$escenas.length; i++) {
+            if(event.target===$escenas[i]) {
+                event.target.classList.add("disp_act");
+            } else {
+                if($escenas[i].classList.contains("disp_act")) {
+                    $escenas[i].classList.remove("disp_act");
+                }
+            }
+        }
+    }
+
     function seleccionar(dispositivo) {
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'datos_dispositivos.php', true);
@@ -94,8 +119,7 @@
         httpRequest.onreadystatechange = function() {
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
-                    //$('#datos_disp').remove();
-                    $('#datos_disp').fadeOut(300, function() { $(this).remove();});
+                    $('#datos_disp').remove();
                     $('#div_datos').append(httpRequest.responseText).children(':last').hide().fadeIn(900);
                     $('#controlador').click(cambiarEstado);
                     $('[name=prg_enviar]').eq(0).click(programarDisp);
@@ -104,6 +128,46 @@
             }
         };
         httpRequest.send('disp='+dispositivo);
+    }
+
+    function seleccionarEscena(escena) {
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'datos_dispositivos.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    $('#datos_scn').remove();
+                    $('#div_scns').append(httpRequest.responseText).children(':last').hide().fadeIn(900);
+                    if(document.getElementById('controlador_scns').src==="http://localhost/proyecto/imgs/on.png") {
+                        $('#controlador_scns').click(quitarScn);
+                    }
+                    if(document.getElementsByName('reuse_scn_btn')[0]) {
+                        document.getElementsByName('reuse_scn_btn')[0].onclick = actualizarScn;
+                    }
+                    $('#scn_modify').click(modificarScn);
+                    $('#scn_delete').click(eliminarScn);
+                }
+            }
+        };
+        httpRequest.send('scn='+escena);
+    }
+
+    function quitarScn() {
+        alert('desponer');
+    }
+
+    function actualizarScn() {
+        alert("acutalizar");
+    }
+
+    function modificarScn() {
+        alert("acutalizar");
+    }
+
+    function eliminarScn() {
+        alert("quuitar");
+
     }
 
     function cambiarEstado(event) {
@@ -158,6 +222,11 @@
         this.dia_fin = dia_fin;
         this.hora_fin = hora_fin;
         this.temp =  temp;
+    }
+
+    function Escena(id_escena, fecha) {
+        this.id_escena = id_escena;
+        this.fecha = fecha;
     }
 
     function nuevaEscena() {

@@ -10,10 +10,10 @@
                     </form>
                 </div>
                 <div class="col-12 col-sm-6 col-md-12">
-                    <p class="mt-3"><?= $i_perfil_texto1 ?><?= $usuario->getNombre() ?> <i class="btn btn-light far fa-edit"></i></p>
-                    <p><?= $i_perfil_texto2 ?><?= $usuario->getEmail() ?></p>
-                    <p><?= $i_perfil_texto3 ?><?= count($dispositivos) ?></p>
-                    <p><?= $i_perfil_texto4 ?><?= count($escenas) ?></p>
+                    <p class="mt-3"><?= $i_perfil_texto1 . $usuario->getNombre() ?> <i class="btn btn-light far fa-edit"></i></p>
+                    <p><?= $i_perfil_texto2 . $usuario->getEmail() ?></p>
+                    <p><?= $i_perfil_texto3 . count($dispositivos) ?></p>
+                    <p><?= $i_perfil_texto4 . count($escenas) ?></p>
                     <button type="button" class="btn btn-primary" id="btn_log"><?= $i_perfil_boton2 ?></button>
                 </div>
             </div>
@@ -50,11 +50,11 @@
                 </div>
                 <div class="tab-pane fade" id="prg" role="tabpanel" aria-labelledby="prg_tab">
                     <?php if(!empty($programas)) : ?>
-                        <p class="habitacion_list"><?= $i_perfil_text6 ?></p>
+                        <p class="habitacion_list"><?= $i_perfil_texto6 ?></p>
                         <?php foreach($programas as $programa) {
                             foreach($dispositivos as $dispositivo) {
                                 if($programa['dispositivo_id']==$dispositivo['id']):?>
-                                <p class="programas_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='<?= $i_perfil_popover5 ?><?= $dispositivo['nombre'] ?><br><?= $i_perfil_popover6 ?><?= $programa['inicio'] ?><br><?= $i_perfil_popover7 ?><?= $programa['fin'] ?>'><?= $dispositivo['nombre'] ?></p>
+                                <p class="programas_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='<?= $i_perfil_popover5 ?><?= $dispositivo['nombre'] ?><br><?= $i_perfil_popover6 ?><?= $programa['hora_inicio'] ?><br><?= $i_perfil_popover7 ?><?= $programa['hora_fin'] ?>'><?= $dispositivo['nombre'] ?></p>
                                 <?php endif;
                             }
                         }
@@ -69,12 +69,12 @@
                     <?php if(!empty($escenas)) : ?>
                         <p class="habitacion_list"><?= $i_perfil_texto9 ?></p>
                         <?php foreach($escenas as $escena) : ?>
-                            <p class="escenas_list" data-toggle="popover" data-trigger="focus" title="<?= $escena['nombre'] ?>" data-content="Datos"><?= $escena['nombre'] ?></p>
+                            <p class="programas_list" data-toggle="popover" data-trigger="focus" title="<?= $escena['nombre'] ?>" data-content="Datos"><?= $escena['nombre'] ?></p>
                         <?php endforeach;
                     else: ?>
                         <div style="text-align: center">
                             <p><?= $i_perfil_texto10 ?></p>
-                            <a href="control.php" class="btn btn-primary"><?= $i_perfil_texto11 ?></a>
+                            <a href="nueva_escena.php" class="btn btn-primary"><?= $i_perfil_texto11 ?></a>
                         </div>
                     <?php endif; ?>
                 </div>

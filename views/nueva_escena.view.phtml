@@ -1,0 +1,112 @@
+<div class="container mt-4">
+    <form action="control.php" method="post" id="form_scn">
+        <div class="row mt-4">
+            <div class="col-6">
+                <label>Nombre de la escena</label>
+                <input type="text" name="scn_name" class="form-control" required>
+                <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
+            </div>
+            <div class="col-6">
+                <label>Fecha inicio</label>
+                <input type="date" name="scn_date" class="form-control" required>
+            </div>
+        </div>
+        <div class="row mt-4 row_disp">
+            <div class="col-3">
+                <label>Dispositivo</label>
+                <select class="form-control" name="scn_disp_name[]">
+                    <option disabled selected>Elige el dispositivo</option>
+                    <option disabled>----------------------</option>
+                    <?php foreach($dispositivos as $dispositivo) {
+                        if($dispositivo['temperatura'] != null) :?>
+                            <option value="<?= $dispositivo['id'] ?>" class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
+                        <?php else: ?>
+                            <option value="<?= $dispositivo['id'] ?>"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
+
+                    <?php endif;
+                    } ?>
+
+                </select>
+            </div>
+            <div class="col-3">
+                <label>Hora inicio</label>
+                <input type="time" class="form-control" name="scn_disp_start[]" required disabled>
+            </div>
+            <div class="col-3">
+                <label>Hora fin</label>
+                <input type="time" class="form-control" name="scn_disp_end[]" disabled>
+            </div>
+            <div class="col-3">
+                <label>Temperatura</label>
+                <input type="number" min="0" value="0" class="form-control" name="scn_disp_tmp[]" disabled>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <input type="button" name="new_scn_disp" value="Añadir dispositivo" class="btn btn-primary mr-3">
+                <input type="button" name="del_scn_disp" value="Quitar dispositivo" class="btn btn-danger mr-3">
+                <input type="button" name="scn_submit" value="Añadir escena" class="btn btn-success">
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    let row_disp = document.getElementsByClassName('row_disp')[0].cloneNode(true);
+    document.getElementsByName('new_scn_disp')[0].onclick = nuevoDisp;
+    document.getElementsByName('del_scn_disp')[0].onclick = quitarDisp;
+    document.getElementsByName('scn_submit')[0].onclick = comprobarScnForm;
+    for(let i = 0; i<document.getElementsByName('scn_disp_name[]').length; i++) {
+        document.getElementsByName('scn_disp_name[]')[i].onchange = habilitarInputs;
+    }
+
+    function nuevoDisp(event) {
+        event.target.parentNode.parentNode.parentNode.insertBefore(row_disp.cloneNode(true), event.target.parentNode.parentNode);
+        for(let i = 0; i<document.getElementsByName('scn_disp_name[]').length; i++) {
+            document.getElementsByName('scn_disp_name[]')[i].onchange = habilitarInputs;
+        }
+    }
+
+    function quitarDisp(event) {
+        if(document.getElementsByClassName('row_disp').length>1) {
+            event.target.parentNode.parentNode.parentNode.removeChild(document.getElementsByClassName('row_disp')[document.getElementsByClassName('row_disp').length - 1]);
+        }
+    }
+
+    function habilitarInputs(event) {
+        for(let i = 0; i<document.getElementsByName('scn_disp_name[]').length; i++) {
+            if(document.getElementsByName('scn_disp_name[]')[i] == event.target) {
+                document.getElementsByName('scn_disp_start[]')[i].disabled = false;
+                document.getElementsByName('scn_disp_end[]')[i].disabled = false;
+                if(event.target.options[event.target.selectedIndex].classList.contains('has_temp')) {
+                    document.getElementsByName('scn_disp_tmp[]')[i].disabled = false;
+                } else {
+                    document.getElementsByName('scn_disp_tmp[]')[i].disabled = true;
+                }
+            }
+        }
+    }
+
+    function comprobarScnForm(event) {
+        let ok = true;
+        for(let i =0; i<document.getElementById('form_scn').getElementsByTagName('input').length; i++) {
+            if(!document.getElementById('form_scn').getElementsByTagName('input')[i].disabled && document.getElementById('form_scn').getElementsByTagName('input')[i].required) {
+                if(!document.getElementById('form_scn').getElementsByTagName('input')[i].value) {
+                    ok = false;
+                }
+            }
+        }
+        if(ok === false) {
+            alert("not ok");
+        } else {
+            for(let i = 0; i<document.getElementsByName('scn_disp_tmp[]').length; i++) {
+                if(document.getElementsByName('scn_disp_tmp[]')[i].disabled == true) {
+                    document.getElementsByName('scn_disp_tmp[]')[i].disabled = false;
+                    document.getElementsByName('scn_disp_tmp[]')[i].value = null;
+                }
+            }
+            document.getElementById('form_scn').submit();
+        }
+    }
+
+</script>

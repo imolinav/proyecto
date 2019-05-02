@@ -17,14 +17,10 @@ if(isset($_POST['activar'])) {
 } else if (isset($_POST['programar'])) {
     $datos = json_decode($_POST['programar'], true);
 
-    $dia_inicio = $datos['dia_ini']." ".$datos['hora_ini'].":00";
-    $dia_fin = $datos['dia_fin']." ".$datos['hora_fin'].":00";
-
-    $stmt = $conexion->prepare("INSERT INTO programa(dispositivo_id, inicio, fin, temperatura) VALUES (:disp, :inicio, :fin, :temp)");
-
-    $parameters = [':disp'=>$datos['id_disp'], ':inicio'=>$dia_inicio, ':fin'=>$dia_fin, ':temp'=>$datos['temp']];
-
+    $stmt = $conexion->prepare("INSERT INTO programa(dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temperatura) VALUES (:disp, :inicio_d, :inicio_h, :fin_d, :fin_h, :temp)");
+    $parameters = [':disp'=>$datos['id_disp'], ':inicio_d'=>$datos['dia_ini'], ':inicio_h'=>$datos['hora_ini'], ':fin_d'=>$datos['dia_fin'], ':fin_h'=>$datos['hora_fin'], ':temp'=>$datos['temp']];
     $stmt->execute($parameters);
     echo "bien";
+
 }
 ?>

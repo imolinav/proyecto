@@ -152,8 +152,15 @@ footer a, footer a:hover {
 }
 .temp_fondo {
     height: 200px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#datos_tiempo i {
+    position: absolute;
+    font-size: 7em;
+    top: 40px;
+    left: 20px;
+    color: white;
 }
 .quote_container {
     width: 75%;
@@ -439,7 +446,7 @@ footer a, footer a:hover {
 
 /* CONTROL DISPOSITIVOS */
 
-.dispositivos_list, .habitacion_list, .programas_list {
+.dispositivos_list, .habitacion_list, .programas_list, .scenes_list, .scene_title {
     padding: 10px 30px;
     margin: 0;
     border-bottom: 1px solid darkgrey;
@@ -447,10 +454,10 @@ footer a, footer a:hover {
     border-right: 1px solid darkgrey;
     cursor: pointer;
 }
-.dispositivos_list, .programas_list {
+.dispositivos_list, .programas_list, .scenes_list {
     padding-left: 50px;
 }
-.dispositivos_list:first-child, .habitacion_list:first-child {
+.dispositivos_list:first-child, .habitacion_list:first-child, .scene_title {
     border-top: 1px solid darkgrey;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -463,11 +470,11 @@ footer a, footer a:hover {
     background-color: #007BFF;
     color: white;
 }
-#datos_disp img {
+#datos_disp img, #datos_scn img {
     cursor: pointer;
     margin-left: 15%;
 }
-.habitacion_list {
+.habitacion_list, .scene_title {
     cursor: initial;
     background-color: #f4f4f4;
     color: #727272;
