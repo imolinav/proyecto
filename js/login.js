@@ -1,6 +1,16 @@
 if(document.getElementsByTagName('button')[0].id!=="logout") {
     document.getElementsByTagName("button")[0].onclick = login;
 }
+document.body.onkeyup = accionesTeclado;
+
+function accionesTeclado(event) {
+    if(event.key==="Enter") {
+        if(document.getElementById('li_aceptar')) {
+
+            comprobarForm();
+        }
+    }
+}
 
 function login() {
     let divisor = document.createElement('form');
@@ -84,7 +94,7 @@ function cerrarForm() {
     document.body.removeChild(document.getElementById('difuminador'));
 }
 
-function comprobarForm(event) {
+function comprobarForm() {
     let p_error = document.createElement('p');
     p_error.setAttribute('id', 'texto_error');
     let texto_error;
@@ -98,13 +108,13 @@ function comprobarForm(event) {
                 if(httpRequest.responseText === "opcion1") {
                     texto_error = document.createTextNode("El usuario no existe");
                     p_error.appendChild(texto_error);
-                    event.target.parentNode.insertBefore(p_error, event.target);
+                    document.getElementById('li_aceptar').parentNode.insertBefore(p_error, document.getElementById('li_aceptar'));
                 } else if(httpRequest.responseText === "opcion2") {
                     texto_error = document.createTextNode("La contraseña es incorrecta");
                     p_error.appendChild(texto_error);
-                    event.target.parentNode.insertBefore(p_error, event.target);
+                    document.getElementById('li_aceptar').parentNode.insertBefore(p_error, document.getElementById('li_aceptar'));
                 } else {
-                    event.target.parentNode.submit();
+                    document.getElementById('li_aceptar').parentNode.submit();
                 }
             }
         }
