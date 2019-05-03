@@ -1,2 +1,7 @@
 Cambios base de datos
-26/04/2019
+03/05/2019
+
+CREATE TABLE `proyecto5`.`log` ( `id` INT(8) NOT NULL , `fecha` DATE NOT NULL , `info` TEXT NOT NULL , `usuario_email` VARCHAR(255) NOT NULL , `hora` TIME NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+ALTER TABLE log ADD FOREIGN KEY(usuario_email) REFERENCES usuario(email) ON DELETE CASCADE ON UPDATE CASCADE;
+

@@ -22,5 +22,29 @@ if(isset($_POST['activar'])) {
     $stmt->execute($parameters);
     echo "bien";
 
+} else if (isset($_POST['escena'])) {
+    $dato = json_decode($_POST['escena'], true);
+    $parameters = [':id'=>$dato['id_escena']];
+    if($dato['accion']=="scn_delete") {
+        $stmt_scn_del = $conexion->prepare("DELETE FROM escena WHERE id = :id");
+        $stmt_scn_del->execute($parameters);
+        echo "eliminado";
+    } else if($dato['accion']=='scn_update') {
+        $stmt_prgs = $conexion->prepare("SELECT P.id as id FROM programa P, compuesta C, escena E WHERE P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
+        $stmt_prgs->execute($parameters);
+        $programas = $stmt_prgs->fetchAll(PDO::FETCH_ASSOC);
+        foreach($programas as $programa) {
+            $stmt_prg = $conexion->prepare("UPDATE programa SET dia_inicio = :dia1, dia_fin = :dia2 WHERE id = :id");
+            $parameters_prg =  [':dia1'=>$dato['fecha'], ':dia2'=>$dato['fecha'], ':id'=>$programa['id']];
+            $stmt_prg->execute($parameters_prg);
+        }
+        $stmt_scn_upd = $conexion->prepare("UPDATE escena SET activa = 1 WHERE id = :id");
+        $stmt_scn_upd->execute($parameters);
+        echo "actualizado";
+    } else if($dato['accion']=='scn_apagar') {
+        $stmt_scn_upd = $conexion->prepare("UPDATE escena SET activa = 0 WHERE id = :id");
+        $stmt_scn_upd->execute($parameters);
+        echo "apagado";
+    }
 }
 ?>

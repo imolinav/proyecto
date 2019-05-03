@@ -94,11 +94,11 @@ if (isset($_POST['disp'])) {
 
         <div class="col-12 col-md-6 col-lg-5 col-xl-4 mt-5 mt-md-0 offset-lg-1 offset-xl-2 pl-5" id="datos_scn">
             <?php if($escenas[0]['activa']==1):?>
-                <img src="imgs/on.png" height="100px" class="mb-5 hvr-grow" id="controlador_scns">
+            <img src="imgs/on.png" height="100px" class="mb-5 hvr-grow" id="scn_apagar">
             <?php else:?>
-                <img src="imgs/off.png" height="100px" class="mb-5 hvr-grow" id="controlador_scns">
-                <input type="date" name="reuse_scn_date" class="form-control mb-3">
-                <button type="button" name="reuse_scn_btn" class="btn btn-primary mb-3">Actualizar escena</button>
+            <img src="imgs/off.png" height="100px" class="mb-5 hvr-grow" id="scn_apagar">
+            <input type="date" name="reuse_scn_date" class="form-control mb-3">
+            <button type="button" name="reuse_scn_btn" class="btn btn-primary mb-3" id="scn_update" disabled>Actualizar escena</button>
             <?php endif;
             foreach($disp_escenas as $disp) :?>
             <p><?= $disp['habitacion']." - ".$disp['nombre'] ?></p>
@@ -107,8 +107,7 @@ if (isset($_POST['disp'])) {
             <?php endforeach; ?>
             <hr>
             <button type="button" class="btn btn-primary mb-3" id="scn_modify">Modificar escena</button>
-            <button type="button" class="btn btn-danger mb-3" id="scn_delete"><i class="far fa-trash-alt"></i></button>
-
+            <button type="button" class="btn btn-danger mb-3" id="scn_delete_conf"><i class="far fa-trash-alt"></i></button>
         </div>
 
 <?php endif;

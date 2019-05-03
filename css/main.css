@@ -58,6 +58,24 @@ body {
     margin-right: 10px;
     cursor: pointer;
 }
+#go_up {
+    display: none;
+    height: 50px;
+    width: 50px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
+    position: fixed;
+    z-index: 687965874;
+    bottom: 3%;
+    left: 1%;
+    text-align: center;
+}
+#go_up i {
+    color: white;
+    font-size: 2em;
+    margin-top: 8px;
+}
+
 
 /* FOOTER */
 
@@ -449,7 +467,7 @@ footer a, footer a:hover {
 .dispositivos_list, .habitacion_list, .programas_list, .scenes_list, .scene_title {
     padding: 10px 30px;
     margin: 0;
-    border-bottom: 1px solid darkgrey;
+    border-bottom: 0.5px solid darkgrey;
     border-left: 1px solid darkgrey;
     border-right: 1px solid darkgrey;
     cursor: pointer;
@@ -481,6 +499,33 @@ footer a, footer a:hover {
 }
 #controlador {
     box-shadow: none;
+}
+.formulario_scn {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    top: 3.5%;
+    border: 1px solid darkgrey;
+    padding:20px 0 0 0;
+    z-index: 10;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 400px;
+    max-height: 90%;
+    text-align: left;
+    height: 160px;
+}
+.formulario_scn p {
+    text-align: left;
+    margin-left: 75px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.formulario_scn #div_btns {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: block;
 }
 
 /* GRAFICAS */

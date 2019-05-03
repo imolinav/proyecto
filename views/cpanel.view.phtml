@@ -106,7 +106,7 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="select_user"><i class="fas fa-user-friends"></i></label>
                             </div>
-                            <select class="form-control" id="select_user">
+                            <select class="form-control selectpicker" data-live-search="true" id="select_user">
                                 <option selected disabled><?= $i_cpanel_option1 ?></option>
                                 <?php foreach($usuarios as $user) : ?>
                                 <option value="<?= $user['email'] ?>"><?= $user['nombre'] ?></option>

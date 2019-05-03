@@ -72,7 +72,6 @@
     </div>
 </div>
 <script>
-    $('#new_scene').click(nuevaEscena);
     let $dispositivos = $('.dispositivos_list');
     let $escenas = $('.scenes_list');
     for(let i=0; i<$dispositivos.length; i++) {
@@ -81,8 +80,7 @@
     for(let i=0; i<$escenas.length; i++) {
         $escenas.eq(i).click(seleccionarScn);
     }
-    let dispositivo = "";
-    let escena = "";
+    let dispositivo = "", escena = "", accion = "";
 
     function seleccionarDisp(event) {
         dispositivo = event.target.nextElementSibling.value;
@@ -139,35 +137,136 @@
                 if(httpRequest.status === 200) {
                     $('#datos_scn').remove();
                     $('#div_scns').append(httpRequest.responseText).children(':last').hide().fadeIn(900);
-                    if(document.getElementById('controlador_scns').src==="http://localhost/proyecto/imgs/on.png") {
-                        $('#controlador_scns').click(quitarScn);
+                    if(document.getElementById('scn_apagar').src==="http://localhost/proyecto/imgs/on.png") {
+                        $('#scn_apagar').click(opcionesEscena);
                     }
                     if(document.getElementsByName('reuse_scn_btn')[0]) {
-                        document.getElementsByName('reuse_scn_btn')[0].onclick = actualizarScn;
+                        document.getElementsByName('reuse_scn_btn')[0].onclick = opcionesEscena;
                     }
-                    $('#scn_modify').click(modificarScn);
-                    $('#scn_delete').click(eliminarScn);
+                    $('#scn_modify').click(foo);
+                    $('#scn_delete_conf').click(confirmarDelete);
+                    $('[name=reuse_scn_date').change(activarReuse);
                 }
             }
         };
         httpRequest.send('scn='+escena);
     }
 
-    function quitarScn() {
-        alert('desponer');
+    function foo() {
+        alert("hola");
     }
 
-    function actualizarScn() {
-        alert("acutalizar");
+    function activarReuse(event) {
+        if(event.target.value!=="") {
+            document.getElementsByName('reuse_scn_btn')[0].disabled = false;
+        } else {
+            document.getElementsByName('reuse_scn_btn')[0].disabled = true;
+        }
     }
 
-    function modificarScn() {
-        alert("acutalizar");
+    function confirmarDelete(event) {
+
+        let difuminador = document.createElement('div');
+        difuminador.setAttribute('id', 'difuminador');
+
+        let divisor = document.createElement('div');
+        divisor.setAttribute('class', 'formulario_scn');
+
+        let parrafo = document.createElement('p');
+        let texto = document.createTextNode("Ha seleccionado eliminar la escena.");
+        parrafo.appendChild(texto);
+        let parrafo2 = document.createElement('p');
+        let texto2 = document.createTextNode("¿Desea continuar?");
+        parrafo2.appendChild(texto2);
+
+        let div_btn = document.createElement('div');
+        div_btn.setAttribute('id', 'div_btns');
+
+        let btn1 = document.createElement('input');
+        btn1.setAttribute('type', 'button');
+        btn1.setAttribute('class', 'btn btn-primary mr-3');
+        btn1.setAttribute('id', 'scn_delete');
+        btn1.setAttribute('value', 'Aceptar');
+
+        let btn2 = document.createElement('input');
+        btn2.setAttribute('type', 'button');
+        btn2.setAttribute('class', 'btn btn-danger');
+        btn2.setAttribute('id', 'scn_delete_cancel');
+        btn2.setAttribute('value', 'Cancelar');
+        
+        div_btn.appendChild(btn1);
+        div_btn.appendChild(btn2);
+
+        divisor.appendChild(parrafo);
+        divisor.appendChild(parrafo2);
+        divisor.appendChild(div_btn);
+
+        document.body.appendChild(divisor);
+        document.body.appendChild(difuminador);
+
+        $('#scn_delete_cancel').click(cancelarDel);
+        $('#scn_delete').click(opcionesEscena);
+
     }
 
-    function eliminarScn() {
-        alert("quuitar");
+    function cancelarDel() {
+        document.body.removeChild(document.getElementsByClassName('formulario_scn')[0]);
+        document.body.removeChild(document.getElementById('difuminador'));
+    }
 
+    function opcionesEscena(event) {
+        if(document.getElementById('difuminador')) {
+            cancelarDel();
+        }
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'actualizar_dispositivo.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    if(httpRequest.responseText === "apagado") {
+                        document.getElementById('scn_apagar').src = "http://localhost/proyecto/imgs/off.png";
+                        let date = document.createElement('input');
+                        date.setAttribute('type', 'date');
+                        date.setAttribute('name', 'reuse_scn_date');
+                        date.setAttribute('class', 'form-control mb-3');
+
+                        let button = document.createElement('button');
+                        button.setAttribute('type', 'button');
+                        button.setAttribute('name', 'reuse_scn_btn');
+                        button.setAttribute('class', 'btn btn-primary mb-3');
+                        button.setAttribute('id', 'scn_update');
+                        button.setAttribute('disabled', 'true');
+                        let btn_text = document.createTextNode('Actualizar escena');
+                        button.appendChild(btn_text);
+
+                        document.getElementById('datos_scn').insertBefore(button, document.getElementById('scn_apagar').nextSibling );
+                        document.getElementById('datos_scn').insertBefore(date, document.getElementById('scn_apagar').nextSibling);
+
+                        $('[name=reuse_scn_date').change(activarReuse);
+                        $('[name=reuse_scn_btn').click(opcionesEscena);
+
+                    } else if(httpRequest.responseText === "eliminado") {
+                        $('#datos_scn').remove();
+                        for(let i = 0; i<document.getElementsByClassName('scenes_list').length; i++) {
+                            if (document.getElementsByClassName('scenes_list')[i].classList.contains('disp_act')) {
+                                document.getElementsByClassName('scenes_list')[i].parentNode.removeChild(document.getElementsByClassName('scenes_list')[i].nextElementSibling);
+                                document.getElementsByClassName('scenes_list')[i].parentNode.removeChild(document.getElementsByClassName('scenes_list')[i]);
+                            }
+                        }
+                    } else if(httpRequest.responseText === "actualizado") {
+                        seleccionarEscena(escena);
+                    }
+                }
+            }
+        };
+        let date = "";
+        if(document.getElementsByName("reuse_scn_date")[0]) {
+            date = document.getElementsByName("reuse_scn_date")[0].value;
+        }
+        let escena_datos = new Scene(escena, event.target.id, date);
+        escena_datos = JSON.stringify(escena_datos);
+        httpRequest.send('escena='+escena_datos);
     }
 
     function cambiarEstado(event) {
@@ -224,12 +323,15 @@
         this.temp =  temp;
     }
 
-    function Escena(id_escena, fecha) {
+    /*function Escena(id_escena, fecha) {
         this.id_escena = id_escena;
+        this.fecha = fecha;
+    }*/
+
+    function Scene(id_escena, accion, fecha) {
+        this.id_escena = id_escena;
+        this.accion = accion;
         this.fecha = fecha;
     }
 
-    function nuevaEscena() {
-        alert("Tengo sueño");
-    }
 </script>

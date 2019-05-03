@@ -12,35 +12,41 @@ if(isset($_POST['scn_name'])) {
     $parameters_escena = [':nombre'=>$_POST['scn_name'], ':email'=>$usuario->getEmail()];
     $stmt_escena->execute($parameters_escena);
 
-    $stmt_cnt = $conexion->prepare("SELECT * FROM escena");
+    /*$stmt_cnt = $conexion->prepare("SELECT * FROM escena");
     $stmt_cnt->execute();
     $escenas = $stmt_cnt->fetchAll(PDO::FETCH_ASSOC);
-    $id_scn = count($escenas);
+    $id_scn = count($escenas);*/
 
-    $stmt_cnt2 = $conexion->prepare("SELECT * FROM programa");
+    $stmt_cnt = $conexion->prepare("SELECT MAX(id) as id FROM escena");
+    $stmt_cnt->execute();
+    $escena_id = $stmt_cnt->fetchAll(PDO::FETCH_ASSOC);
+    $escena_id = $escena_id[0]['id'];
+
+    $stmt_cnt2 = $conexion->prepare("SELECT MAX(id) as id FROM programa");
     $stmt_cnt2->execute();
     $programas = $stmt_cnt2->fetchAll(PDO::FETCH_ASSOC);
-    $id_prg = count($programas);
+    $id_prg = $programas[0]['id'];
 
     for($i=0; $i<count($_POST['scn_disp_name']); $i++) {
-        $fecha_inicio = $_POST['scn_date'] . " " . $_POST['scn_disp_start'][$i] . ":00";
+
+        /*$fecha_inicio = $_POST['scn_date'] . " " . $_POST['scn_disp_start'][$i] . ":00";*/
         if($_POST['scn_disp_end'][$i]=="") {
             $fecha_fin = null;
         } else {
-            $fecha_fin = $_POST['scn_date'] . " " . $_POST['scn_disp_end'][$i] . ":00";
+            $fecha_fin = $_POST['scn_disp_end'][$i];
         }
-        $stmt_prgr = $conexion->prepare("INSERT INTO programa (dispositivo_id, inicio, fin, temperatura) VALUES (:id, :inicio, :fin, :temp)");
+        $stmt_prgr = $conexion->prepare("INSERT INTO programa (dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temperatura) VALUES (:id, :dia_inicio, :hora_inicio, :dia_fin, :hora_fin, :temp)");
         if($_POST['scn_disp_tmp'][$i]=="") {
-            $parameters_prgr = [':id'=>$_POST['scn_disp_name'][$i], ':inicio'=>$fecha_inicio, ':fin'=>$fecha_fin, ':temp'=>NULL];
+            $parameters_prgr = [':id'=>$_POST['scn_disp_name'][$i], ':dia_inicio'=>$_POST['scn_date'], ':hora_inicio'=>$_POST['scn_disp_start'][$i], ':dia_fin'=>$_POST['scn_date'], ':hora_fin'=>$fecha_fin, ':temp'=>NULL];
         } else {
-            $parameters_prgr = [':id'=>$_POST['scn_disp_name'][$i], ':inicio'=>$fecha_inicio, ':fin'=>$fecha_fin, ':temp'=>$_POST['scn_disp_tmp'][$i]];
+            $parameters_prgr = [':id'=>$_POST['scn_disp_name'][$i], ':dia_inicio'=>$_POST['scn_date'], ':hora_inicio'=>$_POST['scn_disp_start'][$i], ':dia_fin'=>$_POST['scn_date'], ':hora_fin'=>$fecha_fin, ':temp'=>$_POST['scn_disp_tmp'][$i]];
         }
         $stmt_prgr->execute($parameters_prgr);
 
         $id_prg++;
 
         $stmt_contiene = $conexion->prepare("INSERT INTO compuesta VALUES(:id1, :id2)");
-        $parameters_contiene = [':id1'=>$id_scn, ':id2'=>$id_prg];
+        $parameters_contiene = [':id1'=>$escena_id, ':id2'=>$id_prg];
         $stmt_contiene->execute($parameters_contiene);
     }
 }

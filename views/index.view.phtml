@@ -105,14 +105,29 @@
     </div>
 </div>
 -->
+<a href="#" id="go_up" class="hvr-icon-up" onclick="topFunction()"><i class="fas fa-chevron-up hvr-icon"></i></a>
 <script>
+    window.onscroll = function() {scrollFunction()};
     document.body.onload = resizeIframe;
     document.body.onresize = resizeIframe;
     $('#selec_comunidad').change(cargarProvincias);
+    let t1=0;
 
     function resizeIframe() {
         let anchura = document.getElementById('videoYT').scrollWidth;
         document.getElementById('videoYT').height = anchura*0.5625;
+    }
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            document.getElementById("go_up").style.display = "block";
+        } else {
+            document.getElementById("go_up").style.display = "none";
+        }
+    }
+
+    function topFunction() {
+        $('html, body').animate({scrollTop:0}, 'slow');
     }
 
     function cargarProvincias(event) {
