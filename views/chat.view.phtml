@@ -29,16 +29,18 @@
         if(document.getElementById('cuerpo_chat').style.display === "none") {
             $('#cuerpo_chat').fadeIn(300, function() {$(this).css('display', 'block');});
             $('#enviar_chat').fadeIn(300, function() {$(this).css('display', 'block');});
+            if(!document.getElementsByClassName('msg_user')[0]) {
+                cargarMsg();
+            }
         } else {
             $('#cuerpo_chat').css('display', 'none');
             $('#enviar_chat').css('display', 'none');
         }
-        cargarMsg();
     }
 
     function cargarMsg() {
         if(document.getElementById('new_msg_user')) {
-            document.getElementById('new_msg_user').parentNode.removeChild($('#new_msg_user'));
+            document.getElementById('new_msg_user').parentNode.removeChild(document.getElementById('new_msg_user'));
         }
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);
@@ -47,7 +49,6 @@
             if(httpRequest.readyState === 4) {
                 if(httpRequest.status === 200) {
                     $('#cuerpo_chat').append(httpRequest.responseText);
-                    //document.getElementById('cuerpo_chat').innerHTML = httpRequest.responseText;
                     actualizarScroll();
                 }
             }
@@ -83,10 +84,6 @@
         let datos = JSON.stringify(data);
         httpRequest.send('new_msg='+datos);
     }
-
-    /*function sendMessage(message){
-        $.post('http://localhost:3000/messages', message);
-    }*/
 
     function actualizarScroll() {
         document.getElementById('cuerpo_chat').scrollTop = document.getElementById('cuerpo_chat').scrollHeight;

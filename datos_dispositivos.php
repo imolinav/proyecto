@@ -1,19 +1,22 @@
 <?php
 require_once "metodos.php";
 if(isset($_POST['disp'])) {
-    $parameters = [':id' => $_POST['disp']];
+    $id = $_POST['disp'];
 } else if(isset($_POST['scn'])) {
-    $parameters = [':id'=>$_POST['scn']];
+    $id = $_POST['scn'];
 } else {
-    $parameters = [':id'=>$_POST['profile']];
+    $id = $_POST['profile'];
 }
+
+$parameters = [':id'=>$id];
 
 $stmt_disp = $conexion->prepare("SELECT * FROM dispositivo WHERE id = :id");
 $stmt_disp->execute($parameters);
 $dispositivo = $stmt_disp->fetch(PDO::FETCH_ASSOC);
 
-$stmt_prog = $conexion->prepare("SELECT * FROM programa WHERE dispositivo_id = :id");
-$stmt_prog->execute($parameters);
+$stmt_prog = $conexion->prepare("SELECT * FROM programa WHERE dispositivo_id = :id AND (dia_fin > :dia_actual OR dia_fin IS NULL)");
+$parameters_prg = [':id'=>$id, ':dia_actual'=>date('Y-m-d')];
+$stmt_prog->execute($parameters_prg);
 $programas = $stmt_prog->fetchAll(PDO::FETCH_ASSOC);
 
 $stmt_scn = $conexion->prepare("SELECT * FROM escena WHERE id = :id");

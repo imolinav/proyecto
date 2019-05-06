@@ -14,7 +14,6 @@
                     <p><?= $i_perfil_texto2 . $usuario->getEmail() ?></p>
                     <p><?= $i_perfil_texto3 . count($dispositivos) ?></p>
                     <p><?= $i_perfil_texto4 . count($escenas) ?></p>
-                    <button type="button" class="btn btn-primary" id="btn_log"><?= $i_perfil_boton2 ?></button>
                 </div>
             </div>
         </div>
@@ -38,7 +37,7 @@
                         <p class="habitacion_list"><?= $habitacion['habitacion'] ?></p>
                         <?php foreach($dispositivos as $dispositivo) {
                             if($dispositivo['habitacion']==$habitacion['habitacion']):?>
-                                <p class="dispositivos_list" data-container=".dispositivos_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='<?= $i_perfil_popover1 ?><?= $habitacion['habitacion'] ?><br><?= $i_perfil_popover2 ?><?= $dispositivo['num_encendidos'] ?><br><?= $i_perfil_popover3 ?><?= $dispositivo['tiempo_encendido'] ?><br><?= $i_perfil_popover4 ?><?= $dispositivo['pin'] ?>'><?= $dispositivo['nombre'] ?></p>
+                                <p class="dispositivos_list" data-container=".dispositivos_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='<?= $i_perfil_popover1 . $habitacion['habitacion'] ?><br><?= $i_perfil_popover2 . $dispositivo['num_encendidos'] ?><br><?= $i_perfil_popover3 . $dispositivo['tiempo_encendido'] ?><br><?= $i_perfil_popover4 . $dispositivo['pin'] ?>'><?= $dispositivo['nombre'] ?></p>
                             <?php endif;
                         } endforeach; ?>
                     <?php if(!empty($camaras)) : ?>
@@ -54,7 +53,7 @@
                         <?php foreach($programas as $programa) {
                             foreach($dispositivos as $dispositivo) {
                                 if($programa['dispositivo_id']==$dispositivo['id']):?>
-                                <p class="programas_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='<?= $i_perfil_popover5 ?><?= $dispositivo['nombre'] ?><br><?= $i_perfil_popover6 ?><?= $programa['hora_inicio'] ?><br><?= $i_perfil_popover7 ?><?= $programa['hora_fin'] ?>'><?= $dispositivo['nombre'] ?></p>
+                                    <p class="programas_list" data-container=".programas_list"  data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='<?= $i_perfil_popover5 . $dispositivo['nombre'] ?><br><?= $i_perfil_popover8 . $programa['dia_inicio'] ?><br><?= $i_perfil_popover6 . $programa['hora_inicio'] ?><br><?= $i_perfil_popover9 . $programa['dia_fin'] ?><br><?= $i_perfil_popover7 . $programa['hora_fin'] ?>'><?= $dispositivo['nombre'] ?></p>
                                 <?php endif;
                             }
                         }
@@ -69,7 +68,7 @@
                     <?php if(!empty($escenas)) : ?>
                         <p class="habitacion_list"><?= $i_perfil_texto9 ?></p>
                         <?php foreach($escenas as $escena) : ?>
-                            <p class="programas_list" data-toggle="popover" data-trigger="focus" title="<?= $escena['nombre'] ?>" data-content="Datos"><?= $escena['nombre'] ?></p>
+                            <p class="escenas_list" data-toggle="popover" data-trigger="focus" title="<?= $escena['nombre'] ?>" data-content="Datos"><?= $escena['nombre'] ?></p>
                         <?php endforeach;
                     else: ?>
                         <div style="text-align: center">
@@ -85,7 +84,7 @@
 <script>
     $('#update_foto').click(actualizarFoto);
     $('.btn-light').eq(0).click(actualizarDato);
-    $('#btn_log').click(comprobarLog);
+    //$('#btn_log').click(comprobarLog);
 
     function actualizarFoto(event) {
         let input = document.createElement('input');
@@ -160,9 +159,9 @@
         $('.btn-light').eq(0).click(actualizarDato);
     }
 
-    function comprobarLog() {
+    /* function comprobarLog() {
         alert("Esto aun no funciona!");
-    }
+    }  */
 
     $('.dispositivos_list').on('click', function () {
         $('.dispositivos_list').not(this).popover('hide');

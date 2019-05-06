@@ -41,6 +41,7 @@
                 <?php if($usuario->getAdmin()==0): ?>
                 <a class="dropdown-item hvr-icon-forward" href="control.php"><i class="far fa-lightbulb hvr-icon"></i> <?= $i_header_control ?></a>
                 <a class="dropdown-item hvr-icon-forward" href="perfil.php"><i class="far fa-user hvr-icon"></i> <?= $i_header_perfil ?></a>
+                <a class="dropdown-item hvr-icon-forward" href="historial.php"><i class="fas fa-list-ul hvr-icon"></i> <?= $i_header_historial ?></a>
                 <a class="dropdown-item hvr-icon-forward" href="graficas.php"><i class="far fa-chart-bar hvr-icon"></i> <?= $i_header_graficas ?></a>
                 <?php else: ?>
                 <a class="dropdown-item hvr-icon-forward" href="cpanel.php"><i class="fas fa-cog hvr-icon"></i> <?= $i_header_panel ?></a>

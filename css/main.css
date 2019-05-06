@@ -303,6 +303,16 @@ footer a, footer a:hover {
     z-index: 123456;
 }
 
+/* HISTORIAL */
+
+code {
+    color: rgba(10, 10, 10, 0.8);
+}
+.code_container {
+    background-color: rgba(244, 244, 244, 1);
+    padding: 30px 40px;
+}
+
 /* CHAT */
 
 #chat_wdw {
@@ -464,23 +474,41 @@ footer a, footer a:hover {
 
 /* CONTROL DISPOSITIVOS */
 
-.dispositivos_list, .habitacion_list, .programas_list, .scenes_list, .scene_title {
+.dispositivos_list,
+.habitacion_list,
+.programas_list,
+.scenes_list,
+.scene_title,
+.escenas_list {
     padding: 10px 30px;
     margin: 0;
-    border-bottom: 0.5px solid darkgrey;
+    border-bottom: 1px solid darkgrey;
     border-left: 1px solid darkgrey;
     border-right: 1px solid darkgrey;
     cursor: pointer;
 }
-.dispositivos_list, .programas_list, .scenes_list {
+.dispositivos_list,
+.programas_list,
+.scenes_list,
+.escenas_list {
     padding-left: 50px;
 }
-.dispositivos_list:first-child, .habitacion_list:first-child, .scene_title {
+.dispositivos_list:hover:not(.disp_act),
+.programas_list:hover:not(.disp_act),
+.scenes_list:hover:not(.disp_act),
+.escenas_list:hover:not(.disp_act) {
+    background-color: rgba(248, 248, 248, 1);
+}
+.dispositivos_list:first-child,
+.habitacion_list:first-child,
+.scene_title {
     border-top: 1px solid darkgrey;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
-.dispositivos_list:last-child {
+.dispositivos_list:last-child,
+.programas_list:last-child,
+.escenas_list:last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -488,11 +516,13 @@ footer a, footer a:hover {
     background-color: #007BFF;
     color: white;
 }
-#datos_disp img, #datos_scn img {
+#datos_disp img,
+#datos_scn img {
     cursor: pointer;
     margin-left: 15%;
 }
-.habitacion_list, .scene_title {
+.habitacion_list,
+.scene_title {
     cursor: initial;
     background-color: #f4f4f4;
     color: #727272;

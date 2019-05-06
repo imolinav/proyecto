@@ -86,6 +86,13 @@ class Usuario {
         return $programas;
     }
 
+    public function getLog($conexion) {
+        $stmt_log = $conexion->prepare("SELECT * FROM log WHERE usuario_email = '$this->email'");
+        $stmt_log->execute();
+        $logs = $stmt_log->fetchAll(PDO::FETCH_ASSOC);
+        return $logs;
+    }
+
 
     /* -- GETTERS & SETTERS -- */
 
