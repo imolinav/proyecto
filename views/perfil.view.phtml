@@ -91,12 +91,12 @@
     }
 
     function guardarTab(event) {
-        localStorage.setItem('active_tab_perfil', event.target.id);
+        sessionStorage.setItem('active_tab_perfil', event.target.id);
     }
 
     function cargarTab() {
-        let tab = localStorage.getItem('active_tab_perfil');
-        if(tab==="") {
+        let tab = sessionStorage.getItem('active_tab_perfil');
+        if(tab == null) {
             tab = "disp_tab"
         }
         let tab_p = tab.substring(0, tab.length - 4);
