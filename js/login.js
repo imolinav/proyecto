@@ -6,7 +6,6 @@ document.body.onkeyup = accionesTeclado;
 function accionesTeclado(event) {
     if(event.key==="Enter") {
         if(document.getElementById('li_aceptar')) {
-
             comprobarForm();
         }
     }
