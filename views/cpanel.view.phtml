@@ -1,7 +1,7 @@
 <div class="container mt-4 formulario_registro">
     <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user" aria-selected="true"><?= $i_cpanel_tab1 ?></a>
+            <a class="nav-link" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user" aria-selected="true"><?= $i_cpanel_tab1 ?></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="modify_user_tab" data-toggle="tab" href="#modify_user" role="tab" aria-controls="modify_user" aria-selected="true"><?= $i_cpanel_tab2 ?></a>
@@ -11,7 +11,7 @@
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="add_user" role="tabpanel" aria-labelledby="add_user_tab">
+        <div class="tab-pane fade" id="add_user" role="tabpanel" aria-labelledby="add_user_tab">
             <div class="container mt-4">
                 <form action="cpanel.php" method="post" id="form_reg">
                     <div class="row">
@@ -156,6 +156,7 @@
     </div>
 </div>
 <script>
+    document.body.onload = cargarTab;
     let div_hab = document.getElementsByClassName('habitaciones')[0].cloneNode(true);
     let div_disp = document.getElementsByClassName('dispositivos')[0].cloneNode(true);
     let new_div_hab, new_div_disp, usuario, elemento, user;
@@ -167,6 +168,25 @@
     }
     document.getElementById('enviar_admin').onclick = enviarMensaje;
     document.getElementById('select_user').onchange = buscarUser;
+    for (let i = 0; i<document.getElementsByClassName('nav-link').length; i++) {
+        document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
+    }
+
+    function guardarTab(event) {
+        localStorage.setItem('active_tab', event.target.id);
+    }
+
+    function cargarTab() {
+        let tab = localStorage.getItem('active_tab');
+        if(tab==="") {
+            tab = "disp_tab"
+        }
+        let tab_p = tab.substring(0, tab.length - 4);
+        document.getElementById(tab).classList.add('active');
+        document.getElementById(tab).classList.add('show');
+        document.getElementById(tab_p).classList.add('active');
+        document.getElementById(tab_p).classList.add('show');
+    }
 
     function anyadirHab(event) {
         let aux="";
@@ -358,12 +378,8 @@
         document.getElementById('admin_chat_body').scrollTop = document.getElementById('admin_chat_body').scrollHeight;
     }
 
-
     $("[type='number']").keypress(function (evt) {
         evt.preventDefault();
     });
-
-
-
 
 </script>

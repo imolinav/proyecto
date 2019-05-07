@@ -20,7 +20,7 @@
         <div class="col-12 col-md-5 col-lg-4 mt-5 mt-md-0">
             <ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="disp_tab" data-toggle="tab" href="#disp" role="tab" aria-controls="disp" aria-selected="true"><?= $i_perfil_tab1 ?></a>
+                    <a class="nav-link" id="disp_tab" data-toggle="tab" href="#disp" role="tab" aria-controls="disp" aria-selected="true"><?= $i_perfil_tab1 ?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="prg_tab" data-toggle="tab" href="#prg" role="tab" aria-controls="prg" aria-selected="false"><?= $i_perfil_tab2 ?></a>
@@ -31,7 +31,7 @@
             </ul>
 
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="disp" role="tabpanel" aria-labelledby="disp_tab">
+                <div class="tab-pane fade" id="disp" role="tabpanel" aria-labelledby="disp_tab">
                     <?php
                     foreach ($habitaciones as $habitacion) : ?>
                         <p class="habitacion_list"><?= $habitacion['habitacion'] ?></p>
@@ -82,9 +82,29 @@
     </div>
 </div>
 <script>
+    document.body.onload = cargarTab;
     $('#update_foto').click(actualizarFoto);
     $('.btn-light').eq(0).click(actualizarDato);
     //$('#btn_log').click(comprobarLog);
+    for (let i = 0; i<document.getElementsByClassName('nav-link').length; i++) {
+        document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
+    }
+
+    function guardarTab(event) {
+        localStorage.setItem('active_tab_perfil', event.target.id);
+    }
+
+    function cargarTab() {
+        let tab = localStorage.getItem('active_tab_perfil');
+        if(tab==="") {
+            tab = "disp_tab"
+        }
+        let tab_p = tab.substring(0, tab.length - 4);
+        document.getElementById(tab).classList.add('active');
+        document.getElementById(tab).classList.add('show');
+        document.getElementById(tab_p).classList.add('active');
+        document.getElementById(tab_p).classList.add('show');
+    }
 
     function actualizarFoto(event) {
         let input = document.createElement('input');

@@ -1,8 +1,22 @@
+/*Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { ... }
+
+Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767.98px) { ... }
+
+Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px) { ... }
+
+Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1199.98px) { ... }
+
+Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }*/
+
 html {
     height: 100%;
     box-sizing: border-box;
 }
-
 body {
     position: relative;
     margin:0;
@@ -75,7 +89,6 @@ body {
     font-size: 2em;
     margin-top: 8px;
 }
-
 
 /* FOOTER */
 
@@ -206,11 +219,9 @@ footer a, footer a:hover {
 }
 .pide_presupuesto {
     padding:0;
-
 }
 .pide_presupuesto div:first-child img {
-    border-bottom-left-radius: 20px;
-    border-top-left-radius: 20px;
+    border-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(14, 116, 153, 0.2), 0 6px 20px 0 rgba(14, 116, 153, 0.19);
 }
 .info_presupuesto {
@@ -234,10 +245,15 @@ footer a, footer a:hover {
 .info_presupuesto img:first-child {
     margin-top: 40px;
 }
+@media(min-width: 992px) {
+    .pide_presupuesto div:first-child img {
+        border-radius: 20px 0 0 20px;
+    }
+}
 
 /* FORMULARIO INICIO SESION */
 
-.formulario{
+.formulario {
     position: fixed;
     left: 50%;
     transform: translate(-50%, 0%);
