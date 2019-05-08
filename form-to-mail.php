@@ -13,8 +13,9 @@ if(isset($_POST['email_contacto'])) {
     ---------------------------------
     ".$_POST['mensaje_contacto'];
 
-    mail('ianmolinav@hotmail.com', $opcion, $mensaje);
+    mail('iamovaz@gmail.com', $opcion, $mensaje);
 
     header('Location: index.php');
+    //Añadir SMTP server
 }
 ?>
