@@ -1,21 +1,45 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require "metodos.php";
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 if(isset($_POST['email_contacto'])) {
     $opcion = $_POST['opciones_contacto'];
     if ($opcion == 'otra') {
         $opcion = $_POST['opcion_contacto'];
     }
-
-    $mensaje = "";
-
-    $mensaje .= 'De: '.$_POST['nombre_contacto'].'
-    Email: '.$_POST['email_contacto'].'
-    Razón de contacto: '.$opcion. "
-    ---------------------------------
+    $mensaje = "
+    De: ".$_POST['nombre_contacto']."
+    Email: ".$_POST['email_contacto']."
+    Razón de contacto: ".$opcion."
+    ----------------------------------------------------
     ".$_POST['mensaje_contacto'];
 
-    mail('iamovaz@gmail.com', $opcion, $mensaje);
+    $email = new PHPMailer(TRUE);
 
-    header('Location: index.php');
-    //Añadir SMTP server
+    try {
+        $email->setFrom($_POST['email_contacto'], $_POST['nombre_contacto']);
+        $email->addAddress('iamovaz@gmail.com', 'Ian Molina');
+        $email->Subject = '[SMART LIVING] - '.$opcion;
+        $email->Body = $mensaje;
+
+        $email->isSMTP();
+        $email->Host = 'smtp.gmail.com';
+        $email->SMTPAuth = TRUE;
+        $email->SMTPSecure = 'tls';
+        $email->Username = 'iamovaz@gmail.com';
+        $email->Password = 'pdkfmhtdrmzhgkom';
+        $email->Port = 587;
+
+        $email->send();
+
+    } catch (Exception $e) {
+        echo $e->errorMessage();
+    }
+
+    header("Location: contacto.php");
 }
 ?>
