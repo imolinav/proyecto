@@ -85,7 +85,6 @@
     document.body.onload = cargarTab;
     $('#update_foto').click(actualizarFoto);
     $('.btn-light').eq(0).click(actualizarDato);
-    //$('#btn_log').click(comprobarLog);
     for (let i = 0; i<document.getElementsByClassName('nav-link').length; i++) {
         document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
     }
@@ -97,7 +96,7 @@
     function cargarTab() {
         let tab = sessionStorage.getItem('active_tab_perfil');
         if(tab == null) {
-            tab = "disp_tab"
+            tab = "disp_tab";
         }
         let tab_p = tab.substring(0, tab.length - 4);
         document.getElementById(tab).classList.add('active');
@@ -178,10 +177,6 @@
         event.target.parentNode.parentNode.removeChild(event.target.parentNode);
         $('.btn-light').eq(0).click(actualizarDato);
     }
-
-    /* function comprobarLog() {
-        alert("Esto aun no funciona!");
-    }  */
 
     $('.dispositivos_list').on('click', function () {
         $('.dispositivos_list').not(this).popover('hide');

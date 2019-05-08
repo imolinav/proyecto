@@ -82,7 +82,6 @@
         $escenas.eq(i).click(seleccionarScn);
     }
     let dispositivo = "", escena = "", accion = "";
-
     for (let i = 0; i<document.getElementsByClassName('nav-link').length; i++) {
         document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
     }
@@ -94,7 +93,7 @@
     function cargarTab() {
         let tab = sessionStorage.getItem('active_tab_control');
         if(tab == null) {
-            tab = "dispositivos_tab"
+            tab = "dispositivos_tab";
         }
         let tab_p = tab.substring(0, tab.length - 4);
         document.getElementById(tab).classList.add('active');

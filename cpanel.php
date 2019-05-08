@@ -1,18 +1,18 @@
 <?php
-//session_start();
 require_once "metodos.php";
 
 //Registro de usuarios
 
 if(isset($_POST['su_name'])) {
-    //Esto lo puedo quitar en un principio
+
+    //Asignamos puerto aleatorio no usado con anterioridad
     $stmt_recoger = $conexion->prepare("SELECT puerto FROM usuario");
     $stmt_recoger->execute();
     $puertos = $stmt_recoger->fetchAll(PDO::FETCH_ASSOC);
     do {
         $puerto = rand(0, 65535);
     } while(array_search($puerto, $puertos)!=false);
-    //Hasta aqui
+
     //Creamos el usuario
     $stmt = $conexion->prepare("INSERT INTO usuario VALUES (:email, :nombre, './imgs/generic.png', :pass, 0, :puerto, 0, :ip)");
     $parameters = [':email'=>$_POST['su_email'], ':nombre'=>$_POST['su_name'], ':pass'=>password_hash($_POST['su_email'], PASSWORD_DEFAULT, ['cost'=>10]), ':puerto'=>$puerto, ':ip'=>$_POST['su_rbip']];
@@ -29,6 +29,7 @@ if(isset($_POST['su_name'])) {
 
     for($i=0; $i<$_POST['su_hab_num']; $i++) {
         for($j=0; $j<$_POST['su_hab_cant_disp'][$i]; $j++) {
+
             //Sacamos del array el primer dispositivo y el primer pin
             $dispositivo = array_shift($dispositivos);
             $pin = array_shift($pins);
@@ -200,10 +201,11 @@ if(isset($_POST['su_name'])) {
         ";
     fwrite($fichero, $text);
     fclose($fichero);
+}
 
 //Modificacion de usuarios
 
-} else if(isset($_POST['user_mod_option'])) {
+else if(isset($_POST['user_mod_option'])) {
     $option = $_POST['user_mod_option'];
     $email = $_POST['user_mod_email'];
     if($option == "delete") {

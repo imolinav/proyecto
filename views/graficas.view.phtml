@@ -26,7 +26,6 @@
         for (let i = 0; i<dispositivos.length; i++) {
             dataPoints.push({ label : dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'], y : parseInt(dispositivos[i]['num_encendidos']) });
         }
-
         let dataPoints2 = [];
         let chart2 = new CanvasJS.Chart("chartTiempos", {
             title:{

@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <form method="post" action="link.php">
+    <form method="post" action="form-to-mail.php">
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
                 <label><?= $i_contacto_texto1 ?></label>
@@ -27,13 +27,13 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-question"></i></label>
                     </div>
-                    <select class="form-control">
-                        <option value="opcion1"><?= $i_contacto_option1 ?></option>
-                        <option value="opcion2"><?= $i_contacto_option2 ?></option>
-                        <option value="opcion3"><?= $i_contacto_option3 ?></option>
-                        <option value="opcion4"><?= $i_contacto_option4 ?></option>
-                        <option value="opcion5"><?= $i_contacto_option5 ?></option>
-                        <option value="opcion6"><?= $i_contacto_option6 ?></option>
+                    <select class="form-control" name="opciones_contacto">
+                        <option value="<?= $i_contacto_option1 ?>"><?= $i_contacto_option1 ?></option>
+                        <option value="<?= $i_contacto_option2 ?>"><?= $i_contacto_option2 ?></option>
+                        <option value="<?= $i_contacto_option3 ?>"><?= $i_contacto_option3 ?></option>
+                        <option value="<?= $i_contacto_option4 ?>"><?= $i_contacto_option4 ?></option>
+                        <option value="<?= $i_contacto_option5 ?>"><?= $i_contacto_option5 ?></option>
+                        <option value="otra"><?= $i_contacto_option6 ?></option>
                     </select>
                 </div>
             </div>
@@ -50,7 +50,7 @@
         <div class="row mt-0">
             <div class="col-12 col-lg-8 offset-lg-2">
                 <label><?= $i_contacto_texto5 ?></label>
-                <textarea class="form-control" rows="5"></textarea>
+                <textarea class="form-control" rows="5" name="mensaje_contacto"></textarea>
                 <small class="form-text text-muted"><?= $i_contacto_texto6 ?></small>
                 <input type="submit" name="submit" class="btn btn-primary mt-3" value="<?= $i_contacto_boton1 ?>">
             </div>
@@ -69,4 +69,5 @@
             document.getElementsByName('opcion_contacto')[0].disabled = true;
         }
     }
+
 </script>
