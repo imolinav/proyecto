@@ -18,7 +18,6 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/canvasjs.min.js"></script>
 
-
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
     <h1 class="navbar-brand d-none d-sm-block"><a href="index.php">Smart Living</a></h1>
@@ -61,5 +60,6 @@
         <input type="hidden" name="page" id="actual_page" value="<?= basename($_SERVER['PHP_SELF']) ?>">
     </form>
 </header>
+
 <script src="js/functions.js"></script>
 <script src="js/login.js"></script>

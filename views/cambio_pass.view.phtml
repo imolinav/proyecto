@@ -4,10 +4,12 @@
             <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-2">
                 <label><?= $i_cambio_pass_texto1 ?></label>
                 <input type="password" class="form-control" name="pass_chg">
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
             <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-0">
                 <label class="mt-3 mt-lg-0"><?= $i_cambio_pass_texto2 ?></label>
                 <input type="password" class="form-control" name="pass_chg_conf">
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                 <small class="form-text text-muted"><?= $i_cambio_pass_texto3 ?></small>
             </div>
             <div class="col-12 offset-md-2">
@@ -22,18 +24,31 @@
     $('[name=submit_cambio_pass').eq(0).click(comprobarPass);
 
     function comprobarPass(event) {
+        let ok = true;
+        document.getElementsByName('pass_chg')[0].classList.remove('is-invalid');
+        document.getElementsByName('pass_chg_conf')[0].classList.remove('is-invalid');
+        if(document.getElementsByName('pass_chg')[0].value==="") {
+            document.getElementsByName('pass_chg')[0].classList.add('is-invalid');
+            ok = false;
+        }
+        if(document.getElementsByName('pass_chg_conf')[0].value==="") {
+            document.getElementsByName('pass_chg_conf')[0].classList.add('is-invalid');
+            ok = false;
+        }
         //if(document.getElementsByName('pass_chg')[0].value!==document.getElementsByName('pass_chg_conf')[0].value) {
-        if($('[name=pass_chg]').eq(0).val()!==$('[name=pass_chg_conf]').eq(0).val()) {
-            if(document.getElementById('texto_error')) {
-                event.target.parentNode.removeChild($('#texto_error'));
+        if(ok === true) {
+            if($('[name=pass_chg]').eq(0).val()!==$('[name=pass_chg_conf]').eq(0).val()) {
+                if(document.getElementById('texto_error')) {
+                    event.target.parentNode.removeChild($('#texto_error'));
+                }
+                let error = document.createElement('p');
+                let texto_error = document.createTextNode('<?= $i_cambio_pass_error1 ?>');
+                error.setAttribute('id', 'texto_error');
+                error.appendChild(texto_error);
+                event.target.parentNode.insertBefore(error, event.target);
+            } else {
+                event.target.parentNode.parentNode.parentNode.submit();
             }
-            let error = document.createElement('p');
-            let texto_error = document.createTextNode('<?= $i_cambio_pass_error1 ?>');
-            error.setAttribute('id', 'texto_error');
-            error.appendChild(texto_error);
-            event.target.parentNode.insertBefore(error, event.target);
-        } else {
-            event.target.parentNode.submit();
         }
     }
 

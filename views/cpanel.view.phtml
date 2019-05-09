@@ -21,9 +21,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="far fa-user"></i></span>
                                 </div>
-                                <input type="text" name="su_name" class="form-control" required>
+                                <input type="text" name="su_name" class="form-control">
+                                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                             </div>
-                            <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                         <div class="col-12 col-md-6 mb-3">
                             <label><?= $i_cpanel_form2 ?></label>
@@ -31,9 +31,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
                                 </div>
-                                <input type="text" name="su_email" class="form-control" required>
+                                <input type="text" name="su_email" class="form-control">
+                                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                             </div>
-                            <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                     </div>
                     <div class="row">
@@ -43,9 +43,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="fab fa-raspberry-pi"></i></span>
                                 </div>
-                                <input type="text" name="su_rbip" class="form-control" required>
+                                <input type="text" name="su_rbip" class="form-control">
+                                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                             </div>
-                            <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
                         </div>
                     </div>
                     <hr>
@@ -62,8 +62,8 @@
                         <div class="row">
                             <div class="col-12 col-md-6 mb-3">
                                 <label><?= $i_cpanel_form5 ?></label>
-                                <input type="text" class="form-control" name="su_hab_name[]" required>
-                                <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
+                                <input type="text" class="form-control" name="su_hab_name[]">
+                                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                             </div>
                             <div class="col-12 col-md-6 mb-3">
                                 <label><?= $i_cpanel_form6 ?></label>
@@ -74,21 +74,18 @@
                             <div class="row">
                                 <div class="col-12 col-md-6 mb-3">
                                     <label><?= $i_cpanel_form7 ?></label>
-                                    <input type="text" class="form-control" name="su_disp_name[]" required>
-                                    <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
+                                    <input type="text" class="form-control" name="su_disp_name[]">
+                                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                                 </div>
                                 <div class="col-12 col-md-6 mb-3">
                                     <label><?= $i_cpanel_form8 ?></label>
-                                    <input type="text" class="form-control" name="su_disp_pin[]" required>
-                                    <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
+                                    <input type="text" class="form-control" name="su_disp_pin[]">
+                                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-6 mb-3">
-                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                        <input class="custom-control-input" id="customControlInline" type="checkbox" value="si" name="su_disp_temp[]">
-                                        <label class="custom-control-label" for="customControlInline"><?= $i_cpanel_form9 ?></label>
-                                    </div>
+                                    <label><input type="checkbox" value="si" name="su_disp_temp[]"> <?= $i_cpanel_form9 ?></label>
                                 </div>
                             </div>
                         </div>
@@ -171,6 +168,7 @@
     for (let i = 0; i<document.getElementsByClassName('nav-link').length; i++) {
         document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
     }
+    let regex_email = /^.+@.+\..+$/;
 
     function guardarTab(event) {
         sessionStorage.setItem('active_tab', event.target.id);
@@ -225,42 +223,39 @@
 
     function comprobarForm(event) {
         let aux = "";
-        let completo = true;
-        if (event.target.name==="new_submit_btn") {
+        let ok = true;
+        if(event.target.name==="new_submit_btn") {
             aux = "new_";
         }
-        if(document.getElementsByName(aux+'su_name')[0].value === "" || document.getElementsByName(aux+'su_email')[0].value === "" || document.getElementsByName(aux+'su_rbip')[0].value === "") {
-            completo = false;
-        } else {
-            for(let i = 0; i<document.getElementsByName(aux+'su_hab_name').length; i++) {
-                if(document.getElementsByName(aux+'su_hab_name')[i].value === "") {
-                    completo = false;
-                    break;
-                }
-            }
-            for(let i=0; i<document.getElementsByName(aux+'su_disp_name').length; i++) {
-                if(document.getElementsByName(aux+'su_disp_name')[i].value==="") {
-                    completo = false;
-                    break;
-                }
-            }
-            for (let i=0; i<document.getElementsByName(aux+'su_disp_pin').length; i++) {
-                if(document.getElementsByName(aux+'su_disp_pin')[i].value==="") {
-                    completo = false;
-                    break;
-                }
+        if(document.getElementById('texto_error')) {
+            document.getElementById('texto_error').parentNode.removeChild(document.getElementById('texto_error'));
+        }
+        for(let j=0; j<document.getElementById(aux+'form_reg').getElementsByTagName('input').length; j++) {
+            document.getElementById(aux+'form_reg').getElementsByTagName('input')[j].classList.remove('is-invalid');
+        }
+        for(let i = 0; i<document.getElementById(aux+'form_reg').getElementsByTagName('input').length; i++) {
+            if(document.getElementById(aux+'form_reg').getElementsByTagName('input')[i].type==="text" && document.getElementById(aux+'form_reg').getElementsByTagName('input')[i].value==="" && document.getElementById(aux+'form_reg').getElementsByTagName('input')[i].name!=='new_email') {
+                document.getElementById(aux+'form_reg').getElementsByTagName('input')[i].classList.add('is-invalid');
+                ok = false;
             }
         }
-        if(completo===false) {
-            document.getElementById('form_reg').classList.add('was-validated');
-        } else {
+        if(aux==="") {
+            if (document.getElementsByName(aux + 'su_email')[0].value !== "" && regex_email.test(document.getElementsByName(aux + 'su_email')[0].value) === false) {
+                document.getElementsByName(aux + 'su_email')[0].classList.add('is-invalid');
+                ok = false;
+            }
+        }
+        if(ok === true) {
             for(let i = 0; i<document.getElementsByName(aux+'su_disp_temp[]').length; i++) {
                 if(document.getElementsByName(aux+'su_disp_temp[]')[i].checked===false) {
                     document.getElementsByName(aux+'su_disp_temp[]')[i].checked = true;
                     document.getElementsByName(aux+'su_disp_temp[]')[i].value = 'no';
                 }
             }
-            event.target.parentNode.submit();
+            if(aux!=="") {
+                document.getElementsByName('user_mod_option')[0].value = "add";
+            }
+            document.getElementById(aux+'form_reg').submit();
         }
     }
 
@@ -279,7 +274,7 @@
                     $('#modify_user').append(httpRequest.responseText).children(':last').hide().fadeIn("slow");
                     document.getElementsByName('new_su_hab_num')[0].onchange = anyadirHab;
                     document.getElementsByName('new_su_hab_cant_disp[]')[0].onchange = anyadirDisp;
-                    document.getElementsByName('new_submit_btn')[0].onclick = modificarHabitaciones;
+                    document.getElementsByName('new_submit_btn')[0].onclick = comprobarForm;
                     //document.getElementById('btn_new_email').onclick = modificarEmail;
                     //document.getElementsByName('new_delete_btn')[0].onclick = confirmarDelete;
                     new_div_hab = document.getElementsByClassName('new_habitaciones')[0].cloneNode(true);
@@ -295,16 +290,21 @@
         document.getElementById('new_form_reg').submit();
     }
 
-    function modificarHabitaciones() {
-        //for que recorra nombres de habitaciones y de dispositivos y solo lo lance si estan todos rellenos
-        document.getElementsByName('user_mod_option')[0].value = "add";
-        document.getElementById('new_form_reg').submit();
+    function comprobarEmail() {
+        let regex_email = /^.+@.+\..+$/;
+        document.getElementsByName('new_email')[0].classList.remove('is-invalid');
+        if(document.getElementsByName('new_email')[0].value==="" || regex_email.test(document.getElementsByName('new_email')[0].value)===false) {
+            document.getElementsByName('new_email')[0].classList.add('is-invalid');
+        } else {
+            $('#updEmailModal').modal('toggle');
+        }
     }
 
     function modificarEmail() {
         //Aqui la expresion regular, if buena, cambiamos, else, mensaje de error
         document.getElementsByName('user_mod_option')[0].value = "update";
         document.getElementById('new_form_reg').submit();
+
     }
 
     function selecUser(event) {

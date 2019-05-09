@@ -38,6 +38,11 @@ function login() {
     let small1_text = document.createTextNode("Introduce tu e-mail (xxxxx@yyyyy.qqq)");
     small1.appendChild(small1_text);
 
+    let div_error1 = document.createElement('div');
+    div_error1.setAttribute('class', 'invalid-feedback');
+    let error_text1 = document.createTextNode('Es necesario completar este campo');
+    div_error1.appendChild(error_text1);
+
     let p2 = document.createElement('p');
     let text_p2 = document.createTextNode('Contraseña');
     p2.appendChild(text_p2);
@@ -54,6 +59,11 @@ function login() {
     let small2_text = document.createTextNode("¿Has olvidado tu contraseña?");
     small_a.appendChild(small2_text);
     small2.appendChild(small_a);
+
+    let div_error2 = document.createElement('div');
+    div_error2.setAttribute('class', 'invalid-feedback');
+    let error_text2 = document.createTextNode('Es necesario completar este campo');
+    div_error2.appendChild(error_text2);
 
     let boton1 = document.createElement('button');
     boton1.setAttribute('type', 'button');
@@ -73,15 +83,18 @@ function login() {
     //divisor.appendChild(parrafo);
     divisor.appendChild(p1);
     divisor.appendChild(input1);
+    divisor.appendChild(div_error1);
     divisor.appendChild(small1);
     divisor.appendChild(p2);
     divisor.appendChild(input2);
+    divisor.appendChild(div_error2);
     divisor.appendChild(small2);
     //divisor.appendChild(salto);
     divisor.appendChild(boton1);
     divisor.appendChild(boton2);
     document.body.appendChild(difuminador);
     document.body.appendChild(divisor);
+
 
     document.getElementById('difuminador').onclick = cerrarForm;
     document.getElementById('li_aceptar').onclick = comprobarForm;
@@ -97,30 +110,41 @@ function comprobarForm() {
     let p_error = document.createElement('p');
     p_error.setAttribute('id', 'texto_error');
     let texto_error;
+    let regex_email = /^.+@.+\..+$/;
+    document.getElementsByName('li_email')[0].classList.remove('is-invalid');
+    document.getElementsByName('li_pass')[0].classList.remove('is-invalid');
+    if(document.getElementById('texto_error')) {
+        document.getElementById('texto_error').parentNode.removeChild(document.getElementById('texto_error'));
+    }
 
-    let httpRequest = obtainXMLHttpRequest();
-    httpRequest.open('POST', 'comprobacion_login.php', true);
-    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    httpRequest.onreadystatechange = function() {
-        if(httpRequest.readyState === 4) {
-            if(httpRequest.status === 200) {
-                if(httpRequest.responseText === "opcion1") {
-                    texto_error = document.createTextNode("El usuario no existe");
-                    p_error.appendChild(texto_error);
-                    document.getElementById('li_aceptar').parentNode.insertBefore(p_error, document.getElementById('li_aceptar'));
-                } else if(httpRequest.responseText === "opcion2") {
-                    texto_error = document.createTextNode("La contraseña es incorrecta");
-                    p_error.appendChild(texto_error);
-                    document.getElementById('li_aceptar').parentNode.insertBefore(p_error, document.getElementById('li_aceptar'));
-                } else {
-                    document.getElementById('li_aceptar').parentNode.submit();
+    if(document.getElementsByName('li_email')[0].value==="" || document.getElementsByName('li_pass')[0].value==="" || regex_email.test(document.getElementsByName('li_email')[0].value)===false) {
+        if(document.getElementsByName('li_email')[0].value==="" || regex_email.test(document.getElementsByName('li_email')[0].value)===false) {
+            document.getElementsByName('li_email')[0].classList.add('is-invalid');
+        }
+        if(document.getElementsByName('li_pass')[0].value==="") {
+            document.getElementsByName('li_pass')[0].classList.add('is-invalid');
+        }
+    } else {
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'comprobacion_login.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
+                    if (httpRequest.responseText === "opcion1") {
+                        texto_error = document.createTextNode("El usuario o la contraseña son incorrectos");
+                        p_error.appendChild(texto_error);
+                        document.getElementById('li_aceptar').parentNode.insertBefore(p_error, document.getElementById('li_aceptar'));
+                    } else {
+                        document.getElementById('li_aceptar').parentNode.submit();
+                    }
                 }
             }
-        }
+        };
+        let data = new Datos(document.getElementsByName('li_email')[0].value, document.getElementsByName('li_pass')[0].value);
+        let json_data = JSON.stringify(data);
+        httpRequest.send('datos=' + json_data);
     }
-    let data = new Datos(document.getElementsByName('li_email')[0].value, document.getElementsByName('li_pass')[0].value);
-    let json_data = JSON.stringify(data);
-    httpRequest.send('datos='+json_data);
 
 }
 

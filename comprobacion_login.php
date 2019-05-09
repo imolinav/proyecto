@@ -12,7 +12,7 @@ if(isset($_POST['datos'])) {
         if(password_verify($datos['pass'], $usuario[0]['pass'])) {
             echo "opcion3";
         } else {
-            echo "opcion2";
+            echo "opcion1";
         }
     }
 }

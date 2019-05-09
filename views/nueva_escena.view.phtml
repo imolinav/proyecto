@@ -3,20 +3,21 @@
         <div class="row mt-4">
             <div class="col-6">
                 <label>Nombre de la escena</label>
-                <input type="text" name="scn_name" class="form-control" required>
-                <div class="invalid-feedback"><?= $i_cpanel_invalid1 ?></div>
+                <input type="text" name="scn_name" class="form-control">
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
             <div class="col-6">
                 <label>Fecha inicio</label>
-                <input type="date" name="scn_date" class="form-control" required>
+                <input type="date" name="scn_date" class="form-control">
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
         </div>
         <div class="row mt-4 row_disp">
-            <div class="col-3">
+            <div class="col-2">
                 <label>Dispositivo</label>
                 <select class="form-control" name="scn_disp_name[]">
-                    <option disabled selected>Elige el dispositivo</option>
-                    <option disabled>----------------------</option>
+                    <option disabled selected value="no">Elige el dispositivo</option>
+                    <option disabled value="no">----------------------</option>
                     <?php foreach($dispositivos as $dispositivo) {
                         if($dispositivo['temperatura'] != null) :?>
                             <option value="<?= $dispositivo['id'] ?>" class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
@@ -27,18 +28,31 @@
                     } ?>
 
                 </select>
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label>Hora inicio</label>
-                <input type="time" class="form-control" name="scn_disp_start[]" required disabled>
+                <input type="time" class="form-control" name="scn_disp_start[]" disabled>
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label>Hora fin</label>
                 <input type="time" class="form-control" name="scn_disp_end[]" disabled>
             </div>
-            <div class="col-3">
+            <div class="col-2">
+                <label>Temperatura inicio</label>
+                <input type="number" min="0" class="form-control" name="scn_disp_tmp_start[]" placeholder="0" disabled>
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+            </div>
+            <div class="col-2">
+                <label>Temperatura fin</label>
+                <input type="number" min="0" class="form-control" name="scn_disp_tmp_end[]" placeholder="0" disabled>
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+            </div>
+            <div class="col-2">
                 <label>Temperatura</label>
-                <input type="number" min="0" value="0" class="form-control" name="scn_disp_tmp[]" disabled>
+                <input type="number" min="0" class="form-control" name="scn_disp_tmp[]" placeholder="0" disabled>
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
         </div>
         <div class="row mt-4">
@@ -78,6 +92,8 @@
             if(document.getElementsByName('scn_disp_name[]')[i] == event.target) {
                 document.getElementsByName('scn_disp_start[]')[i].disabled = false;
                 document.getElementsByName('scn_disp_end[]')[i].disabled = false;
+                document.getElementsByName('scn_disp_tmp_start[]')[i].disabled = false;
+                document.getElementsByName('scn_disp_tmp_end[]')[i].disabled = false;
                 if(event.target.options[event.target.selectedIndex].classList.contains('has_temp')) {
                     document.getElementsByName('scn_disp_tmp[]')[i].disabled = false;
                 } else {
@@ -87,8 +103,59 @@
         }
     }
 
-    function comprobarScnForm(event) {
+    function comprobarScnForm() {
+        for(let i = 0; i<document.getElementsByTagName('input').length; i++) {
+            document.getElementsByTagName('input')[i].classList.remove('is-invalid');
+        }
+        document.getElementsByTagName('select')[0].classList.remove('is-invalid');
+        if(document.getElementById('texto_error')) {
+            document.getElementById('texto_error').parentNode.removeChild(document.getElementById('texto_error'));
+        }
+
         let ok = true;
+        if(document.getElementsByName('scn_name')[0].value==="") {
+            document.getElementsByName('scn_name')[0].classList.add('is-invalid');
+            ok = false;
+        }
+        if(document.getElementsByName('scn_date')[0].value==="") {
+            document.getElementsByName('scn_date')[0].classList.add('is-invalid');
+            ok = false;
+        }
+        for(let i=0; i<document.getElementsByName('scn_disp_name[]').length; i++) {
+            if(document.getElementsByName('scn_disp_name[]')[i].value === "no") {
+                document.getElementsByName('scn_disp_name[]')[i].classList.add('is-invalid');
+                ok = false;
+            }
+        }
+        for(let i=0; i<document.getElementsByName('scn_disp_start[]').length; i++) {
+            if(document.getElementsByName('scn_disp_start[]')[i].value === "" && document.getElementsByName('scn_disp_tmp_start[]')[i].value === "") {
+                if(document.getElementsByName('scn_disp_start[]')[i].disabled === false) {
+                    document.getElementsByName('scn_disp_start[]')[i].classList.add('is-invalid');
+                    document.getElementsByName('scn_disp_tmp_start[]')[i].classList.add('is-invalid');
+                    ok = false;
+                }
+            }
+        }
+        for(let i=0; i<document.getElementsByName('scn_disp_tmp[]').length; i++) {
+            if(document.getElementsByName('scn_disp_tmp[]')[i].value === "") {
+                if(document.getElementsByName('scn_disp_tmp[]')[i].disabled === false) {
+                    document.getElementsByName('scn_disp_tmp[]')[i].classList.add('is-invalid');
+                    ok = false;
+                }
+            }
+        }
+        if(ok === true) {
+            for(let i = 0; i<document.getElementsByName('scn_disp_tmp[]').length; i++) {
+                if(document.getElementsByName('scn_disp_tmp[]')[i].disabled === true) {
+                    document.getElementsByName('scn_disp_tmp[]')[i].disabled = false;
+                    document.getElementsByName('scn_disp_tmp[]')[i].value = null;
+                }
+            }
+            document.getElementById('form_scn').submit();
+        }
+
+
+        /*let ok = true;
         for(let i =0; i<document.getElementById('form_scn').getElementsByTagName('input').length; i++) {
             if(!document.getElementById('form_scn').getElementsByTagName('input')[i].disabled && document.getElementById('form_scn').getElementsByTagName('input')[i].required) {
                 if(!document.getElementById('form_scn').getElementsByTagName('input')[i].value) {
@@ -106,7 +173,7 @@
                 }
             }
             document.getElementById('form_scn').submit();
-        }
+        }*/
     }
 
 </script>

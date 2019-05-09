@@ -1,7 +1,7 @@
 <?php
+require "metodos.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require "metodos.php";
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
@@ -34,7 +34,11 @@ if(isset($_POST['email_contacto'])) {
         $email->Password = 'pdkfmhtdrmzhgkom';
         $email->Port = 587;
 
-        $email->send();
+        if($email->send()) {
+            $_SESSION['contacto'] = "bien";
+        } else {
+            $_SESSION['contacto'] = "mal";
+        }
 
     } catch (Exception $e) {
         echo $e->errorMessage();

@@ -33,8 +33,14 @@ if(isset($_POST['activar'])) {
     $parameters_log = [':dia'=>date("Y-m-d"), ':info'=>$info, ':usuario_email'=>$usuario->getEmail(), ':hora'=>date("H:i:s")];
     $stmt_log->execute($parameters_log);
 
-    $stmt = $conexion->prepare("INSERT INTO programa(dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temperatura) VALUES (:disp, :inicio_d, :inicio_h, :fin_d, :fin_h, :temp)");
-    $parameters = [':disp'=>$datos['id_disp'], ':inicio_d'=>$datos['dia_ini'], ':inicio_h'=>$datos['hora_ini'], ':fin_d'=>$datos['dia_fin'], ':fin_h'=>$datos['hora_fin'], ':temp'=>$datos['temp']];
+    foreach($datos as $k => $v) {
+        if($v==="" || empty($v)) {
+            $datos[$k]=null;
+        }
+    }
+
+    $stmt = $conexion->prepare("INSERT INTO programa(dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temp_inicio, temp_fin, temperatura) VALUES (:disp, :inicio_d, :inicio_h, :fin_d, :fin_h, :temp_ini, :temp_fin, :temp)");
+    $parameters = [':disp'=>$datos['id_disp'], ':inicio_d'=>$datos['dia_ini'], ':inicio_h'=>$datos['hora_ini'], ':fin_d'=>$datos['dia_fin'], ':fin_h'=>$datos['hora_fin'], ':temp_ini'=>$datos['temp_ini'], ':temp_fin'=>$datos['temp_fin'], ':temp'=>$datos['temp']];
     $stmt->execute($parameters);
     echo "bien";
 

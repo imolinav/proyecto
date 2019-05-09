@@ -20,10 +20,10 @@ if (isset($_POST['buscar'])) {
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
                         </div>
                         <br>
-                        <input type="text" class="form-control" name="new_email" required>
+                        <input type="text" class="form-control" name="new_email">
+                        <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                     </div>
-                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
-                    <input type="button" class="btn btn-primary" value="<?= $i_guser_boton1 ?>" id="btn_new_email" data-toggle="modal" data-target="#updEmailModal">
+                    <input type="button" class="btn btn-primary" value="<?= $i_guser_boton1 ?>" id="btn_new_email" onclick="comprobarEmail()">
                 </div>
             </div>
             <hr>
@@ -41,7 +41,7 @@ if (isset($_POST['buscar'])) {
                     <div class="row">
                         <div class="col-12 col-md-6 mb-3">
                             <label><?= $i_guser_texto3 ?></label>
-                            <input type="text" class="form-control" name="new_su_hab_name[]" required>
+                            <input type="text" class="form-control" name="new_su_hab_name[]">
                             <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                         </div>
                         <div class="col-12 col-md-6 mb-3">
@@ -53,21 +53,18 @@ if (isset($_POST['buscar'])) {
                         <div class="row">
                             <div class="col-12 col-md-6 mb-3">
                                 <label><?= $i_guser_texto5 ?></label>
-                                <input type="text" class="form-control" name="new_su_disp_name[]" required>
+                                <input type="text" class="form-control" name="new_su_disp_name[]">
                                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                             </div>
                             <div class="col-12 col-md-6 mb-3">
                                 <label><?= $i_guser_texto6 ?></label>
-                                <input type="text" class="form-control" name="new_su_disp_pin[]" required>
+                                <input type="text" class="form-control" name="new_su_disp_pin[]">
                                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 mb-3">
-                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                    <input class="custom-control-input" type="checkbox" id="customControlInline" value="si" name="new_su_disp_temp[]">
-                                    <label class="custom-control-label" for="customControlInline"><?= $i_cpanel_form7 ?></label>
-                                </div>
+                                <label><input type="checkbox" value="si" name="new_su_disp_temp[]"><?= $i_cpanel_form9 ?></label>
                             </div>
                         </div>
                     </div>

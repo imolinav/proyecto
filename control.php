@@ -1,11 +1,6 @@
 <?php
 require_once "metodos.php";
 
-$dispositivos = $usuario->getDispositivos($conexion);
-$escenas = $usuario->getEscenas($conexion);
-$habitaciones = $usuario->getHabitaciones($conexion);
-$camaras = $usuario->getCamaras($conexion);
-
 if(isset($_POST['scn_name'])) {
 
     $stmt_escena = $conexion->prepare("INSERT INTO escena (nombre, activa, usuario_email) VALUES (:nombre, 1, :email)");
@@ -27,20 +22,29 @@ if(isset($_POST['scn_name'])) {
     $programas = $stmt_cnt2->fetchAll(PDO::FETCH_ASSOC);
     $id_prg = $programas[0]['id'];
 
+
     for($i=0; $i<count($_POST['scn_disp_name']); $i++) {
 
-        /*$fecha_inicio = $_POST['scn_date'] . " " . $_POST['scn_disp_start'][$i] . ":00";*/
-        if($_POST['scn_disp_end'][$i]=="") {
-            $fecha_fin = null;
-        } else {
-            $fecha_fin = $_POST['scn_disp_end'][$i];
+        if($_POST['scn_disp_start'][$i]==="") {
+            $_POST['scn_disp_start'][$i]=null;
         }
-        $stmt_prgr = $conexion->prepare("INSERT INTO programa (dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temperatura) VALUES (:id, :dia_inicio, :hora_inicio, :dia_fin, :hora_fin, :temp)");
-        if($_POST['scn_disp_tmp'][$i]=="") {
-            $parameters_prgr = [':id'=>$_POST['scn_disp_name'][$i], ':dia_inicio'=>$_POST['scn_date'], ':hora_inicio'=>$_POST['scn_disp_start'][$i], ':dia_fin'=>$_POST['scn_date'], ':hora_fin'=>$fecha_fin, ':temp'=>NULL];
-        } else {
-            $parameters_prgr = [':id'=>$_POST['scn_disp_name'][$i], ':dia_inicio'=>$_POST['scn_date'], ':hora_inicio'=>$_POST['scn_disp_start'][$i], ':dia_fin'=>$_POST['scn_date'], ':hora_fin'=>$fecha_fin, ':temp'=>$_POST['scn_disp_tmp'][$i]];
+        if($_POST['scn_disp_end'][$i]==="") {
+            $_POST['scn_disp_end'][$i]=null;
         }
+        if($_POST['scn_disp_tmp_start'][$i]==="") {
+            $_POST['scn_disp_tmp_start'][$i]=null;
+        }
+        if($_POST['scn_disp_tmp_end'][$i]==="") {
+            $_POST['scn_disp_tmp_end'][$i]=null;
+        }
+        if($_POST['scn_disp_tmp'][$i]==="") {
+            $_POST['scn_disp_tmp'][$i]=null;
+        }
+
+        $stmt_prgr = $conexion->prepare("INSERT INTO programa (dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temp_inicio, temp_fin, temperatura) VALUES (:id, :dia_inicio, :hora_inicio, :dia_fin, :hora_fin, :temp_ini, :temp_fin, :temp)");
+
+        $parameters_prgr = [':id'=>$_POST['scn_disp_name'][$i], ':dia_inicio'=>$_POST['scn_date'], ':hora_inicio'=>$_POST['scn_disp_start'][$i], ':dia_fin'=>null, ':hora_fin'=>$_POST['scn_disp_end'][$i], ':temp_ini'=>$_POST['scn_disp_tmp_start'][$i], ':temp_fin'=>$_POST['scn_disp_tmp_end'][$i], ':temp'=>$_POST['scn_disp_tmp'][$i]];
+
         $stmt_prgr->execute($parameters_prgr);
 
         $id_prg++;
@@ -49,7 +53,12 @@ if(isset($_POST['scn_name'])) {
         $parameters_contiene = [':id1'=>$escena_id, ':id2'=>$id_prg];
         $stmt_contiene->execute($parameters_contiene);
     }
+    header("Location: control.php");
 }
+$dispositivos = $usuario->getDispositivos($conexion);
+$escenas = $usuario->getEscenas($conexion);
+$habitaciones = $usuario->getHabitaciones($conexion);
+$camaras = $usuario->getCamaras($conexion);
 
 include "views/partials/header.part.php";
 include "views/control.view.phtml";

@@ -1,13 +1,14 @@
 <?php
 include "metodos.php";
-$logs = $usuario->getLog($conexion);
+$logs = $usuario->getLog($conexion, 50);
+$logs_excel = $usuario->getLog($conexion, 500);
 if(isset($_POST['export_xls'])) {
     $filename="log_dispositivos.xls";
     header("Content-Type: application/vnd.ms-excel");
     header("Content-Disposition: attachment; filename=\"$filename\"");
     $isPrintHeader = false;
-    if(!empty($logs)) {
-        foreach ($logs as $log) {
+    if(!empty($logs_excel)) {
+        foreach ($logs_excel as $log) {
             if(!$isPrintHeader) {
                 echo implode("\t", array_keys($log)). "\n";
                 $isPrintHeader = true;

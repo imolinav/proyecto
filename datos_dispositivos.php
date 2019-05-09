@@ -14,7 +14,7 @@ $stmt_disp = $conexion->prepare("SELECT * FROM dispositivo WHERE id = :id");
 $stmt_disp->execute($parameters);
 $dispositivo = $stmt_disp->fetch(PDO::FETCH_ASSOC);
 
-$stmt_prog = $conexion->prepare("SELECT * FROM programa WHERE dispositivo_id = :id AND (dia_fin > :dia_actual OR dia_fin IS NULL)");
+$stmt_prog = $conexion->prepare("SELECT * FROM programa WHERE dispositivo_id = :id AND (dia_fin >= :dia_actual OR dia_fin IS NULL)");
 $parameters_prg = [':id'=>$id, ':dia_actual'=>date('Y-m-d')];
 $stmt_prog->execute($parameters_prg);
 $programas = $stmt_prog->fetchAll(PDO::FETCH_ASSOC);
@@ -60,12 +60,21 @@ if (isset($_POST['disp'])) {
                 <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
             </div>
             <input type="date" class="form-control" name="prg_date_start">
+            <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon2"><i class="far fa-clock"></i></span>
             </div>
             <input type="time" class="form-control" name="prg_hour_start" aria-describedby="basic-addon2">
+            <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2"><i class="fas fa-thermometer-quarter"></i></span>
+            </div>
+            <input type="number" placeholder="0" min="0" class="form-control" name="prg_temp_start" aria-describedby="basic-addon2">
+            <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
         </div>
         <p><?= $i_disp_texto7 ?></p>
         <div class="input-group mb-3">
@@ -80,13 +89,20 @@ if (isset($_POST['disp'])) {
             </div>
             <input type="time" class="form-control" name="prg_hour_end">
         </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fas fa-thermometer-quarter"></i></span>
+            </div>
+            <input type="number" placeholder="0" min="0" class="form-control" name="prg_temp_end">
+        </div>
         <?php if($dispositivo['temperatura']!=null):?>
         <p><?= $i_disp_texto8 ?></p>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-thermometer-quarter"></i></span>
             </div>
-            <input type="number" class="form-control" name="prg_temp" value="0" min="0" />
+            <input type="number" class="form-control" name="prg_temp" placeholder="0" min="0" />
+            <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
         </div>
         <?php endif; ?>
         <input type="button" class="btn btn-primary" value="<?= $i_disp_boton1 ?>" name="prg_enviar">

@@ -201,6 +201,7 @@ if(isset($_POST['su_name'])) {
         ";
     fwrite($fichero, $text);
     fclose($fichero);
+
 }
 
 //Modificacion de usuarios
@@ -216,11 +217,11 @@ else if(isset($_POST['user_mod_option'])) {
         for($i=0; $i<$_POST['new_su_hab_num'];$i++) {
             for($j=0; $j<$_POST['new_su_hab_cant_disp'][$i]; $j++) {
                 $dispositivo = array_shift($dispositivos);
-                $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, temperatura, usuario_email) VALUES (:nombre, :habitacion, 0, 0, 0, :temperatura, :usuario)");
-                if($_POST['new_su_disp_temp'][$i]=="si") {
-                    $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>0,':usuario'=>$_POST['user_mod_email']];
+                $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, temperatura, usuario_email, pin) VALUES (:nombre, :habitacion, 0, 0, 0, :temperatura, :usuario, :pin)");
+                if($_POST['new_su_disp_temp'][$j]=="si") {
+                    $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>0,':usuario'=>$_POST['user_mod_email'], ':pin'=>$_POST['new_su_disp_pin'][$j]];
                 } else {
-                    $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>null, ':usuario'=>$_POST['user_mod_email']];
+                    $parameters_disp = [':nombre'=>$dispositivo, ':habitacion'=>$_POST['new_su_hab_name'][$i], ':temperatura'=>null, ':usuario'=>$_POST['user_mod_email'], ':pin'=>$_POST['new_su_disp_pin'][$j]];
                 }
                 $stmt_disp->execute($parameters_disp);
             }
