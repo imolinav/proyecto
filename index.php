@@ -13,6 +13,16 @@ if(isset($_POST['li_email'])) {
         echo "<script type='text/javascript'>alert('El usuario no existe');</script>";
     } else if(password_verify($_POST['li_pass'], $usuario->getPass())) {
         $_SESSION['email'] = $usuario->getEmail();
+
+        $stmt_rec = $conexion->prepare("SELECT * FROM pswd_rec WHERE usuario_email = :email");
+        $parameters_rec = [':email'=>$usuario->getEmail()];
+        $stmt_rec->execute($parameters_rec);
+        $reco = $stmt_rec->fetch(PDO::FETCH_ASSOC);
+        if(!empty($reco)) {
+            $stmt_del = $conexion->prepare("DELETE FROM pswd_rec WHERE usuario_email = :email");
+            $parameters_del = [':email'=>$usuario->getEmail()];
+            $stmt_del->execute($parameters_del);
+        }
     } else {
         echo "<script type='text/javascript'>alert('La contrasenya no es correcta');</script>";
     }
@@ -30,6 +40,15 @@ if(isset($_POST['li_email'])) {
 //cambio pass
 if(isset($_POST['pass_chg'])) {
     $usuario->updatePassFT($conexion, $_POST['pass_chg']);
+}
+if(isset($_POST['pass_recovery'])) {
+    $stmt = $conexion->prepare("UPDATE usuario SET pass = :pass, activo = 1 WHERE email = :email");
+    $parameters = [':pass'=>password_hash($_POST['pass_recovery'], PASSWORD_DEFAULT, ['cost'=>10]), ':email'=>$_POST['user_email_recovery']];
+    $stmt->execute($parameters);
+
+    $stmt_del = $conexion->prepare("DELETE FROM pswd_rec WHERE usuario_email = :email");
+    $parameters_del = [':email'=>$_POST['user_email_recovery']];
+    $stmt_del->execute($parameters_del);
 }
 
 $hora = date("H", time());

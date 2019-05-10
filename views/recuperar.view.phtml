@@ -1,7 +1,10 @@
 <div class="container mt-5 mb-5">
     <div class="row">
         <div class="col-6 offset-3">
-            <form method="post" action="link.php">
+            <?php if(isset($_GET['error'])) :?>
+            <p id="texto_error">ERROR! El email introducido no existe!</p>
+            <?php endif; ?>
+            <form method="post" action="recuperar.php">
                 <p><?= $i_recuperar_texto1 ?></p>
                 <input type="text" class="form-control" name="email_chg">
                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>

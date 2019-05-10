@@ -22,6 +22,4 @@ require_once "views/partials/header.part.php";
 require_once "views/historial.view.phtml";
 require_once "chat.php";
 require_once "views/partials/footer.part.php";
-
-
 ?>
