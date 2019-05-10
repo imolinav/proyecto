@@ -19,7 +19,8 @@
         </div>
     </div>
 </div>
-<div class="container col-12 col-md-8">
+<div class="container col-12 col-md-8 mt-5">
+    <!--
     <div class="row">
         <div class="col-12 col-lg-4" id="info_tiempo">
             <h3 class="mt-3"><?= $i_index_texto3 ?></h3>
@@ -36,16 +37,43 @@
 
         </div>
     </div>
-    <div class="row">
+    -->
+    <div class="row mt-5">
+        <div class="col-6">
+
+        </div>
+        <div class="col-6">
+            <img src="imgs/insert_block_efyb.svg" class="img-fluid">
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-6">
+            <img src="imgs/click_here_2li1.svg" class="img-fluid">
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-6">
+
+        </div>
+        <div class="col-6">
+            <img src="imgs/predictive_analytics_kf9n.svg" class="img-fluid">
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row mt-5">
         <div class="col-12 mt-5">
             <iframe id="videoYT" width="100%" src="https://www.youtube.com/embed/UPGir81FUpY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
 </div>
 <div class="container-fluid mt-5">
-    <div class="row">
-        <div class="col-12 col-md-6">
-            <i class="fas fa-quote-left hvr-grow-rotate"></i>
+    <div class="row mt-5">
+        <div class="col-12 col-md-6 quotes">
+            <i class="fas fa-quote-left hvr-grow-rotate" ></i>
             <div class="quote_container">
                 <hr>
                 <p>"La mejor empresa para que tu casa funcione de la forma mas eficiente posible"</p>
@@ -53,8 +81,8 @@
                 <i>New York Times</i>
             </div>
         </div>
-        <div class="col-12 col-md-6">
-            <i class="fas fa-quote-left hvr-grow-rotate"></i>
+        <div class="col-12 col-md-6 quotes">
+            <i class="fas fa-quote-left hvr-grow-rotate" ></i>
             <div class="quote_container">
                 <hr>
                 <p>"Opiniones buenas de mentira para hacer que la pagina quede mejor de lo que es ya en realidad"</p>
@@ -130,7 +158,7 @@
         $('html, body').animate({scrollTop:0}, 'slow');
     }
 
-    function cargarProvincias(event) {
+    /*function cargarProvincias(event) {
         let httpRequest = new obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_tiempo.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -149,9 +177,9 @@
             }
         };
         httpRequest.send('comunidad='+event.target.value);
-    }
+    }*/
 
-    function cargarMunicipios(event) {
+    /*function cargarMunicipios(event) {
         let httpRequest = new obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_tiempo.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -167,9 +195,9 @@
             }
         };
         httpRequest.send('provincia='+event.target.value);
-    }
+    }*/
 
-    function cargarTiempo(event) {
+    /*function cargarTiempo(event) {
         let httpRequest = new obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_tiempo.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -185,6 +213,6 @@
             }
         };
         httpRequest.send('municipio='+event.target.value);
-    }
+    }*/
 
 </script>

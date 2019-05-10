@@ -20,7 +20,7 @@
 
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
-    <h1 class="navbar-brand d-none d-sm-block"><a href="index.php">Smart Living</a></h1>
+    <h1 class="navbar-brand d-none d-sm-block"><a href="index.php">SMART LIVING</a></h1>
     <?php if(!isset($_SESSION['email'])): ?>
         <button type="button" class="btn btn-light ml-auto mr-3"><?= $i_header_login ?></button>
     <?php else: ?>
@@ -54,8 +54,8 @@
         </div>
     <?php endif; ?>
     <form id="idiomas" class="form-inline my-2 my-lg-0" action="metodos.php" method="post">
-        <img src="imgs/spanish.png" id="castellano">
-        <img src="imgs/uk.png" id="ingles">
+        <img src="imgs/spanish.png" id="castellano" class="hvr-grow">
+        <img src="imgs/uk.png" id="ingles" class="hvr-grow">
         <input type="hidden" name="lengua" id="idioma_selected">
         <input type="hidden" name="page" id="actual_page" value="<?= basename($_SERVER['PHP_SELF']) ?>">
     </form>

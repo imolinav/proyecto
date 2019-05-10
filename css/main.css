@@ -26,6 +26,11 @@ body {
 
 /* HEADER */
 
+header h1 {
+    font-family: "Gobold Regular";
+    margin-top: 7px;
+    margin-left: 20px;
+}
 .navbar a {
     text-decoration: none;
     color: white;
@@ -195,7 +200,6 @@ footer a, footer a:hover {
 .quote_container {
     width: 75%;
     margin-left: 12.5%;
-    margin-top: 50px;
     text-justify: auto;
     text-align: center;
     padding: 10px 10px;
@@ -212,9 +216,9 @@ footer a, footer a:hover {
 }
 .fa-quote-left {
     font-size: 3em;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
+}
+.quotes {
+    text-align: center;
 }
 .pide_presupuesto {
     padding:0;

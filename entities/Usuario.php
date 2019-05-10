@@ -8,23 +8,25 @@
 
 class Usuario {
     protected $email;
-    protected $dni;
     protected $nombre;
     protected $foto;
     protected $pass;
     protected $activo;
     protected $puerto;
     protected $admin;
+    protected $rb_ip;
+    protected $cp;
 
-    public function __construct($email="", $dni="", $nombre="", $foto="", $pass="", $activo="", $puerto="", $admin="") {
+    public function __construct($email="", $nombre="", $foto="", $pass="", $activo="", $puerto="", $admin="", $rb_ip="", $cp="") {
         $this->email = $email;
-        $this->dni = $dni;
         $this->nombre = $nombre;
         $this->foto = $foto;
         $this->pass = $pass;
         $this->activo = $activo;
         $this->puerto = $puerto;
         $this->admin = $admin;
+        $this->rb_ip = $rb_ip;
+        $this->cp = $cp;
     }
 
     public function updatePassFT($conexion, $pass) {
@@ -106,15 +108,6 @@ class Usuario {
         return $this;
     }
 
-    public function getDni(): string {
-        return $this->dni;
-    }
-
-    public function setDni(string $dni): Usuario {
-        $this->dni = $dni;
-        return $this;
-    }
-
     public function getNombre(): string {
         return $this->nombre;
     }
@@ -168,4 +161,25 @@ class Usuario {
         $this->admin = $admin;
         return $this;
     }
+
+    public function getRbIp(): string {
+        return $this->rb_ip;
+    }
+
+    public function setRbIp(string $rb_ip): Usuario
+    {
+        $this->rb_ip = $rb_ip;
+        return $this;
+    }
+
+    public function getCp(): string {
+        return $this->cp;
+    }
+
+    public function setCp(string $cp): Usuario {
+        $this->cp = $cp;
+        return $this;
+    }
+
+
 }

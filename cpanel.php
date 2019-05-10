@@ -14,8 +14,8 @@ if(isset($_POST['su_name'])) {
     } while(array_search($puerto, $puertos)!=false);
 
     //Creamos el usuario
-    $stmt = $conexion->prepare("INSERT INTO usuario VALUES (:email, :nombre, './imgs/generic.png', :pass, 0, :puerto, 0, :ip)");
-    $parameters = [':email'=>$_POST['su_email'], ':nombre'=>$_POST['su_name'], ':pass'=>password_hash($_POST['su_email'], PASSWORD_DEFAULT, ['cost'=>10]), ':puerto'=>$puerto, ':ip'=>$_POST['su_rbip']];
+    $stmt = $conexion->prepare("INSERT INTO usuario VALUES (:email, :nombre, './imgs/generic.png', :pass, 0, :puerto, 0, :ip, :cp)");
+    $parameters = [':email'=>$_POST['su_email'], ':nombre'=>$_POST['su_name'], ':pass'=>password_hash($_POST['su_email'], PASSWORD_DEFAULT, ['cost'=>10]), ':puerto'=>$puerto, ':ip'=>$_POST['su_rbip'], ':cp'=>$_POST['su_cp']];
     $stmt->execute($parameters);
 
     //Creamos un array de reles y uno de metodos donde meteremos los strings de texto pertinentes para crear el servidor .js

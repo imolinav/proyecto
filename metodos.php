@@ -17,7 +17,12 @@ if (isset($_SESSION['email'])) {
 
     $mensajes_nl = comprobarMsgs($conexion, $usuario->getEmail());
 
-
+    $cp = $usuario->getCp();
+    $stmt_tiempo = $conexion->prepare("SELECT AVG(P.lat) as latitud, AVG(P.lon) as longitud FROM poblacion P, codigopostal C WHERE P.poblacionid = C.poblacionid AND C.codigopostalid = :cp");
+    $parameters_tiempo = [':cp'=>$cp];
+    $stmt_tiempo->execute($parameters_tiempo);
+    $poblacion = $stmt_tiempo->fetch(PDO::FETCH_ASSOC);
+    $tiempo = cargaTiempo($poblacion['latitud'], $poblacion['longitud']);
 }
 
 
@@ -40,31 +45,13 @@ if(isset($_POST['logout'])) {
 
 //Carga de API OpenWeather
 
+
+
 function cargaTiempo($latitud, $longitud) {
     $clave = "http://api.openweathermap.org/data/2.5/forecast?lat=".$latitud."&lon=".$longitud."&APPID=d0cb0d8b429769a6e1105782251c99aa&units=metric&lang=es";
     $data = file_get_contents($clave);
     $data_parsed = json_decode($data, true);
     return $data_parsed;
-}
-
-//Carga comunidades, provincias y municipios
-
-$stmt_com = $conexion->prepare("SELECT * FROM comunidades");
-$stmt_com->execute();
-$comunidades = $stmt_com->fetchAll(PDO::FETCH_ASSOC);
-
-function cargaProvincias($conexion, $comunidad) {
-    $stmt_prov = $conexion->prepare("SELECT * FROM provincias WHERE comunidad_id = $comunidad");
-    $stmt_prov->execute();
-    $provincias = $stmt_prov->fetchAll(PDO::FETCH_ASSOC);
-    return $provincias;
-}
-
-function cargaMunicipios($conexion, $provincia) {
-    $stmt_prov = $conexion->prepare("SELECT * FROM municipios WHERE provincia_id = $provincia");
-    $stmt_prov->execute();
-    $municipios = $stmt_prov->fetchAll(PDO::FETCH_ASSOC);
-    return $municipios;
 }
 
 //Cambio de idioma
