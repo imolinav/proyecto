@@ -137,7 +137,7 @@ if(isset($_POST['su_name'])) {
         $fichero = fopen('users/'.$_POST['su_email'].'/scripts/enciende'.$i.'.js', "w");
         $text = "
         #!/usr/bin/env node
-        let io = require(../node_modules/socket.io-client');
+        let io = require('../node_modules/socket.io-client');
         let socket = io.connect('".$_POST['su_rbip'].":8080', {reconnect: true});
         socket.on('connect', function(socket) {
             console.log('Connected!');

@@ -17,9 +17,11 @@
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/canvasjs.min.js"></script>
+<!--
 <script src="js/jsmpeg.min.js"></script>
 <script src="js/websocket.js"></script>
 <script src="js/websocket-relay.js"></script>
+-->
 
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
