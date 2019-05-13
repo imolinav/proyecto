@@ -8,10 +8,7 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 if(isset($_POST['email_chg'])) {
-    $stmt_email = $conexion->prepare("SELECT * FROM usuario WHERE email = :email");
-    $parameters_email = [':email' => $_POST['email_chg']];
-    $stmt_email->execute($parameters_email);
-    $usuario_ex = $stmt_email->fetch(PDO::FETCH_ASSOC);
+    $usuario_ex = buscarUsuario($conexion, $_POST['email_chg']);
     if (!empty($usuario_ex)) {
         try {
             $id = bin2hex(random_bytes(16));

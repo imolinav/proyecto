@@ -25,7 +25,7 @@
 
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
-    <h1 class="navbar-brand d-none d-sm-block"><a href="index.php">SMART LIVING</a></h1>
+    <h1 class="navbar-brand d-none d-sm-block hvr-underline-from-left"><a href="index.php">SMART LIVING</a></h1>
     <?php if(!isset($_SESSION['email'])): ?>
         <button type="button" class="btn btn-light ml-auto mr-3"><?= $i_header_login ?></button>
     <?php else: ?>

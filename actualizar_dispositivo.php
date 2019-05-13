@@ -3,17 +3,20 @@ require_once "metodos.php";
 $stmt_log = $conexion->prepare("INSERT INTO log (fecha, info, usuario_email, hora) VALUES (:dia, :info, :usuario_email, :hora)");
 if(isset($_POST['activar'])) {
     $disp = $_POST['activar'];
-    $stmt_comp = $conexion->prepare("SELECT * FROM dispositivo WHERE id = :id");
-    $parameters = [':id'=>$disp];
-    $stmt_comp->execute($parameters);
-    $dispositivo = $stmt_comp->fetch(PDO::FETCH_ASSOC);
+    $dispositivo = buscarDispositivo($conexion, $disp);
     $accion = "";
 
     if($dispositivo['encendido']==1) {
-        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 0, num_encendidos = num_encendidos+1 WHERE id = :id");
+        $stmt_faux = $conexion->prepare("SELECT fecha_aux FROM dispositivo WHERE id = '$disp'");
+        $stmt_faux->execute();
+        $faux = $stmt_faux->fetch(PDO::FETCH_ASSOC);
+        $new_time = time() - $faux['fecha_aux'];
+        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 0, num_encendidos = num_encendidos+1, tiempo_encendido = tiempo_encendido + :fnew WHERE id = :id");
+        $parameters = [':fnew'=>$new_time, ':id'=>$disp];
         $accion = " apagado.";
     } else {
-        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 1, num_encendidos = num_encendidos+1  WHERE id = :id");
+        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 1, num_encendidos = num_encendidos+1, fecha_aux = :faux  WHERE id = :id");
+        $parameters = [':faux'=>time(), ':id'=>$disp];
         $accion = " encendido.";
     }
     $stmt->execute($parameters);
@@ -24,10 +27,7 @@ if(isset($_POST['activar'])) {
 
 } else if (isset($_POST['programar'])) {
     $datos = json_decode($_POST['programar'], true);
-    $stmt_disp = $conexion->prepare("SELECT * FROM dispositivo WHERE id = :id");
-    $parameters_disp = [':id'=>$datos['id_disp']];
-    $stmt_disp->execute($parameters_disp);
-    $dispositivo = $stmt_disp->fetch(PDO::FETCH_ASSOC);
+    $dispositivo = buscarDispositivo($conexion, $datos['id_disp']);
 
     $info = $dispositivo['habitacion']." - ". $dispositivo['nombre'].": dispositivo programado para el dia ".$datos['dia_ini']. " a las ".$datos['hora_ini'];
     $parameters_log = [':dia'=>date("Y-m-d"), ':info'=>$info, ':usuario_email'=>$usuario->getEmail(), ':hora'=>date("H:i:s")];

@@ -2,9 +2,7 @@
 require_once "metodos.php";
 if (isset($_POST['buscar'])) {
     $usuario = $_POST['buscar'];
-    $stmt = $conexion->prepare("SELECT * FROM usuario WHERE email = '$usuario'");
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = buscarUsuario($conexion, $usuario);
     if ($user == false) :?>
 <div class="row mt-3" id="user_data">
     <div class="col-6 offset-3"><h4 style="color: red; text-align: center"><?= $i_guser_error1 ?></h4></div>
@@ -56,15 +54,23 @@ if (isset($_POST['buscar'])) {
                                 <input type="text" class="form-control" name="new_su_disp_name[]">
                                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                             </div>
-                            <div class="col-12 col-md-6 mb-3">
-                                <label><?= $i_guser_texto6 ?></label>
-                                <input type="text" class="form-control" name="new_su_disp_pin[]">
+                            <div class="col-6 col-md-3 mb-3">
+                                <label>Tipo de dispositivo</label>
+                                <!-- <input type="text" class="form-control" name="su_disp_type[]"> -->
+                                <select class="form-control" name="new_su_disp_type[]">
+                                    <option value="0" selected disabled>Elige un tipo de dispositivo</option>
+                                    <option value="0" disabled>-------------------</option>
+                                    <option value="1">Salida de corriente</option>
+                                    <option value="2">Control de temperatura</option>
+                                    <option value="3">Sensor infrarrojo</option>
+                                    <option value="4">Pantalla LCD</option>
+                                </select>
                                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6 mb-3">
-                                <label><input type="checkbox" value="si" name="new_su_disp_temp[]"><?= $i_cpanel_form9 ?></label>
+                            <div class="col-6 col-md-3 mb-3">
+                                <label><?= $i_cpanel_form8 ?></label>
+                                <input type="text" class="form-control" name="new_su_disp_pin[]">
+                                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                             </div>
                         </div>
                     </div>
@@ -88,7 +94,7 @@ if (isset($_POST['buscar'])) {
                         </button>
                     </div>
                     <div class="modal-body" id="modal-body-new-email">
-                        <p><?= $i_guser_texto8 ?><?= $user['email'] ?></p>
+                        <p><?= $i_guser_texto8 . $user['email'] ?></p>
                         <p><?= $i_guser_texto10 ?></p>
                     </div>
                     <div class="modal-footer">
@@ -110,7 +116,7 @@ if (isset($_POST['buscar'])) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p><?= $i_guser_texto9 ?><?= $user['email'] ?>!</p>
+                        <p><?= $i_guser_texto9 . $user['email'] ?>!</p>
                         <p><?= $i_guser_texto10 ?></p>
                     </div>
                     <div class="modal-footer">

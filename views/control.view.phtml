@@ -144,13 +144,12 @@
             document.getElementsByName('prg_hour_start')[0].classList.add('is-invalid');
             ok = false;
         }
-        if(document.getElementsByName('prg_temp')[0]) {
-            if(document.getElementsByName('prg_temp')[0].value==="") {
-                document.getElementsByName('prg_temp')[0].classList.add('is-invalid');
+        if(document.getElementsByName('prg_temp_start')[0]) {
+            if(document.getElementsByName('prg_temp_start')[0].value==="") {
+                document.getElementsByName('prg_temp_start')[0].classList.add('is-invalid');
                 ok = false;
             }
         }
-        alert(ok);
         if (ok ===true) {
             let programa;
             let httpRequest = obtainXMLHttpRequest();

@@ -2,10 +2,7 @@
 require_once "metodos.php";
 if(isset($_POST['datos'])) {
     $datos = json_decode($_POST['datos'], true);
-    $stmt = $conexion->prepare("SELECT * FROM usuario WHERE email = :email");
-    $parameters = [':email'=>$datos['email']];
-    $stmt->execute($parameters);
-    $usuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $usuario = buscarUsuario($conexion, $datos['email']);
     if(empty($usuario)) {
         echo "opcion1";
     } else {

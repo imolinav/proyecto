@@ -22,7 +22,6 @@ if (isset($_FILES['upd_foto'])) {
         move_uploaded_file($fichero['tmp_name'], $rutaImagen);
         $usuario->updateFoto($conexion, $rutaImagen);
     }
-
 }
 
 $dispositivos = $usuario->getDispositivos($conexion);

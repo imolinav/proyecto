@@ -36,6 +36,26 @@ function comprobarMsgs($conexion, $email) {
     return $mensajes_nl;
 }
 
+// Buscar usuario
+
+function buscarUsuario($conexion, $email) {
+    $stmt = $conexion->prepare("SELECT * FROM usuario WHERE email = :email");
+    $parameters = [':email'=>$email];
+    $stmt->execute($parameters);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $usuario;
+}
+
+// Buscar dispositivo
+
+function buscarDispositivo($conexion, $id) {
+    $stmt = $conexion->prepare("SELECT * FROM dispositivo WHERE id = :id");
+    $parameters = [':id'=>$id];
+    $stmt->execute($parameters);
+    $dispositivo = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $dispositivo;
+}
+
 //Cerrar sesión
 
 if(isset($_POST['logout'])) {

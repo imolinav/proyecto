@@ -41,12 +41,6 @@ class Usuario {
         $this->setNombre($nombre);
     }
 
-    public function updateDni($conexion, $dni) {
-        $stmt = $conexion->prepare("UPDATE usuario SET dni = '$dni' WHERE email = '$this->email'");
-        $stmt->execute();
-        $this->setDni($dni);
-    }
-
     public function updateFoto($conexion, $foto) {
         $stmt = $conexion->prepare("UPDATE usuario SET foto = '$foto' WHERE email = '$this->email'");
         $stmt->execute();
@@ -180,6 +174,4 @@ class Usuario {
         $this->cp = $cp;
         return $this;
     }
-
-
 }
