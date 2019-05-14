@@ -28,7 +28,11 @@ body {
 
 header h1 {
     font-family: "Gobold Regular";
-    margin-top: 7px;
+    margin:0 !important;
+    padding:0;
+}
+header .h1-cont {
+    padding: 0;
     margin-left: 20px;
 }
 .navbar a {

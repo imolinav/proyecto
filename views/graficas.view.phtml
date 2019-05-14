@@ -1,9 +1,9 @@
 <div class="container-fluid mt-5">
     <div class="row">
-        <div class="col-12 col-md-5 offset-md-1 graficas" >
+        <div class="col-12 col-md-5 offset-md-1 graficas">
             <div id="chartEncendidos"></div>
         </div>
-        <div class="col-12 col-md-5 graficas" >
+        <div class="col-12 col-md-5 graficas">
             <div id="chartTiempos"></div>
         </div>
     </div>
@@ -13,7 +13,7 @@
         let dispositivos = JSON.parse('<?= $disp ?>');
         let dataPoints = [];
         let chart = new CanvasJS.Chart("chartEncendidos", {
-            title:{
+            title: {
                 text: "Cantidad de veces encendido por dispositivos",
                 fontFamily: "Calibri"
             },
@@ -23,12 +23,15 @@
                     dataPoints: dataPoints
                 }]
         });
-        for (let i = 0; i<dispositivos.length; i++) {
-            dataPoints.push({ label : dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'], y : parseInt(dispositivos[i]['num_encendidos']) });
+        for (let i = 0; i < dispositivos.length; i++) {
+            dataPoints.push({
+                label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
+                y: parseInt(dispositivos[i]['num_encendidos'])
+            });
         }
         let dataPoints2 = [];
         let chart2 = new CanvasJS.Chart("chartTiempos", {
-            title:{
+            title: {
                 text: "Tiempo encendido por dispositivos",
                 fontFamily: "Calibri"
             },
@@ -38,8 +41,11 @@
                     dataPoints: dataPoints2
                 }]
         });
-        for (let i = 0; i<dispositivos.length; i++) {
-            dataPoints2.push({ label : dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'], y : parseInt(dispositivos[i]['tiempo_encendido']) });
+        for (let i = 0; i < dispositivos.length; i++) {
+            dataPoints2.push({
+                label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
+                y: parseInt(dispositivos[i]['tiempo_encendido'])
+            });
         }
         chart.render();
         chart2.render();

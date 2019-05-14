@@ -1,24 +1,24 @@
 <div class="container">
     <div class="row">
         <div class="col-6 offset-3">
-<?php if($ok ===true) :?>
-            <form action="index.php" method="post">
-                <label class="mt-3">Contraseña nueva</label>
-                <input type="password" class="form-control" name="pass_recovery">
-                <div class="invalid-feedback "><?= $i_guser_error2 ?></div>
-                <label class="mt-3">Confirmar contraseña</label>
-                <input type="password" class="form-control" name="pass_recovery_conf">
-                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
-                <input type="hidden" value="<?= $datos_rec['usuario_email'] ?>" name="user_email_recovery">
-                <input type="button" name="sbmt_btn" class="btn btn-primary mt-3" value="Cambiar contraseña">
-            </form>
-<?php else :?>
-            <h2>Ha habido un problema a la hora de recuperar su contraseña.</h2>
-            <h3>O bien ha introducido un link no valido, o ha expirado el tiempo para hacerlo.</h3>
-            <h4>Vuelva a intentarlo de nuevo.</h4>
-            <a href="index.php" class="btn btn-primary">Volver al inicio</a>
+            <?php if ($ok === true) : ?>
+                <form action="index.php" method="post">
+                    <label class="mt-3">Contraseña nueva</label>
+                    <input type="password" class="form-control" name="pass_recovery">
+                    <div class="invalid-feedback "><?= $i_guser_error2 ?></div>
+                    <label class="mt-3">Confirmar contraseña</label>
+                    <input type="password" class="form-control" name="pass_recovery_conf">
+                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+                    <input type="hidden" value="<?= $datos_rec['usuario_email'] ?>" name="user_email_recovery">
+                    <input type="button" name="sbmt_btn" class="btn btn-primary mt-3" value="Cambiar contraseña">
+                </form>
+            <?php else : ?>
+                <h2>Ha habido un problema a la hora de recuperar su contraseña.</h2>
+                <h3>O bien ha introducido un link no valido, o ha expirado el tiempo para hacerlo.</h3>
+                <h4>Vuelva a intentarlo de nuevo.</h4>
+                <a href="index.php" class="btn btn-primary">Volver al inicio</a>
 
-<?php endif; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -29,15 +29,15 @@
         document.getElementsByName('pass_recovery')[0].classList.remove('is-invalid');
         document.getElementsByName('pass_recovery_conf')[0].classList.remove('is-invalid');
         let ok = true;
-        if(document.getElementsByName('pass_recovery')[0].value==="") {
+        if (document.getElementsByName('pass_recovery')[0].value === "") {
             document.getElementsByName('pass_recovery')[0].classList.add('is-invalid');
             ok = false;
         }
-        if(document.getElementsByName('pass_recovery_conf')[0].value==="") {
+        if (document.getElementsByName('pass_recovery_conf')[0].value === "") {
             document.getElementsByName('pass_recovery_conf')[0].classList.add('is-invalid');
             ok = false;
         }
-        if(ok === true) {
+        if (ok === true) {
             event.target.parentNode.submit();
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-    print_r($_POST['prueba']);
+print_r($_POST['prueba']);
 
 ?>
 <!doctype html>
@@ -29,8 +29,8 @@
     document.getElementById('enviar').onclick = enviar;
 
     function enviar(event) {
-        for(let i = 0; i<document.getElementsByName('prueba[]').length; i++) {
-            if(document.getElementsByName('prueba[]')[i].checked===false) {
+        for (let i = 0; i < document.getElementsByName('prueba[]').length; i++) {
+            if (document.getElementsByName('prueba[]')[i].checked === false) {
                 document.getElementsByName('prueba[]')[i].checked = true;
                 document.getElementsByName('prueba[]')[i].value = 'no';
             }

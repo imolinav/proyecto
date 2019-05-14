@@ -18,13 +18,14 @@
                 <select class="form-control" name="scn_disp_name[]">
                     <option disabled selected value="no">Elige el dispositivo</option>
                     <option disabled value="no">----------------------</option>
-                    <?php foreach($dispositivos as $dispositivo) {
-                        if($dispositivo['temperatura'] != null) :?>
-                            <option value="<?= $dispositivo['id'] ?>" class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
+                    <?php foreach ($dispositivos as $dispositivo) {
+                        if ($dispositivo['temperatura'] != null) :?>
+                            <option value="<?= $dispositivo['id'] ?>"
+                                    class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
                         <?php else: ?>
                             <option value="<?= $dispositivo['id'] ?>"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
 
-                    <?php endif;
+                        <?php endif;
                     } ?>
 
                 </select>
@@ -70,31 +71,31 @@
     document.getElementsByName('new_scn_disp')[0].onclick = nuevoDisp;
     document.getElementsByName('del_scn_disp')[0].onclick = quitarDisp;
     document.getElementsByName('scn_submit')[0].onclick = comprobarScnForm;
-    for(let i = 0; i<document.getElementsByName('scn_disp_name[]').length; i++) {
+    for (let i = 0; i < document.getElementsByName('scn_disp_name[]').length; i++) {
         document.getElementsByName('scn_disp_name[]')[i].onchange = habilitarInputs;
     }
 
     function nuevoDisp(event) {
         event.target.parentNode.parentNode.parentNode.insertBefore(row_disp.cloneNode(true), event.target.parentNode.parentNode);
-        for(let i = 0; i<document.getElementsByName('scn_disp_name[]').length; i++) {
+        for (let i = 0; i < document.getElementsByName('scn_disp_name[]').length; i++) {
             document.getElementsByName('scn_disp_name[]')[i].onchange = habilitarInputs;
         }
     }
 
     function quitarDisp(event) {
-        if(document.getElementsByClassName('row_disp').length>1) {
+        if (document.getElementsByClassName('row_disp').length > 1) {
             event.target.parentNode.parentNode.parentNode.removeChild(document.getElementsByClassName('row_disp')[document.getElementsByClassName('row_disp').length - 1]);
         }
     }
 
     function habilitarInputs(event) {
-        for(let i = 0; i<document.getElementsByName('scn_disp_name[]').length; i++) {
-            if(document.getElementsByName('scn_disp_name[]')[i] == event.target) {
+        for (let i = 0; i < document.getElementsByName('scn_disp_name[]').length; i++) {
+            if (document.getElementsByName('scn_disp_name[]')[i] == event.target) {
                 document.getElementsByName('scn_disp_start[]')[i].disabled = false;
                 document.getElementsByName('scn_disp_end[]')[i].disabled = false;
                 document.getElementsByName('scn_disp_tmp_start[]')[i].disabled = false;
                 document.getElementsByName('scn_disp_tmp_end[]')[i].disabled = false;
-                if(event.target.options[event.target.selectedIndex].classList.contains('has_temp')) {
+                if (event.target.options[event.target.selectedIndex].classList.contains('has_temp')) {
                     document.getElementsByName('scn_disp_tmp[]')[i].disabled = false;
                 } else {
                     document.getElementsByName('scn_disp_tmp[]')[i].disabled = true;
@@ -104,49 +105,49 @@
     }
 
     function comprobarScnForm() {
-        for(let i = 0; i<document.getElementsByTagName('input').length; i++) {
+        for (let i = 0; i < document.getElementsByTagName('input').length; i++) {
             document.getElementsByTagName('input')[i].classList.remove('is-invalid');
         }
         document.getElementsByTagName('select')[0].classList.remove('is-invalid');
-        if(document.getElementById('texto_error')) {
+        if (document.getElementById('texto_error')) {
             document.getElementById('texto_error').parentNode.removeChild(document.getElementById('texto_error'));
         }
 
         let ok = true;
-        if(document.getElementsByName('scn_name')[0].value==="") {
+        if (document.getElementsByName('scn_name')[0].value === "") {
             document.getElementsByName('scn_name')[0].classList.add('is-invalid');
             ok = false;
         }
-        if(document.getElementsByName('scn_date')[0].value==="") {
+        if (document.getElementsByName('scn_date')[0].value === "") {
             document.getElementsByName('scn_date')[0].classList.add('is-invalid');
             ok = false;
         }
-        for(let i=0; i<document.getElementsByName('scn_disp_name[]').length; i++) {
-            if(document.getElementsByName('scn_disp_name[]')[i].value === "no") {
+        for (let i = 0; i < document.getElementsByName('scn_disp_name[]').length; i++) {
+            if (document.getElementsByName('scn_disp_name[]')[i].value === "no") {
                 document.getElementsByName('scn_disp_name[]')[i].classList.add('is-invalid');
                 ok = false;
             }
         }
-        for(let i=0; i<document.getElementsByName('scn_disp_start[]').length; i++) {
-            if(document.getElementsByName('scn_disp_start[]')[i].value === "" && document.getElementsByName('scn_disp_tmp_start[]')[i].value === "") {
-                if(document.getElementsByName('scn_disp_start[]')[i].disabled === false) {
+        for (let i = 0; i < document.getElementsByName('scn_disp_start[]').length; i++) {
+            if (document.getElementsByName('scn_disp_start[]')[i].value === "" && document.getElementsByName('scn_disp_tmp_start[]')[i].value === "") {
+                if (document.getElementsByName('scn_disp_start[]')[i].disabled === false) {
                     document.getElementsByName('scn_disp_start[]')[i].classList.add('is-invalid');
                     document.getElementsByName('scn_disp_tmp_start[]')[i].classList.add('is-invalid');
                     ok = false;
                 }
             }
         }
-        for(let i=0; i<document.getElementsByName('scn_disp_tmp[]').length; i++) {
-            if(document.getElementsByName('scn_disp_tmp[]')[i].value === "") {
-                if(document.getElementsByName('scn_disp_tmp[]')[i].disabled === false) {
+        for (let i = 0; i < document.getElementsByName('scn_disp_tmp[]').length; i++) {
+            if (document.getElementsByName('scn_disp_tmp[]')[i].value === "") {
+                if (document.getElementsByName('scn_disp_tmp[]')[i].disabled === false) {
                     document.getElementsByName('scn_disp_tmp[]')[i].classList.add('is-invalid');
                     ok = false;
                 }
             }
         }
-        if(ok === true) {
-            for(let i = 0; i<document.getElementsByName('scn_disp_tmp[]').length; i++) {
-                if(document.getElementsByName('scn_disp_tmp[]')[i].disabled === true) {
+        if (ok === true) {
+            for (let i = 0; i < document.getElementsByName('scn_disp_tmp[]').length; i++) {
+                if (document.getElementsByName('scn_disp_tmp[]')[i].disabled === true) {
                     document.getElementsByName('scn_disp_tmp[]')[i].disabled = false;
                     document.getElementsByName('scn_disp_tmp[]')[i].value = null;
                 }

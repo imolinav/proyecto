@@ -1,5 +1,5 @@
 <div id="chat_wdw">
-    <?php if(!empty($mensajes_nl)):?>
+    <?php if (!empty($mensajes_nl)): ?>
         <div id="new_msg_user"><?= count($mensajes_nl) ?></div>
     <?php endif; ?>
     <div id="cabecera_chat">
@@ -26,10 +26,14 @@
     $('#texto_msg').keyup(comprobarText);
 
     function minMax() {
-        if(document.getElementById('cuerpo_chat').style.display === "none") {
-            $('#cuerpo_chat').fadeIn(300, function() {$(this).css('display', 'block');});
-            $('#enviar_chat').fadeIn(300, function() {$(this).css('display', 'block');});
-            if(!document.getElementsByClassName('msg_user')[0]) {
+        if (document.getElementById('cuerpo_chat').style.display === "none") {
+            $('#cuerpo_chat').fadeIn(300, function () {
+                $(this).css('display', 'block');
+            });
+            $('#enviar_chat').fadeIn(300, function () {
+                $(this).css('display', 'block');
+            });
+            if (!document.getElementsByClassName('msg_user')[0]) {
                 cargarMsg();
             }
         } else {
@@ -39,15 +43,15 @@
     }
 
     function cargarMsg() {
-        if(document.getElementById('new_msg_user')) {
+        if (document.getElementById('new_msg_user')) {
             document.getElementById('new_msg_user').parentNode.removeChild(document.getElementById('new_msg_user'));
         }
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.onreadystatechange = function() {
-            if(httpRequest.readyState === 4) {
-                if(httpRequest.status === 200) {
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
                     $('#cuerpo_chat').append(httpRequest.responseText);
                     actualizarScroll();
                 }
@@ -57,7 +61,7 @@
     }
 
     function comprobarText(event) {
-        if(event.target.value!=="") {
+        if (event.target.value !== "") {
             $('[name=chat_enviar]').eq(0).prop("disabled", false);
         } else {
             $('[name=chat_enviar]').eq(0).prop("disabled", true);
@@ -68,9 +72,9 @@
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.onreadystatechange = function() {
-            if(httpRequest.readyState === 4) {
-                if(httpRequest.status === 200) {
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
                     //document.getElementById('texto_msg').value="";
                     $('#texto_msg').val("");
                     $('#cuerpo_chat table').append(httpRequest.responseText);
@@ -82,7 +86,7 @@
         };
         let data = new Datos($('#texto_msg').val(), '<?= $usuario->getEmail() ?>');
         let datos = JSON.stringify(data);
-        httpRequest.send('new_msg='+datos);
+        httpRequest.send('new_msg=' + datos);
     }
 
     function actualizarScroll() {

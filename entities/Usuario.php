@@ -36,55 +36,63 @@ class Usuario {
     }
 
     public function updateNombre($conexion, $nombre) {
-        $stmt = $conexion->prepare("UPDATE usuario SET nombre = '$nombre' WHERE email = '$this->email'");
-        $stmt->execute();
+        $stmt = $conexion->prepare("UPDATE usuario SET nombre = :nombre WHERE email = :email");
+        $parameters = [':nombre'=>$nombre, ':email'=>$this->email];
+        $stmt->execute($parameters);
         $this->setNombre($nombre);
     }
 
     public function updateFoto($conexion, $foto) {
-        $stmt = $conexion->prepare("UPDATE usuario SET foto = '$foto' WHERE email = '$this->email'");
-        $stmt->execute();
+        $stmt = $conexion->prepare("UPDATE usuario SET foto = :foto WHERE email = :email");
+        $parameters = [':foto'=>$foto, ':email'=>$this->email];
+        $stmt->execute($parameters);
         $this->setFoto($foto);
     }
 
     public function getDispositivos($conexion) {
-        $stmt_disp = $conexion->prepare("SELECT * FROM dispositivo WHERE usuario_email = '$this->email'");
-        $stmt_disp->execute();
+        $stmt_disp = $conexion->prepare("SELECT * FROM dispositivo WHERE usuario_email = :email");
+        $parameters = [':email'=>$this->email];
+        $stmt_disp->execute($parameters);
         $dispositivos = $stmt_disp->fetchAll(PDO::FETCH_ASSOC);
         return $dispositivos;
     }
 
     public function getHabitaciones($conexion) {
-        $stmt_hab = $conexion->prepare("SELECT habitacion FROM dispositivo WHERE usuario_email = '$this->email' GROUP BY habitacion");
-        $stmt_hab->execute();
+        $stmt_hab = $conexion->prepare("SELECT habitacion FROM dispositivo WHERE usuario_email = :email GROUP BY habitacion");
+        $parameters = [':email'=>$this->email];
+        $stmt_hab->execute($parameters);
         $habitaciones = $stmt_hab->fetchAll(PDO::FETCH_ASSOC);
         return $habitaciones;
     }
 
     public function getCamaras($conexion) {
-        $stmt_cam = $conexion->prepare("SELECT * FROM camara WHERE usuario_email = '$this->email'");
-        $stmt_cam->execute();
+        $stmt_cam = $conexion->prepare("SELECT * FROM camara WHERE usuario_email = :email");
+        $parameters = [':email'=>$this->email];
+        $stmt_cam->execute($parameters);
         $camaras = $stmt_cam->fetchAll(PDO::FETCH_ASSOC);
         return $camaras;
     }
 
     public function getEscenas($conexion) {
-        $stmt_esc = $conexion->prepare("SELECT * FROM escena WHERE usuario_email = '$this->email'");
-        $stmt_esc->execute();
+        $stmt_esc = $conexion->prepare("SELECT * FROM escena WHERE usuario_email = :email");
+        $parameters = [':email'=>$this->email];
+        $stmt_esc->execute($parameters);
         $escenas = $stmt_esc->fetchAll(PDO::FETCH_ASSOC);
         return $escenas;
     }
 
     public function getProgramas($conexion) {
-        $stmt_prg = $conexion->prepare("SELECT * FROM programa WHERE dispositivo_id IN (SELECT id FROM dispositivo WHERE usuario_email = '$this->email')");
-        $stmt_prg->execute();
+        $stmt_prg = $conexion->prepare("SELECT * FROM programa WHERE dispositivo_id IN (SELECT id FROM dispositivo WHERE usuario_email = :email)");
+        $parameters = [':email'=>$this->email];
+        $stmt_prg->execute($parameters);
         $programas = $stmt_prg->fetchAll(PDO::FETCH_ASSOC);
         return $programas;
     }
 
     public function getLog($conexion, $cant) {
-        $stmt_log = $conexion->prepare("SELECT * FROM log WHERE usuario_email = '$this->email' ORDER BY hora DESC LIMIT $cant");
-        $stmt_log->execute();
+        $stmt_log = $conexion->prepare("SELECT * FROM log WHERE usuario_email = :email ORDER BY hora DESC LIMIT :cant");
+        $parameters = [':email'=>$this->email, ':cant'=>$cant];
+        $stmt_log->execute($parameters);
         $logs = $stmt_log->fetchAll(PDO::FETCH_ASSOC);
         return $logs;
     }

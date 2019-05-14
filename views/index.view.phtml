@@ -1,13 +1,13 @@
 <div class="container-fluid col-12">
     <div class="row">
         <div class="col-12 imagen_index mb-3">
-            <?php if($hora>=00 && $hora<=05): ?>
+            <?php if ($hora >= 00 && $hora <= 05): ?>
                 <img src="imgs/index4.jpg" class="img-fluid img-index">
-            <?php elseif($hora>=06 && $hora<=11): ?>
+            <?php elseif ($hora >= 06 && $hora <= 11): ?>
                 <img src="imgs/index1.jpg" class="img-fluid img-index">
-            <?php elseif($hora>=12 && $hora<=17): ?>
+            <?php elseif ($hora >= 12 && $hora <= 17): ?>
                 <img src="imgs/index2.jpg" class="img-fluid img-index">
-            <?php elseif($hora>=18 && $hora<=23): ?>
+            <?php elseif ($hora >= 18 && $hora <= 23): ?>
                 <img src="imgs/index3.jpg" class="img-fluid img-index">
             <?php endif; ?>
             <div id="index_title">
@@ -28,7 +28,7 @@
             <select class="form-control mt-3" id="selec_comunidad">
                 <option selected disabled class="text-muted"><?= $i_index_select1 ?></option>
                 <option disabled class="text-muted">------------------------------</option>
-                <?php foreach($comunidades as $comunidad): ?>
+                <?php foreach ($comunidades as $comunidad): ?>
                 <option value="<?= $comunidad['id'] ?>"><?= $comunidad['comunidad'] ?></option>
                 <?php endforeach; ?>
             </select>
@@ -66,14 +66,16 @@
 <div class="container mt-5">
     <div class="row mt-5">
         <div class="col-12 mt-5">
-            <iframe id="videoYT" width="100%" src="https://www.youtube.com/embed/UPGir81FUpY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe id="videoYT" width="100%" src="https://www.youtube.com/embed/UPGir81FUpY" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
         </div>
     </div>
 </div>
 <div class="container-fluid mt-5">
     <div class="row mt-5">
         <div class="col-12 col-md-6 quotes">
-            <i class="fas fa-quote-left hvr-grow-rotate" ></i>
+            <i class="fas fa-quote-left hvr-grow-rotate"></i>
             <div class="quote_container">
                 <hr>
                 <p>"La mejor empresa para que tu casa funcione de la forma mas eficiente posible"</p>
@@ -82,7 +84,7 @@
             </div>
         </div>
         <div class="col-12 col-md-6 quotes">
-            <i class="fas fa-quote-left hvr-grow-rotate" ></i>
+            <i class="fas fa-quote-left hvr-grow-rotate"></i>
             <div class="quote_container">
                 <hr>
                 <p>"Opiniones buenas de mentira para hacer que la pagina quede mejor de lo que es ya en realidad"</p>
@@ -95,15 +97,21 @@
 <div class="container mt-5">
     <div class="row pide_presupuesto">
         <div class="col-12 col-lg-6">
-            <img src="imgs/dibujo.jpg" style="width: 100%" >
+            <img src="imgs/dibujo.jpg" style="width: 100%">
         </div>
         <div class="col-12 col-lg-6 info_presupuesto align-self-center">
-            <img src="imgs/list1.png" class="hvr-grow"><p>Cuidamos el medio ambiente</p>
-            <img src="imgs/list2.png" class="hvr-grow"><p>Utilizamos tecnologia puntera</p>
-            <img src="imgs/list3.png" class="hvr-grow"><p>Cuidamos a nuestros clientes</p>
-            <img src="imgs/list4.png" class="hvr-grow"><p>Cumplimos nuestras promesas</p>
-            <img src="imgs/list5.png" class="hvr-grow"><p>Garantizamos tu seguridad</p>
-            <img src="imgs/list6.png" class="hvr-grow"><p>Accede desde donde quieras</p>
+            <img src="imgs/list1.png" class="hvr-grow">
+            <p>Cuidamos el medio ambiente</p>
+            <img src="imgs/list2.png" class="hvr-grow">
+            <p>Utilizamos tecnologia puntera</p>
+            <img src="imgs/list3.png" class="hvr-grow">
+            <p>Cuidamos a nuestros clientes</p>
+            <img src="imgs/list4.png" class="hvr-grow">
+            <p>Cumplimos nuestras promesas</p>
+            <img src="imgs/list5.png" class="hvr-grow">
+            <p>Garantizamos tu seguridad</p>
+            <img src="imgs/list6.png" class="hvr-grow">
+            <p>Accede desde donde quieras</p>
         </div>
     </div>
 </div>
@@ -135,15 +143,18 @@
 -->
 <a href="#" id="go_up" class="hvr-icon-up" onclick="topFunction()"><i class="fas fa-chevron-up hvr-icon"></i></a>
 <script>
-    window.onscroll = function() {scrollFunction()};
+    window.onscroll = function () {
+        scrollFunction()
+    };
     document.body.onload = resizeIframe;
     document.body.onresize = resizeIframe;
     $('#selec_comunidad').change(cargarProvincias);
+
     /* let t1=0; */
 
     function resizeIframe() {
         let anchura = document.getElementById('videoYT').scrollWidth;
-        document.getElementById('videoYT').height = anchura*0.5625;
+        document.getElementById('videoYT').height = anchura * 0.5625;
     }
 
     function scrollFunction() {
@@ -155,7 +166,7 @@
     }
 
     function topFunction() {
-        $('html, body').animate({scrollTop:0}, 'slow');
+        $('html, body').animate({scrollTop: 0}, 'slow');
     }
 
     /*function cargarProvincias(event) {

@@ -14,13 +14,13 @@ if (isset($_POST['scn_name'])) {
 
     $stmt_cnt = $conexion->prepare("SELECT MAX(id) as id FROM escena");
     $stmt_cnt->execute();
-    $escena_id = $stmt_cnt->fetchAll(PDO::FETCH_ASSOC);
-    $escena_id = $escena_id[0]['id'];
+    $escena_id = $stmt_cnt->fetch(PDO::FETCH_ASSOC);
+    $escena_id = $escena_id['id'];
 
     $stmt_cnt2 = $conexion->prepare("SELECT MAX(id) as id FROM programa");
     $stmt_cnt2->execute();
-    $programas = $stmt_cnt2->fetchAll(PDO::FETCH_ASSOC);
-    $id_prg = $programas[0]['id'];
+    $programas = $stmt_cnt2->fetch(PDO::FETCH_ASSOC);
+    $id_prg = $programas['id'];
 
 
     for ($i = 0; $i < count($_POST['scn_disp_name']); $i++) {

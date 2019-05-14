@@ -4,10 +4,11 @@ require_once "metodos.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
-if(isset($_POST['email_chg'])) {
+if (isset($_POST['email_chg'])) {
     $usuario_ex = buscarUsuario($conexion, $_POST['email_chg']);
     if (!empty($usuario_ex)) {
         try {
@@ -45,14 +46,10 @@ if(isset($_POST['email_chg'])) {
         } catch (Exception $e) {
             echo $e->errorMessage();
         }
-        $stmt_rec_sch = $conexion->prepare("SELECT * FROM pswd_rec WHERE usuario_email = :email");
-        $parameters_rec_sch = [':email' => $_POST['email_chg']];
-        $stmt_rec_sch->execute($parameters_rec_sch);
-        $existe = $stmt_rec_sch->fetch(PDO::FETCH_ASSOC);
+        $existe = getPsswRec($conexion, $_POST['email_chg']);
         if (!empty($existe)) {
             $stmt_del = $conexion->prepare("DELETE FROM pswd_rec WHERE usuario_email = :email");
-            $parameters_del = [':email' => $_POST['email_chg']];
-            $stmt_del->execute($parameters_del);
+            $stmt_del->execute($parameters_rec_sch);
         }
         $stmt_rec = $conexion->prepare("INSERT INTO pswd_rec VALUES (:usuario, :id, :token, :tiempo)");
         $parameters_rec = [':usuario' => $_POST['email_chg'], ':id' => $id, ':token' => hash('md5', $token), ':tiempo' => time()];

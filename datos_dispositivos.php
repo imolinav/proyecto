@@ -17,9 +17,7 @@ $parameters_prg = [':id' => $id, ':dia_actual' => date('Y-m-d')];
 $stmt_prog->execute($parameters_prg);
 $programas = $stmt_prog->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt_scn = $conexion->prepare("SELECT * FROM escena WHERE id = :id");
-$stmt_scn->execute($parameters);
-$escenas = $stmt_scn->fetchAll(PDO::FETCH_ASSOC);
+$escena = getEscena($conexion, $id);
 
 $disp_scn = $conexion->prepare("SELECT D.id, D.nombre, D.habitacion, P.dia_inicio, P.hora_inicio, P.dia_fin, P.hora_fin, P.temperatura FROM dispositivo D, programa P, compuesta C, escena E WHERE D.id = P.dispositivo_id AND P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
 $disp_scn->execute($parameters);
@@ -98,8 +96,7 @@ if (isset($_POST['disp'])) {
                 <p><?= $i_disp_texto8 ?></p>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i
-                                    class="fas fa-thermometer-quarter"></i></span>
+                        <span class="input-group-text" id="basic-addon1"><iclass="fas fa-thermometer-quarter"></i></span>
                     </div>
                     <input type="number" class="form-control" name="prg_temp" placeholder="0" min="0"/>
                     <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
@@ -109,10 +106,10 @@ if (isset($_POST['disp'])) {
         </div>
     <?php endif;
 } else if (isset($_POST['scn'])) {
-    if (!empty($escenas)): ?>
+    if (!empty($escena)): ?>
 
         <div class="col-12 col-md-6 col-lg-5 col-xl-4 mt-5 mt-md-0 offset-lg-1 offset-xl-2 pl-5" id="datos_scn">
-            <?php if ($escenas[0]['activa'] == 1): ?>
+            <?php if ($escena['activa'] == 1): ?>
                 <img src="imgs/on.png" height="100px" class="mb-5 hvr-grow" id="scn_apagar">
             <?php else: ?>
                 <img src="imgs/off.png" height="100px" class="mb-5 hvr-grow" id="scn_apagar">

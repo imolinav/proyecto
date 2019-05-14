@@ -1,13 +1,16 @@
 <div class="container mt-4 formulario_registro">
     <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user" aria-selected="true"><?= $i_cpanel_tab1 ?></a>
+            <a class="nav-link" id="add_user_tab" data-toggle="tab" href="#add_user" role="tab" aria-controls="add_user"
+               aria-selected="true"><?= $i_cpanel_tab1 ?></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="modify_user_tab" data-toggle="tab" href="#modify_user" role="tab" aria-controls="modify_user" aria-selected="true"><?= $i_cpanel_tab2 ?></a>
+            <a class="nav-link" id="modify_user_tab" data-toggle="tab" href="#modify_user" role="tab"
+               aria-controls="modify_user" aria-selected="true"><?= $i_cpanel_tab2 ?></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="chat_tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false"><?= $i_cpanel_tab3 ?></a>
+            <a class="nav-link" id="chat_tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat"
+               aria-selected="false"><?= $i_cpanel_tab3 ?></a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -118,12 +121,13 @@
                     <div class="input-group">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="select_user"><i class="fas fa-user-friends"></i></label>
+                                <label class="input-group-text" for="select_user"><i
+                                            class="fas fa-user-friends"></i></label>
                             </div>
                             <select class="form-control" data-live-search="true" id="select_user">
                                 <option selected disabled><?= $i_cpanel_option1 ?></option>
-                                <?php foreach($usuarios as $user) : ?>
-                                <option value="<?= $user['email'] ?>"><?= $user['nombre'] ?></option>
+                                <?php foreach ($usuarios as $user) : ?>
+                                    <option value="<?= $user['email'] ?>"><?= $user['nombre'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -135,19 +139,20 @@
             <div class="container" id="admin_chat">
                 <div class="row mt-2">
                     <div class="col-4" id="admin_chat_users">
-                        <?php foreach($usuarios_chat as $usuario_chat) {
-                        $cont = 0;
-                        if(!empty($mensajes_nl)) {
-                            foreach ($mensajes_nl as $mensaje_nl) {
-                                if($mensaje_nl['de']==$usuario_chat['email']) {
-                                    $cont++;
+                        <?php foreach ($usuarios_chat as $usuario_chat) {
+                            $cont = 0;
+                            if (!empty($mensajes_nl)) {
+                                foreach ($mensajes_nl as $mensaje_nl) {
+                                    if ($mensaje_nl['de'] == $usuario_chat['email']) {
+                                        $cont++;
+                                    }
                                 }
                             }
-                        }
-                        if($cont>0):?>
-                            <div class="new_msg_admin"><?= $cont ?></div>
-                        <?php endif; ?>
-                            <p class="user_chat"><img src="<?= $usuario_chat['foto'] ?>"><?= $usuario_chat['usuario'] ?></p>
+                            if ($cont > 0):?>
+                                <div class="new_msg_admin"><?= $cont ?></div>
+                            <?php endif; ?>
+                            <p class="user_chat"><img src="<?= $usuario_chat['foto'] ?>"><?= $usuario_chat['usuario'] ?>
+                            </p>
                             <input type="hidden" value="<?= $usuario_chat['email'] ?>">
                         <?php } ?>
                     </div>
@@ -160,7 +165,8 @@
                                 <input type="text" class="form-control" disabled id="msg_admin">
                             </div>
                             <div class="col-2 mt-3 mb-3">
-                                <input type="button" class="btn btn-primary" value="<?= $i_cpanel_boton1 ?>" disabled id="enviar_admin">
+                                <input type="button" class="btn btn-primary" value="<?= $i_cpanel_boton1 ?>" disabled
+                                       id="enviar_admin">
                             </div>
                         </div>
                     </div>
@@ -177,12 +183,12 @@
     document.getElementsByName('su_hab_num')[0].onchange = anyadirHab;
     document.getElementsByName('su_hab_cant_disp[]')[0].onchange = anyadirDisp;
     document.getElementsByName('submit_btn')[0].onclick = comprobarForm;
-    for(let i = 0; i<document.getElementsByClassName('user_chat').length; i++) {
+    for (let i = 0; i < document.getElementsByClassName('user_chat').length; i++) {
         document.getElementsByClassName('user_chat')[i].onclick = selecUser;
     }
     document.getElementById('enviar_admin').onclick = enviarMensaje;
     document.getElementById('select_user').onchange = buscarUser;
-    for (let i = 0; i<document.getElementsByClassName('nav-link').length; i++) {
+    for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
         document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
     }
     let regex_email = /^.+@.+\..+$/;
@@ -193,7 +199,7 @@
 
     function cargarTab() {
         let tab = sessionStorage.getItem('active_tab');
-        if(tab == null) {
+        if (tab == null) {
             tab = "add_user_tab";
         }
         let tab_p = tab.substring(0, tab.length - 4);
@@ -204,88 +210,88 @@
     }
 
     function anyadirHab(event) {
-        let aux="";
-        if(event.target.name==="new_su_hab_num") {
+        let aux = "";
+        if (event.target.name === "new_su_hab_num") {
             aux = "new_";
         }
-        if(document.getElementsByName(aux+'su_hab_num')[0].value > document.getElementsByClassName(aux+'habitaciones').length) {
-            if(event.target.name==="new_su_hab_num") {
-                document.getElementById(aux+'form_reg').insertBefore(new_div_hab.cloneNode(true), document.getElementsByName(aux+'submit_btn')[0].previousSibling.previousSibling);
+        if (document.getElementsByName(aux + 'su_hab_num')[0].value > document.getElementsByClassName(aux + 'habitaciones').length) {
+            if (event.target.name === "new_su_hab_num") {
+                document.getElementById(aux + 'form_reg').insertBefore(new_div_hab.cloneNode(true), document.getElementsByName(aux + 'submit_btn')[0].previousSibling.previousSibling);
             } else {
-                document.getElementById(aux+'form_reg').insertBefore(div_hab.cloneNode(true), document.getElementsByName(aux+'submit_btn')[0].previousSibling.previousSibling);
+                document.getElementById(aux + 'form_reg').insertBefore(div_hab.cloneNode(true), document.getElementsByName(aux + 'submit_btn')[0].previousSibling.previousSibling);
             }
-            for(let i = 0; i<document.getElementsByName(aux+'su_hab_cant_disp[]').length; i++) {
-                document.getElementsByName(aux+'su_hab_cant_disp[]')[i].onchange = anyadirDisp;
+            for (let i = 0; i < document.getElementsByName(aux + 'su_hab_cant_disp[]').length; i++) {
+                document.getElementsByName(aux + 'su_hab_cant_disp[]')[i].onchange = anyadirDisp;
             }
-        } else if(document.getElementsByName(aux+'su_hab_num')[0].value < document.getElementsByClassName(aux+'habitaciones').length) {
-            document.getElementById(aux+'form_reg').removeChild(document.getElementsByClassName(aux+'habitaciones')[document.getElementsByClassName(aux+'habitaciones').length - 1]);
+        } else if (document.getElementsByName(aux + 'su_hab_num')[0].value < document.getElementsByClassName(aux + 'habitaciones').length) {
+            document.getElementById(aux + 'form_reg').removeChild(document.getElementsByClassName(aux + 'habitaciones')[document.getElementsByClassName(aux + 'habitaciones').length - 1]);
         }
     }
 
     function anyadirDisp(event) {
-        let aux="";
-        if(event.target.name==="new_su_hab_cant_disp[]") {
+        let aux = "";
+        if (event.target.name === "new_su_hab_cant_disp[]") {
             aux = "new_";
         }
-        if(event.target.value > event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux+'dispositivos').length) {
-            if(event.target.name==="new_su_hab_cant_disp[]") {
+        if (event.target.value > event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux + 'dispositivos').length) {
+            if (event.target.name === "new_su_hab_cant_disp[]") {
                 event.target.parentNode.parentNode.parentNode.appendChild(new_div_disp.cloneNode(true));
             } else {
                 event.target.parentNode.parentNode.parentNode.appendChild(div_disp.cloneNode(true));
             }
-        } else if(event.target.value < event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux+'dispositivos').length) {
-            event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux+'dispositivos')[event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux+'dispositivos').length - 1]);
+        } else if (event.target.value < event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux + 'dispositivos').length) {
+            event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux + 'dispositivos')[event.target.parentNode.parentNode.parentNode.getElementsByClassName(aux + 'dispositivos').length - 1]);
         }
     }
 
     function comprobarForm(event) {
         let aux = "";
         let ok = true;
-        if(event.target.name==="new_submit_btn") {
+        if (event.target.name === "new_submit_btn") {
             aux = "new_";
         }
-        for(let j=0; j<document.getElementById(aux+'form_reg').getElementsByTagName('input').length; j++) {
-            document.getElementById(aux+'form_reg').getElementsByTagName('input')[j].classList.remove('is-invalid');
+        for (let j = 0; j < document.getElementById(aux + 'form_reg').getElementsByTagName('input').length; j++) {
+            document.getElementById(aux + 'form_reg').getElementsByTagName('input')[j].classList.remove('is-invalid');
         }
-        for(let j=0; j<document.getElementById(aux+'form_reg').getElementsByTagName('select').length; j++) {
-            document.getElementById(aux+'form_reg').getElementsByTagName('select')[j].classList.remove('is-invalid');
+        for (let j = 0; j < document.getElementById(aux + 'form_reg').getElementsByTagName('select').length; j++) {
+            document.getElementById(aux + 'form_reg').getElementsByTagName('select')[j].classList.remove('is-invalid');
         }
-        for(let i = 0; i<document.getElementById(aux+'form_reg').getElementsByTagName('input').length; i++) {
-            if(document.getElementById(aux+'form_reg').getElementsByTagName('input')[i].type==="text" && document.getElementById(aux+'form_reg').getElementsByTagName('input')[i].value==="" && document.getElementById(aux+'form_reg').getElementsByTagName('input')[i].name!=='new_email') {
-                document.getElementById(aux+'form_reg').getElementsByTagName('input')[i].classList.add('is-invalid');
+        for (let i = 0; i < document.getElementById(aux + 'form_reg').getElementsByTagName('input').length; i++) {
+            if (document.getElementById(aux + 'form_reg').getElementsByTagName('input')[i].type === "text" && document.getElementById(aux + 'form_reg').getElementsByTagName('input')[i].value === "" && document.getElementById(aux + 'form_reg').getElementsByTagName('input')[i].name !== 'new_email') {
+                document.getElementById(aux + 'form_reg').getElementsByTagName('input')[i].classList.add('is-invalid');
                 ok = false;
             }
         }
-        for (let i=0; i<document.getElementsByName(aux+'su_disp_type[]').length; i++) {
-            if(document.getElementsByName(aux+'su_disp_type[]')[i].value==="0") {
-                document.getElementsByName(aux+'su_disp_type[]')[i].classList.add('is-invalid');
+        for (let i = 0; i < document.getElementsByName(aux + 'su_disp_type[]').length; i++) {
+            if (document.getElementsByName(aux + 'su_disp_type[]')[i].value === "0") {
+                document.getElementsByName(aux + 'su_disp_type[]')[i].classList.add('is-invalid');
             }
         }
-        if(aux==="") {
+        if (aux === "") {
             if (document.getElementsByName(aux + 'su_email')[0].value !== "" && regex_email.test(document.getElementsByName(aux + 'su_email')[0].value) === false) {
                 document.getElementsByName(aux + 'su_email')[0].classList.add('is-invalid');
                 ok = false;
             }
         }
-        if(ok === true) {
-            if(aux!=="") {
+        if (ok === true) {
+            if (aux !== "") {
                 document.getElementsByName('user_mod_option')[0].value = "add";
             }
-            document.getElementById(aux+'form_reg').submit();
+            document.getElementById(aux + 'form_reg').submit();
         }
     }
 
     function buscarUser(event) {
-        if(document.getElementById('modificar_usuario')) {
+        if (document.getElementById('modificar_usuario')) {
             document.getElementById('modificar_usuario').parentNode.removeChild(document.getElementById('modificar_usuario'));
         }
         user = event.target.value;
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_user.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.onreadystatechange = function() {
-            if(httpRequest.readyState === 4) {
-                if(httpRequest.status === 200) {
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
                     //document.getElementById('modify_user').insertAdjacentHTML('beforeend', httpRequest.responseText);
                     $('#modify_user').append(httpRequest.responseText).children(':last').hide().fadeIn("slow");
                     document.getElementsByName('new_su_hab_num')[0].onchange = anyadirHab;
@@ -298,7 +304,7 @@
                 }
             }
         };
-        httpRequest.send('buscar='+user);
+        httpRequest.send('buscar=' + user);
     }
 
     function confirmarDelete() {
@@ -309,7 +315,7 @@
     function comprobarEmail() {
         let regex_email = /^.+@.+\..+$/;
         document.getElementsByName('new_email')[0].classList.remove('is-invalid');
-        if(document.getElementsByName('new_email')[0].value==="" || regex_email.test(document.getElementsByName('new_email')[0].value)===false) {
+        if (document.getElementsByName('new_email')[0].value === "" || regex_email.test(document.getElementsByName('new_email')[0].value) === false) {
             document.getElementsByName('new_email')[0].classList.add('is-invalid');
         } else {
             $('#updEmailModal').modal('toggle');
@@ -326,10 +332,10 @@
     function selecUser(event) {
         elemento = event.target;
         usuario = event.target.nextElementSibling.value;
-        if(document.getElementsByClassName('msgs_nl_admin')[0]) {
+        if (document.getElementsByClassName('msgs_nl_admin')[0]) {
             let cant_msgs = parseInt(document.getElementsByClassName('msgs_nl_admin')[0].innerHTML);
             let msgs_leidos = parseInt(event.target.previousElementSibling.innerHTML);
-            if(cant_msgs - msgs_leidos !== 0) {
+            if (cant_msgs - msgs_leidos !== 0) {
                 document.getElementsByClassName('msgs_nl_admin')[0].innerHTML = cant_msgs - msgs_leidos;
             } else {
                 document.getElementsByClassName('msgs_nl_admin')[0].parentNode.removeChild(document.getElementsByClassName('msgs_nl_admin')[0]);
@@ -339,8 +345,8 @@
     }
 
     function cargarMensajes(elemento, usuario) {
-        if(elemento.previousElementSibling!==null) {
-            if(elemento.previousElementSibling.classList.contains('new_msg_admin')) {
+        if (elemento.previousElementSibling !== null) {
+            if (elemento.previousElementSibling.classList.contains('new_msg_admin')) {
                 elemento.parentNode.removeChild(elemento.previousElementSibling);
             }
         }
@@ -350,11 +356,11 @@
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.onreadystatechange = function() {
-            if(httpRequest.readyState === 4) {
-                if(httpRequest.status === 200) {
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
                     document.getElementById('admin_chat_body').innerHTML = httpRequest.responseText;
-                    for(let i = 0; i<document.getElementsByClassName('user_chat').length; i++) {
+                    for (let i = 0; i < document.getElementsByClassName('user_chat').length; i++) {
                         document.getElementsByClassName('user_chat')[i].classList.remove("user_selected");
                         document.getElementsByClassName('user_chat')[i].onclick = selecUser;
                         actualizarScroll();
@@ -364,17 +370,17 @@
                 }
             }
         };
-        httpRequest.send('user='+usuario);
+        httpRequest.send('user=' + usuario);
     }
 
     function enviarMensaje() {
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.onreadystatechange = function() {
-            if(httpRequest.readyState === 4) {
-                if(httpRequest.status === 200) {
-                    document.getElementById('msg_admin').value="";
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
+                    document.getElementById('msg_admin').value = "";
                     document.getElementById('admin_chat_body').getElementsByTagName('table')[0].innerHTML += httpRequest.responseText;
                     actualizarScroll();
                 }
@@ -382,7 +388,7 @@
         };
         let data = new Datos(document.getElementById('msg_admin').value, usuario);
         let datos = JSON.stringify(data);
-        httpRequest.send('new_msg='+datos);
+        httpRequest.send('new_msg=' + datos);
     }
 
     function Datos(mensaje_admin, usuario) {

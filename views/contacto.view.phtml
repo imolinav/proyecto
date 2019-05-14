@@ -56,7 +56,9 @@
                 <textarea class="form-control" rows="5" name="mensaje_contacto"></textarea>
                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                 <small class="form-text text-muted"><?= $i_contacto_texto6 ?></small>
-                <button type="button" name="submit_contacto" class="btn btn-primary mt-3 hvr-icon-wobble-horizontal"><?= $i_contacto_boton1 ?> <i class="fas fa-envelope hvr-icon ml-1"></i></button>
+                <button type="button" name="submit_contacto"
+                        class="btn btn-primary mt-3 hvr-icon-wobble-horizontal"><?= $i_contacto_boton1 ?> <i
+                            class="fas fa-envelope hvr-icon ml-1"></i></button>
             </div>
         </div>
     </form>
@@ -68,7 +70,7 @@
     let regex_email = /^.+@.+\..+/;
 
     function habilitarInput(event) {
-        if(event.target.value === "otra") {
+        if (event.target.value === "otra") {
             $('[name="opcion_contacto"]').eq(0).prop("disabled", false);
             document.getElementsByName('opcion_contacto')[0].disabled = false;
         } else {
@@ -81,20 +83,20 @@
         document.getElementsByName('email_contacto')[0].classList.remove('is-invalid');
         document.getElementsByName('mensaje_contacto')[0].classList.remove('is-invalid');
         document.getElementsByName('opcion_contacto')[0].classList.remove('is-invalid');
-        if(document.getElementById('texto_error')) {
+        if (document.getElementById('texto_error')) {
             document.getElementById('texto_error').parentNode.removeChild(document.getElementById('texto_error'));
         }
-        if(document.getElementsByName('nombre_contacto')[0].value==="" || document.getElementsByName('email_contacto')[0].value === "" || regex_email.test(document.getElementsByName('email_contacto')[0].value)===false || document.getElementsByName('mensaje_contacto')[0].value === "") {
-            if(document.getElementsByName('nombre_contacto')[0].value==="") {
+        if (document.getElementsByName('nombre_contacto')[0].value === "" || document.getElementsByName('email_contacto')[0].value === "" || regex_email.test(document.getElementsByName('email_contacto')[0].value) === false || document.getElementsByName('mensaje_contacto')[0].value === "") {
+            if (document.getElementsByName('nombre_contacto')[0].value === "") {
                 document.getElementsByName('nombre_contacto')[0].classList.add('is-invalid');
             }
-            if(document.getElementsByName('email_contacto')[0].value === "" || regex_email.test(document.getElementsByName('email_contacto')[0].value)===false) {
+            if (document.getElementsByName('email_contacto')[0].value === "" || regex_email.test(document.getElementsByName('email_contacto')[0].value) === false) {
                 document.getElementsByName('email_contacto')[0].classList.add('is-invalid');
             }
-            if(document.getElementsByName('mensaje_contacto')[0].value === "") {
+            if (document.getElementsByName('mensaje_contacto')[0].value === "") {
                 document.getElementsByName('mensaje_contacto')[0].classList.add('is-invalid');
             }
-            if(document.getElementsByName('opcion_contacto')[0].value === "" && document.getElementsByName('opcion_contacto')[0].disabled===false) {
+            if (document.getElementsByName('opcion_contacto')[0].value === "" && document.getElementsByName('opcion_contacto')[0].disabled === false) {
                 document.getElementsByName('opcion_contacto')[0].classList.add('is-invalid');
             }
         } else

@@ -1,36 +1,27 @@
 <?php
 //session_start();
 require_once "metodos.php";
-date_default_timezone_set("Europe/Madrid");
 //login
-if(isset($_POST['li_email'])) {
-    $stmt = $conexion->prepare("SELECT * FROM usuario WHERE email = :email");
-    $parameters = [':email'=>$_POST['li_email']];
-    $stmt->execute($parameters);
-    $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Usuario");
-    $usuario = $stmt->fetch();
-    if(empty($usuario)) {
+if (isset($_POST['li_email'])) {
+    $usuario = getUsuario($conexion, $_POST['li_email']);
+    if (empty($usuario)) {
         echo "<script type='text/javascript'>alert('El usuario no existe');</script>";
-    } else if(password_verify($_POST['li_pass'], $usuario->getPass())) {
+    } else if (password_verify($_POST['li_pass'], $usuario->getPass())) {
         $_SESSION['email'] = $usuario->getEmail();
-
-        $stmt_rec = $conexion->prepare("SELECT * FROM pswd_rec WHERE usuario_email = :email");
-        $parameters_rec = [':email'=>$usuario->getEmail()];
-        $stmt_rec->execute($parameters_rec);
-        $reco = $stmt_rec->fetch(PDO::FETCH_ASSOC);
-        if(!empty($reco)) {
+        $reco = getPsswRec($conexion, $usuario->getEmail());
+        if (!empty($reco)) {
             $stmt_del = $conexion->prepare("DELETE FROM pswd_rec WHERE usuario_email = :email");
-            $parameters_del = [':email'=>$usuario->getEmail()];
+            $parameters_del = [':email' => $usuario->getEmail()];
             $stmt_del->execute($parameters_del);
         }
     } else {
         echo "<script type='text/javascript'>alert('La contrasenya no es correcta');</script>";
     }
 
-    if($usuario->getActivo() == 0) {
+    if ($usuario->getActivo() == 0) {
         header('Location: cambio_pass.php');
     }
-    if($usuario->getAdmin() == 1) {
+    if ($usuario->getAdmin() == 1) {
         header('Location: cpanel.php');
     }
 
@@ -38,16 +29,16 @@ if(isset($_POST['li_email'])) {
 }
 
 //cambio pass
-if(isset($_POST['pass_chg'])) {
+if (isset($_POST['pass_chg'])) {
     $usuario->updatePassFT($conexion, $_POST['pass_chg']);
 }
-if(isset($_POST['pass_recovery'])) {
+if (isset($_POST['pass_recovery'])) {
     $stmt = $conexion->prepare("UPDATE usuario SET pass = :pass, activo = 1 WHERE email = :email");
-    $parameters = [':pass'=>password_hash($_POST['pass_recovery'], PASSWORD_DEFAULT, ['cost'=>10]), ':email'=>$_POST['user_email_recovery']];
+    $parameters = [':pass' => password_hash($_POST['pass_recovery'], PASSWORD_DEFAULT, ['cost' => 10]), ':email' => $_POST['user_email_recovery']];
     $stmt->execute($parameters);
 
     $stmt_del = $conexion->prepare("DELETE FROM pswd_rec WHERE usuario_email = :email");
-    $parameters_del = [':email'=>$_POST['user_email_recovery']];
+    $parameters_del = [':email' => $_POST['user_email_recovery']];
     $stmt_del->execute($parameters_del);
 }
 

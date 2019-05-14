@@ -2,18 +2,18 @@
 include "metodos.php";
 $logs = $usuario->getLog($conexion, 50);
 $logs_excel = $usuario->getLog($conexion, 500);
-if(isset($_POST['export_xls'])) {
-    $filename="log_dispositivos.xls";
+if (isset($_POST['export_xls'])) {
+    $filename = "log_dispositivos.xls";
     header("Content-Type: application/vnd.ms-excel");
     header("Content-Disposition: attachment; filename=\"$filename\"");
     $isPrintHeader = false;
-    if(!empty($logs_excel)) {
+    if (!empty($logs_excel)) {
         foreach ($logs_excel as $log) {
-            if(!$isPrintHeader) {
-                echo implode("\t", array_keys($log)). "\n";
+            if (!$isPrintHeader) {
+                echo implode("\t", array_keys($log)) . "\n";
                 $isPrintHeader = true;
             }
-            echo implode("\t", array_values($log)). "\n";
+            echo implode("\t", array_values($log)) . "\n";
         }
     }
     exit();

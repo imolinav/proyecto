@@ -13,7 +13,8 @@
                 <small class="form-text text-muted"><?= $i_cambio_pass_texto3 ?></small>
             </div>
             <div class="col-12 offset-md-2">
-                <input type="button" name="submit_cambio_pass" class="btn btn-primary mt-3" value="<?= $i_cambio_pass_boton1 ?>">
+                <input type="button" name="submit_cambio_pass" class="btn btn-primary mt-3"
+                       value="<?= $i_cambio_pass_boton1 ?>">
             </div>
         </div>
     </form>
@@ -27,18 +28,18 @@
         let ok = true;
         document.getElementsByName('pass_chg')[0].classList.remove('is-invalid');
         document.getElementsByName('pass_chg_conf')[0].classList.remove('is-invalid');
-        if(document.getElementsByName('pass_chg')[0].value==="") {
+        if (document.getElementsByName('pass_chg')[0].value === "") {
             document.getElementsByName('pass_chg')[0].classList.add('is-invalid');
             ok = false;
         }
-        if(document.getElementsByName('pass_chg_conf')[0].value==="") {
+        if (document.getElementsByName('pass_chg_conf')[0].value === "") {
             document.getElementsByName('pass_chg_conf')[0].classList.add('is-invalid');
             ok = false;
         }
         //if(document.getElementsByName('pass_chg')[0].value!==document.getElementsByName('pass_chg_conf')[0].value) {
-        if(ok === true) {
-            if($('[name=pass_chg]').eq(0).val()!==$('[name=pass_chg_conf]').eq(0).val()) {
-                if(document.getElementById('texto_error')) {
+        if (ok === true) {
+            if ($('[name=pass_chg]').eq(0).val() !== $('[name=pass_chg_conf]').eq(0).val()) {
+                if (document.getElementById('texto_error')) {
                     event.target.parentNode.removeChild($('#texto_error'));
                 }
                 let error = document.createElement('p');

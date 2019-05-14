@@ -6,11 +6,13 @@
                     <form action="perfil.php" method="post" enctype="multipart/form-data">
                         <img src="<?= $usuario->getFoto() ?>">
                         <br>
-                        <button type="button" class="btn btn-secondary btn-sm mt-3" id="update_foto"><?= $i_perfil_boton1 ?></button>
+                        <button type="button" class="btn btn-secondary btn-sm mt-3"
+                                id="update_foto"><?= $i_perfil_boton1 ?></button>
                     </form>
                 </div>
                 <div class="col-12 col-sm-6 col-md-12">
-                    <p class="mt-3"><?= $i_perfil_texto1 . $usuario->getNombre() ?> <i class="btn btn-light far fa-edit"></i></p>
+                    <p class="mt-3"><?= $i_perfil_texto1 . $usuario->getNombre() ?> <i
+                                class="btn btn-light far fa-edit"></i></p>
                     <p><?= $i_perfil_texto2 . $usuario->getEmail() ?></p>
                     <p><?= $i_perfil_texto3 . count($dispositivos) ?></p>
                     <p><?= $i_perfil_texto4 . count($escenas) ?></p>
@@ -25,13 +27,16 @@
         <div class="col-12 col-md-5 col-lg-4 mt-5 mt-md-0">
             <ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link" id="disp_tab" data-toggle="tab" href="#disp" role="tab" aria-controls="disp" aria-selected="true"><?= $i_perfil_tab1 ?></a>
+                    <a class="nav-link" id="disp_tab" data-toggle="tab" href="#disp" role="tab" aria-controls="disp"
+                       aria-selected="true"><?= $i_perfil_tab1 ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="prg_tab" data-toggle="tab" href="#prg" role="tab" aria-controls="prg" aria-selected="false"><?= $i_perfil_tab2 ?></a>
+                    <a class="nav-link" id="prg_tab" data-toggle="tab" href="#prg" role="tab" aria-controls="prg"
+                       aria-selected="false"><?= $i_perfil_tab2 ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="scn_tab" data-toggle="tab" href="#scn" role="tab" aria-controls="scn" aria-selected="false"><?= $i_perfil_tab3 ?></a>
+                    <a class="nav-link" id="scn_tab" data-toggle="tab" href="#scn" role="tab" aria-controls="scn"
+                       aria-selected="false"><?= $i_perfil_tab3 ?></a>
                 </li>
             </ul>
 
@@ -40,25 +45,29 @@
                     <?php
                     foreach ($habitaciones as $habitacion) : ?>
                         <p class="habitacion_list"><?= $habitacion['habitacion'] ?></p>
-                        <?php foreach($dispositivos as $dispositivo) {
-                            if($dispositivo['habitacion']==$habitacion['habitacion']):?>
-                                <p class="dispositivos_list" data-container=".dispositivos_list" data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='<?= $i_perfil_popover1 . $habitacion['habitacion'] ?><br><?= $i_perfil_popover2 . $dispositivo['num_encendidos'] ?><br><?= $i_perfil_popover3 . $dispositivo['tiempo_encendido'] ?><br><?= $i_perfil_popover4 . $dispositivo['pin'] ?>'><?= $dispositivo['nombre'] ?></p>
+                        <?php foreach ($dispositivos as $dispositivo) {
+                            if ($dispositivo['habitacion'] == $habitacion['habitacion']):?>
+                                <p class="dispositivos_list" data-container=".dispositivos_list" data-html="true"
+                                   data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>"
+                                   data-content='<?= $i_perfil_popover1 . $habitacion['habitacion'] ?><br><?= $i_perfil_popover2 . $dispositivo['num_encendidos'] ?><br><?= $i_perfil_popover3 . $dispositivo['tiempo_encendido'] ?><br><?= $i_perfil_popover4 . $dispositivo['pin'] ?>'><?= $dispositivo['nombre'] ?></p>
                             <?php endif;
                         } endforeach; ?>
-                    <?php if(!empty($camaras)) : ?>
+                    <?php if (!empty($camaras)) : ?>
                         <p class="habitacion_list"><?= $i_perfil_texto5 ?></p>
-                        <?php foreach($camaras as $camara):?>
+                        <?php foreach ($camaras as $camara): ?>
                             <p class="dispositivos_list"><?= $camara['nombre'] ?></p>
                         <?php endforeach;
-                    endif;?>
+                    endif; ?>
                 </div>
                 <div class="tab-pane fade" id="prg" role="tabpanel" aria-labelledby="prg_tab">
-                    <?php if(!empty($programas)) : ?>
+                    <?php if (!empty($programas)) : ?>
                         <p class="habitacion_list"><?= $i_perfil_texto6 ?></p>
-                        <?php foreach($programas as $programa) {
-                            foreach($dispositivos as $dispositivo) {
-                                if($programa['dispositivo_id']==$dispositivo['id']):?>
-                                    <p class="programas_list" data-container=".programas_list"  data-html="true" data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>" data-content='<?= $i_perfil_popover5 . $dispositivo['nombre'] ?><br><?= $i_perfil_popover8 . $programa['dia_inicio'] ?><br><?= $i_perfil_popover6 . $programa['hora_inicio'] ?><br><?= $i_perfil_popover9 . $programa['dia_fin'] ?><br><?= $i_perfil_popover7 . $programa['hora_fin'] ?>'><?= $dispositivo['nombre'] ?></p>
+                        <?php foreach ($programas as $programa) {
+                            foreach ($dispositivos as $dispositivo) {
+                                if ($programa['dispositivo_id'] == $dispositivo['id']):?>
+                                    <p class="programas_list" data-container=".programas_list" data-html="true"
+                                       data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>"
+                                       data-content='<?= $i_perfil_popover5 . $dispositivo['nombre'] ?><br><?= $i_perfil_popover8 . $programa['dia_inicio'] ?><br><?= $i_perfil_popover6 . $programa['hora_inicio'] ?><br><?= $i_perfil_popover9 . $programa['dia_fin'] ?><br><?= $i_perfil_popover7 . $programa['hora_fin'] ?>'><?= $dispositivo['nombre'] ?></p>
                                 <?php endif;
                             }
                         }
@@ -70,10 +79,11 @@
                     <?php endif; ?>
                 </div>
                 <div class="tab-pane fade" id="scn" role="tabpanel" aria-labelledby="scn_tab">
-                    <?php if(!empty($escenas)) : ?>
+                    <?php if (!empty($escenas)) : ?>
                         <p class="habitacion_list"><?= $i_perfil_texto9 ?></p>
-                        <?php foreach($escenas as $escena) : ?>
-                            <p class="escenas_list" data-toggle="popover" data-trigger="focus" title="<?= $escena['nombre'] ?>" data-content="Datos"><?= $escena['nombre'] ?></p>
+                        <?php foreach ($escenas as $escena) : ?>
+                            <p class="escenas_list" data-toggle="popover" data-trigger="focus"
+                               title="<?= $escena['nombre'] ?>" data-content="Datos"><?= $escena['nombre'] ?></p>
                         <?php endforeach;
                     else: ?>
                         <div style="text-align: center">
@@ -90,7 +100,7 @@
     document.body.onload = cargarTab;
     $('#update_foto').click(actualizarFoto);
     $('.btn-light').eq(0).click(actualizarDato);
-    for (let i = 0; i<document.getElementsByClassName('nav-link').length; i++) {
+    for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
         document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
     }
 
@@ -100,7 +110,7 @@
 
     function cargarTab() {
         let tab = sessionStorage.getItem('active_tab_perfil');
-        if(tab == null) {
+        if (tab == null) {
             tab = "disp_tab";
         }
         let tab_p = tab.substring(0, tab.length - 4);
@@ -131,7 +141,9 @@
         event.target.parentNode.appendChild(salto);
         event.target.parentNode.appendChild(input2);
         event.target.parentNode.appendChild(input3);
-        $('[name=upd_foto]').eq(0).change(function() {$('#update_foto_sbm').prop('disabled', false);});
+        $('[name=upd_foto]').eq(0).change(function () {
+            $('#update_foto_sbm').prop('disabled', false);
+        });
         $('#cancel_foto').click(cancelarFoto);
         $('#update_foto').unbind('click');
     }
@@ -154,7 +166,7 @@
         formulario.setAttribute('action', 'perfil.php');
         let input = document.createElement('input');
         input.setAttribute('type', 'text');
-        if(event.target.name==="chg_name") {
+        if (event.target.name === "chg_name") {
             input.setAttribute('name', 'upd_name');
         } else {
             input.setAttribute('name', 'upd_dni');

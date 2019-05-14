@@ -23,7 +23,8 @@ if (isset($_POST['su_name'])) {
     $relays_metodos = [];
     $relay_num = 1;
 
-    //Guardamos los dispositivos y los pins en variables para acceder a ellas de forma mas sencilla
+    // TODO: ~ Modificar la creacion de scripts
+    // Guardamos los dispositivos y los pins en variables para acceder a ellas de forma mas sencilla
     $dispositivos = $_POST['su_disp_name'];
     $pins = $_POST['su_disp_pin'];
     $tipos = $_POST['su_disp_type'];
@@ -205,8 +206,9 @@ else if (isset($_POST['user_mod_option'])) {
     $option = $_POST['user_mod_option'];
     $email = $_POST['user_mod_email'];
     if ($option == "delete") {
-        $stmt_delete = $conexion->prepare("DELETE FROM usuario WHERE email = '$email'");
-        $stmt_delete->execute();
+        $stmt_delete = $conexion->prepare("DELETE FROM usuario WHERE email = :email");
+        $parameters = [':email' => $email];
+        $stmt_delete->execute($parameters);
     } else if ($option == "add") {
         $dispositivos = $_POST['new_su_disp_name'];
         $pins = $_POST['new_su_disp_pin'];
@@ -223,8 +225,9 @@ else if (isset($_POST['user_mod_option'])) {
         }
     } else if ($option == "update") {
         $new_email = $_POST['new_email'];
-        $stmt_update = $conexion->prepare("UPDATE usuario SET email = '$new_email' WHERE email = '$email'");
-        $stmt_update->execute();
+        $stmt_update = $conexion->prepare("UPDATE usuario SET email = :nemail WHERE email = :email");
+        $parameters_update = [':nemail' => $new_email, ':email' => $email];
+        $stmt_update->execute($parameters);
     }
     header("Location: cpanel.php");
 }
@@ -239,16 +242,6 @@ $stmt_users = $conexion->prepare("SELECT * FROM usuario WHERE email<>'admin@smar
 $stmt_users->execute();
 $usuarios = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
 
-function addDispositivo($conexion, $nombre, $habitacion, $usuario_email, $pin, $tipo)
-{
-    $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, temperatura, usuario_email, pin, tipo) VALUES (:nombre, :habitacion, 0, 0, 0, :temperatura, :usuario, :pin, :tipo)");
-    if ($tipo == 2) {
-        $parameters_disp = [':nombre' => $nombre, ':habitacion' => $habitacion, ':temperatura' => 0, ':usuario' => $usuario_email, ':pin' => $pin, ':tipo' => $tipo];
-    } else {
-        $parameters_disp = [':nombre' => $nombre, ':habitacion' => $habitacion, ':temperatura' => null, ':usuario' => $usuario_email, ':pin' => $pin, ':tipo' => $tipo];
-    }
-    $stmt_disp->execute($parameters_disp);
-}
 
 include "views/partials/header.part.php";
 include "views/cpanel.view.phtml";
