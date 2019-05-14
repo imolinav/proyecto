@@ -1,6 +1,5 @@
 <?php
 require_once "metodos.php";
-$stmt_log = $conexion->prepare("INSERT INTO log (fecha, info, usuario_email, hora) VALUES (:dia, :info, :usuario_email, :hora)");
 if (isset($_POST['activar'])) {
     $disp = $_POST['activar'];
     $dispositivo = buscarDispositivo($conexion, $disp);
@@ -22,24 +21,18 @@ if (isset($_POST['activar'])) {
     }
     $stmt->execute($parameters);
     $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": dispositivo " . $accion;
-    $parameters_log = [':dia' => date("Y-m-d"), ':info' => $info, ':usuario_email' => $usuario->getEmail(), ':hora' => date("H:i:s")];
-    $stmt_log->execute($parameters_log);
     echo "bien";
 
 } else if (isset($_POST['programar'])) {
     $datos = json_decode($_POST['programar'], true);
     $dispositivo = buscarDispositivo($conexion, $datos['id_disp']);
-
-    $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": dispositivo programado para el dia " . $datos['dia_ini'] . " a las " . $datos['hora_ini'];
-    $parameters_log = [':dia' => date("Y-m-d"), ':info' => $info, ':usuario_email' => $usuario->getEmail(), ':hora' => date("H:i:s")];
-    $stmt_log->execute($parameters_log);
-
     foreach ($datos as $k => $v) {
         if ($v === "" || empty($v)) {
             $datos[$k] = null;
         }
     }
     addPrgrm($conexion, $datos['id_disp'], $datos['dia_ini'], $datos['hora_ini'], $datos['dia_fin'], $datos['hora_fin'], $datos['temp_ini'], $datos['temp_fin'], $datos['temp']);
+    $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": dispositivo programado para el dia " . $datos['dia_ini'] . " a las " . $datos['hora_ini'];
     echo "bien";
 
 } else if (isset($_POST['escena'])) {
@@ -51,9 +44,6 @@ if (isset($_POST['activar'])) {
         $stmt_scn_del->execute($parameters);
 
         $info = "Escena con nombre \"" . $escena['nombre'] . "\" eliminada.";
-        $parameters_log = [':dia' => date("Y-m-d"), ':info' => $info, ':usuario_email' => $usuario->getEmail(), ':hora' => date("H:i:s")];
-        $stmt_log->execute($parameters_log);
-
         echo "eliminado";
     } else if ($dato['accion'] == 'scn_update') {
         $stmt_prgs = $conexion->prepare("SELECT P.id as id FROM programa P, compuesta C, escena E WHERE P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
@@ -66,21 +56,14 @@ if (isset($_POST['activar'])) {
         }
         $stmt_scn_upd = $conexion->prepare("UPDATE escena SET activa = 1 WHERE id = :id");
         $stmt_scn_upd->execute($parameters);
-
         $info = "Escena con nombre \"" . $escena['nombre'] . "\" activada para fecha " . $dato['fecha'];
-        $parameters_log = [':dia' => date("Y-m-d"), ':info' => $info, ':usuario_email' => $usuario->getEmail(), ':hora' => date("H:i:s")];
-        $stmt_log->execute($parameters_log);
-
         echo "actualizado";
     } else if ($dato['accion'] == 'scn_apagar') {
         $stmt_scn_upd = $conexion->prepare("UPDATE escena SET activa = 0 WHERE id = :id");
         $stmt_scn_upd->execute($parameters);
-
         $info = "Escena con nombre \"" . $escena['nombre'] . "\" apagada.";
-        $parameters_log = [':dia' => date("Y-m-d"), ':info' => $info, ':usuario_email' => $usuario->getEmail(), ':hora' => date("H:i:s")];
-        $stmt_log->execute($parameters_log);
-
         echo "apagado";
     }
 }
+$usuario->addLog($conexion, date('Y-m-d'), $info, date('H:i:s'));
 ?>

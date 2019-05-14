@@ -1,7 +1,7 @@
 <?php
 include "metodos.php";
-$logs = $usuario->getLog($conexion, 50);
-$logs_excel = $usuario->getLog($conexion, 500);
+$logs = $usuario->getLogs($conexion, 50);
+$logs_excel = $usuario->getLogs($conexion, 500);
 if (isset($_POST['export_xls'])) {
     $filename = "log_dispositivos.xls";
     header("Content-Type: application/vnd.ms-excel");

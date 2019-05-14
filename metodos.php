@@ -111,6 +111,12 @@ function addPrgrm($conexion, $disp, $d_ini, $h_ini, $d_fin, $h_fin, $t_ini, $t_f
     $stmt->execute($parameters);
 }
 
+function deletePswdRec($conexion, $email) {
+    $stmt = $conexion->prepare("DELETE FROM pswd_rec WHERE usuario_email = :email");
+    $parameters = [':email'=>$email];
+    $stmt->execute($parameters);
+}
+
 //Cerrar sesión
 
 if (isset($_POST['logout'])) {

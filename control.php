@@ -7,10 +7,8 @@ if (isset($_POST['scn_name'])) {
     $parameters_escena = [':nombre' => $_POST['scn_name'], ':email' => $usuario->getEmail()];
     $stmt_escena->execute($parameters_escena);
 
-    $stmt_log = $conexion->prepare("INSERT INTO log (fecha, info, usuario_email, hora) VALUES (:dia, :info, :usuario_email, :hora)");
     $info = "Escena con nombre \"" . $_POST['scn_name'] . "\" creada para el dia " . $_POST['scn_date'] . ".";
-    $parameters_log = [':dia' => date("Y-m-d"), ':info' => $info, ':usuario_email' => $usuario->getEmail(), ':hora' => date("H:i:s")];
-    $stmt_log->execute($parameters_log);
+    $usuario->addLog($conexion, date("Y-m-d"), $info, date("H:i:s"));
 
     $stmt_cnt = $conexion->prepare("SELECT MAX(id) as id FROM escena");
     $stmt_cnt->execute();

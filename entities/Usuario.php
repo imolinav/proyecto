@@ -89,12 +89,18 @@ class Usuario {
         return $programas;
     }
 
-    public function getLog($conexion, $cant) {
-        $stmt_log = $conexion->prepare("SELECT * FROM log WHERE usuario_email = :email ORDER BY hora DESC LIMIT :cant");
-        $parameters = [':email'=>$this->email, ':cant'=>$cant];
+    public function getLogs($conexion, $cant) {
+        $stmt_log = $conexion->prepare("SELECT * FROM log WHERE usuario_email = :email ORDER BY fecha DESC, hora DESC LIMIT $cant");
+        $parameters = [':email'=>$this->email];
         $stmt_log->execute($parameters);
         $logs = $stmt_log->fetchAll(PDO::FETCH_ASSOC);
         return $logs;
+    }
+
+    public function addLog($conexion, $dia, $info, $hora) {
+        $stmt_log = $conexion->prepare("INSERT INTO log (fecha, info, usuario_email, hora) VALUES (:dia, :info, :usuario_email, :hora)");
+        $parameters_log = [':dia' => $dia, ':info' => $info, ':usuario_email' => $this->email, ':hora' => $hora];
+        $stmt_log->execute($parameters_log);
     }
 
 
