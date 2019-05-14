@@ -123,12 +123,17 @@
             httpRequest.open('POST', 'datos_dispositivos.php', true);
             httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === 1) {
+                    cargando();
+                }
                 if (httpRequest.readyState === 4) {
                     if (httpRequest.status === 200) {
+                        quitarCargando();
                         $('#datos_disp').remove();
                         $('#div_datos').append(httpRequest.responseText).children(':last').hide().fadeIn(900);
                         $('#controlador').click(cambiarEstado);
                         $('[name=prg_enviar]').eq(0).click(programarDisp);
+                        $('#btn_del_prg').click(confirmarDelPrg);
                         //document.getElementsByName('prg_enviar')[0].onclick = programarDisp;
                     }
                 }
@@ -158,8 +163,12 @@
                 httpRequest.open('POST', 'actualizar_dispositivo.php', true);
                 httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 httpRequest.onreadystatechange = function () {
+                    if (httpRequest.readyState === 1) {
+                        cargando();
+                    }
                     if (httpRequest.readyState === 4) {
                         if (httpRequest.status === 200) {
+                            quitarCargando();
                             if (httpRequest.responseText === "bien") {
                                 seleccionar(dispositivo);
                             }
@@ -177,13 +186,64 @@
             }
         }
 
+        function confirmarDelPrg(event) {
+            let difuminador = document.createElement('div');
+            difuminador.setAttribute('id', 'difuminador');
+
+            let divisor = document.createElement('div');
+            divisor.setAttribute('class', 'formulario_scn');
+
+            let parrafo = document.createElement('p');
+            let texto = document.createTextNode("Ha seleccionado eliminar el programa.");
+            parrafo.appendChild(texto);
+            let parrafo2 = document.createElement('p');
+            let texto2 = document.createTextNode("¿Desea continuar?");
+            parrafo2.appendChild(texto2);
+
+            let div_btn = document.createElement('div');
+            div_btn.setAttribute('id', 'div_btns');
+
+            let btn1 = document.createElement('input');
+            btn1.setAttribute('type', 'button');
+            btn1.setAttribute('class', 'btn btn-primary mr-3');
+            btn1.setAttribute('id', 'prg_delete');
+            btn1.setAttribute('value', 'Aceptar');
+
+            let btn2 = document.createElement('input');
+            btn2.setAttribute('type', 'button');
+            btn2.setAttribute('class', 'btn btn-danger');
+            btn2.setAttribute('id', 'prg_delete_cancel');
+            btn2.setAttribute('value', 'Cancelar');
+
+            div_btn.appendChild(btn1);
+            div_btn.appendChild(btn2);
+
+            divisor.appendChild(parrafo);
+            divisor.appendChild(parrafo2);
+            divisor.appendChild(div_btn);
+
+            document.body.appendChild(divisor);
+            document.body.appendChild(difuminador);
+
+            $('#prg_delete_cancel').click(cancelarDel);
+            $('#prg_delete').click(deletePrg);
+        }
+
+        function deletePrg() {
+            document.getElementById('btn_del_prg').parentNode.submit();
+        }
+
         function cambiarEstado(event) {
             let httpRequest = obtainXMLHttpRequest();
             httpRequest.open('POST', 'actualizar_dispositivo.php', true);
             httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === 1) {
+                    cargando();
+                }
                 if (httpRequest.readyState === 4) {
                     if (httpRequest.status === 200) {
+                        quitarCargando();
                         if (httpRequest.responseText === "bien") {
                             if (event.target.src === "http://localhost/proyecto/imgs/off.png") {
                                 event.target.src = "http://localhost/proyecto/imgs/on.png";
@@ -216,8 +276,12 @@
             httpRequest.open('POST', 'datos_dispositivos.php', true);
             httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === 1) {
+                    cargando();
+                }
                 if (httpRequest.readyState === 4) {
                     if (httpRequest.status === 200) {
+                        quitarCargando();
                         $('#datos_scn').remove();
                         $('#div_scns').append(httpRequest.responseText).children(':last').hide().fadeIn(900);
                         if (document.getElementById('scn_apagar').src === "http://localhost/proyecto/imgs/on.png") {
@@ -305,8 +369,12 @@
             httpRequest.open('POST', 'actualizar_dispositivo.php', true);
             httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === 1) {
+                    cargando();
+                }
                 if (httpRequest.readyState === 4) {
                     if (httpRequest.status === 200) {
+                        quitarCargando();
                         if (httpRequest.responseText === "apagado") {
                             document.getElementById('scn_apagar').src = "http://localhost/proyecto/imgs/off.png";
                             let date = document.createElement('input');

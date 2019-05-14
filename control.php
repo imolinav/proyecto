@@ -52,6 +52,12 @@ if (isset($_POST['scn_name'])) {
         $stmt_contiene->execute($parameters_contiene);
     }
     header("Location: control.php");
+} else if (isset($_POST['del_prg'])) {
+    $id = $_POST['del_prg'];
+    $stmt_del_prg = $conexion->prepare("DELETE FROM programa WHERE id = :id");
+    $parameters_del_prg = [':id' => $id];
+    $stmt_del_prg->execute($parameters_del_prg);
+    header("Location: control.php");
 }
 $dispositivos = $usuario->getDispositivos($conexion);
 $escenas = $usuario->getEscenas($conexion);

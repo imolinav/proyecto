@@ -42,9 +42,13 @@ if (isset($_POST['disp'])) {
             <?php if (!empty($programas)) {
                 foreach ($programas as $programa) {
                     if ($programa['dispositivo_id'] == $dispositivo['id']):?>
-                        <p><?= $i_disp_texto5 ?></p>
-                        <p><?= $programa['dia_inicio'] . " " . $programa['hora_inicio'] ?></p>
-                        <p><?= $programa['dia_fin'] . " " . $programa['hora_fin'] ?></p>
+                        <form method="post" action="control.php" id="form_del_prg">
+                            <button type="button" class="btn btn-danger" style="float: right;" id="btn_del_prg"><i class="far fa-trash-alt"></i></button>
+                            <p><?= $i_disp_texto5 ?></p>
+                            <p><?= $programa['dia_inicio'] . " " . $programa['hora_inicio'] ?></p>
+                            <p><?= $programa['dia_fin'] . " " . $programa['hora_fin'] ?></p>
+                            <input type="hidden" name="del_prg" value="<?= $programa['id'] ?>">
+                        </form>
                         <hr>
                     <?php endif;
                 }
@@ -96,7 +100,7 @@ if (isset($_POST['disp'])) {
                 <p><?= $i_disp_texto8 ?></p>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><iclass="fas fa-thermometer-quarter"></i></span>
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-thermometer-quarter"></i></span>
                     </div>
                     <input type="number" class="form-control" name="prg_temp" placeholder="0" min="0"/>
                     <div class="invalid-feedback"><?= $i_guser_error2 ?></div>

@@ -290,8 +290,12 @@
         httpRequest.open('POST', 'gest_user.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 1) {
+                cargando();
+            }
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
+                    quitarCargando();
                     //document.getElementById('modify_user').insertAdjacentHTML('beforeend', httpRequest.responseText);
                     $('#modify_user').append(httpRequest.responseText).children(':last').hide().fadeIn("slow");
                     document.getElementsByName('new_su_hab_num')[0].onchange = anyadirHab;
@@ -357,8 +361,12 @@
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 1) {
+                cargando();
+            }
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
+                    quitarCargando();
                     document.getElementById('admin_chat_body').innerHTML = httpRequest.responseText;
                     for (let i = 0; i < document.getElementsByClassName('user_chat').length; i++) {
                         document.getElementsByClassName('user_chat')[i].classList.remove("user_selected");
@@ -378,8 +386,12 @@
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 1) {
+                cargando();
+            }
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
+                    quitarCargando();
                     document.getElementById('msg_admin').value = "";
                     document.getElementById('admin_chat_body').getElementsByTagName('table')[0].innerHTML += httpRequest.responseText;
                     actualizarScroll();

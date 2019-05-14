@@ -50,8 +50,12 @@
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 1) {
+                cargando();
+            }
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
+                    quitarCargando();
                     $('#cuerpo_chat').append(httpRequest.responseText);
                     actualizarScroll();
                 }
@@ -73,8 +77,12 @@
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 1) {
+                cargando();
+            }
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
+                    quitarCargando();
                     //document.getElementById('texto_msg').value="";
                     $('#texto_msg').val("");
                     $('#cuerpo_chat table').append(httpRequest.responseText);

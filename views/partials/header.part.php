@@ -5,30 +5,28 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Smart Living</title>
     <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="css/fonts.css"/>
     <link rel="stylesheet" href="css/hover.css"/>
     <link rel="stylesheet" href="css/weather.css"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link type="text/plain" rel="author" href="humans.txt"/>
-    <title>Smart Living</title>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/canvasjs.min.js"></script>
+    <!--
+    <script src="js/jsmpeg.min.js"></script>
+    <script src="js/websocket.js"></script>
+    <script src="js/websocket-relay.js"></script>
+    -->
 </head>
-<script src="js/jquery-3.3.1.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/canvasjs.min.js"></script>
-<!--
-<script src="js/jsmpeg.min.js"></script>
-<script src="js/websocket.js"></script>
-<script src="js/websocket-relay.js"></script>
--->
 
 <body>
 <header class="navbar navbar-dark navbar-expand bg-dark">
-    <div class="hvr-overline-from-right h1-cont"><h1 class="navbar-brand d-none d-sm-block hvr-underline-from-left"><a
-                    href="index.php">SMART LIVING</a></h1></div>
+    <a href="index.php"><div class="hvr-overline-from-right h1-cont"><h1 class="navbar-brand d-none d-sm-block hvr-underline-from-left">SMART LIVING</h1></div></a>
     <?php if (!isset($_SESSION['email'])): ?>
         <button type="button" class="btn btn-light ml-auto mr-3"><?= $i_header_login ?></button>
     <?php else: ?>

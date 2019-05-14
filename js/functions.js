@@ -5,6 +5,24 @@ function logout(event) {
     event.target.parentNode.submit();
 }
 
+/* CARGANDO */
+
+function cargando() {
+    let span = document.createElement('span');
+    span.setAttribute('class', 'loading');
+    let difuminador = document.createElement('div');
+    difuminador.setAttribute('id', 'difuminador');
+    document.body.appendChild(difuminador);
+    document.body.appendChild(span);
+}
+
+function quitarCargando() {
+    if(document.getElementsByClassName('loading')[0]) {
+        document.body.removeChild(document.getElementsByClassName('loading')[0]);
+        document.body.removeChild(document.getElementById('difuminador'));
+    }
+}
+
 /* CAMBIAR IDIOMA */
 
 $('#castellano').click(cambiarIdioma);

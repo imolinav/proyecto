@@ -48,8 +48,7 @@ if (isset($_POST['email_chg'])) {
         }
         $existe = getPsswRec($conexion, $_POST['email_chg']);
         if (!empty($existe)) {
-            $stmt_del = $conexion->prepare("DELETE FROM pswd_rec WHERE usuario_email = :email");
-            $stmt_del->execute($parameters_rec_sch);
+            deletePswdRec($conexion, $_POST['email_chg']);
         }
         $stmt_rec = $conexion->prepare("INSERT INTO pswd_rec VALUES (:usuario, :id, :token, :tiempo)");
         $parameters_rec = [':usuario' => $_POST['email_chg'], ':id' => $id, ':token' => hash('md5', $token), ':tiempo' => time()];

@@ -129,8 +129,12 @@ function comprobarForm() {
         httpRequest.open('POST', 'comprobacion_login.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 1) {
+                cargando();
+            }
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
+                    quitarCargando();
                     if (httpRequest.responseText === "opcion1") {
                         texto_error = document.createTextNode("El usuario o la contraseña son incorrectos");
                         p_error.appendChild(texto_error);
