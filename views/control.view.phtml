@@ -21,7 +21,11 @@
                             <p class="habitacion_list"><?= $habitacion['habitacion'] ?></p>
                             <?php foreach ($dispositivos as $dispositivo) {
                                 if ($dispositivo['habitacion'] == $habitacion['habitacion']):?>
-                                    <p class="dispositivos_list"><?= $dispositivo['nombre'] ?></p>
+                                    <?php if ($dispositivo['encendido']==1) : ?>
+                                    <p class="dispositivos_list"><?= $dispositivo['nombre'] ?><i class="fas fa-power-off icon_disp icon_on"></i></p>
+                                    <?php else :?>
+                                    <p class="dispositivos_list"><?= $dispositivo['nombre'] ?><i class="fas fa-power-off icon_disp"></i></p>
+                                    <?php endif; ?>
                                     <input type="hidden" value="<?= $dispositivo['id'] ?>">
                                 <?php endif;
                             } endforeach; ?>
@@ -38,7 +42,11 @@
                     <div class="col-12 col-md-6 mt-3">
                         <p class="scene_title">Escenas</p>
                         <?php foreach ($escenas as $escena) : ?>
-                            <p class="scenes_list"><?= $escena['nombre'] ?></p>
+                            <?php if ($escena['activa']==1) :?>
+                            <p class="scenes_list"><?= $escena['nombre'] ?><i class="fas fa-power-off icon_disp icon_on"></i></p>
+                            <?php else :?>
+                            <p class="scenes_list"><?= $escena['nombre'] ?><i class="fas fa-power-off icon_disp"></i></p>
+                            <?php endif; ?>
                             <input type="hidden" value="<?= $escena['id'] ?>">
                         <?php endforeach; ?>
                         <a href="nueva_escena.php" class="btn btn-primary mt-3">Escena nueva</a>
@@ -247,8 +255,10 @@
                         if (httpRequest.responseText === "bien") {
                             if (event.target.src === "http://localhost/proyecto/imgs/off.png") {
                                 event.target.src = "http://localhost/proyecto/imgs/on.png";
+                                document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.add('icon_on');
                             } else {
                                 event.target.src = "http://localhost/proyecto/imgs/off.png";
+                                document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.remove('icon_on');
                             }
                         }
                     }
@@ -377,6 +387,7 @@
                         quitarCargando();
                         if (httpRequest.responseText === "apagado") {
                             document.getElementById('scn_apagar').src = "http://localhost/proyecto/imgs/off.png";
+                            document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.remove('icon_on');
                             let date = document.createElement('input');
                             date.setAttribute('type', 'date');
                             date.setAttribute('name', 'reuse_scn_date');
@@ -407,6 +418,7 @@
                             }
                         } else if (httpRequest.responseText === "actualizado") {
                             seleccionarEscena(escena);
+                            document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.add('icon_on');
                         }
                     }
                 }
@@ -430,11 +442,6 @@
             this.temp_fin = temp_fin;
             this.temp = temp;
         }
-
-        /*function Escena(id_escena, fecha) {
-            this.id_escena = id_escena;
-            this.fecha = fecha;
-        }*/
 
         function Scene(id_escena, accion, fecha) {
             this.id_escena = id_escena;

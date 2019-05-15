@@ -63,7 +63,7 @@ if (isset($_POST['comunidad'])) {
     if ($j == 1) : ?>
         <div class="tab-pane fade show active" id="dia<?= $j ?>" role="tabpanel" aria-labelledby="dia<?= $j ?>_tab">
         <?php else: ?>
-        <div class="tab-pane fade" id="dia<?= $j ?>" role="tabpanel" aria-labelledby="dia<?= $j ?>_tab">
+        <div class="tab-pane fade" id="dia<?= º$j ?>" role="tabpanel" aria-labelledby="dia<?= $j ?>_tab">
         <?php endif; ?>
         <!--  Aqui va el carousel  -->
         <div id="carouselTiempo<?= $j ?>" class="carousel slide" data-ride="carousel" data-interval="false">

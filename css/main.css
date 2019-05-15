@@ -545,6 +545,9 @@ code {
     background-color: #007BFF;
     color: white;
 }
+.disp_act i {
+    color: white;
+}
 #datos_disp img,
 #datos_scn img {
     cursor: pointer;
@@ -588,6 +591,13 @@ code {
 }
 .input-group-prepend {
     /*width: 45px;*/
+}
+.icon_disp {
+    float: right;
+    margin-top: 5px;
+}
+.icon_on {
+    color: #007BFF;
 }
 
 /* GRAFICAS */
