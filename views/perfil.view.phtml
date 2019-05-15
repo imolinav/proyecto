@@ -11,9 +11,8 @@
                     </form>
                 </div>
                 <div class="col-12 col-sm-6 col-md-12">
-                    <p class="mt-3"><?= $i_perfil_texto1 . $usuario->getNombre() ?> <i
-                                class="btn btn-light far fa-edit"></i></p>
-                    <p><?= $i_perfil_texto2 . $usuario->getEmail() ?></p>
+                    <p class="mt-3"><?= $i_perfil_texto1 . $usuario->getNombre() ?> <i id="chg_name" class="btn btn-light far fa-edit"></i></p>
+                    <p><?= $i_perfil_texto2 . $usuario->getEmail() ?> <i class="btn btn-light far fa-edit" id="chg_email"></i></p>
                     <p><?= $i_perfil_texto3 . count($dispositivos) ?></p>
                     <p><?= $i_perfil_texto4 . count($escenas) ?></p>
                 </div>
@@ -99,7 +98,8 @@
 <script>
     document.body.onload = cargarTab;
     $('#update_foto').click(actualizarFoto);
-    $('.btn-light').eq(0).click(actualizarDato);
+    document.getElementById('chg_email').onclick = actualizarDato;
+    document.getElementById('chg_name').onclick = actualizarDato;
     for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
         document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
     }
@@ -158,18 +158,18 @@
     }
 
     function actualizarDato(event) {
-        event.stopPropagation();
+        //event.stopPropagation();
+        event.target.onclick = "";
         //event.cancelBubble = true;
-        $('.btn-light').eq(0).unbind('click');
         let formulario = document.createElement('form');
         formulario.setAttribute('method', 'post');
         formulario.setAttribute('action', 'perfil.php');
         let input = document.createElement('input');
         input.setAttribute('type', 'text');
-        if (event.target.name === "chg_name") {
+        if (event.target.id === "chg_name") {
             input.setAttribute('name', 'upd_name');
         } else {
-            input.setAttribute('name', 'upd_dni');
+            input.setAttribute('name', 'upd_email');
         }
         input.setAttribute('class', 'form-control mt-3');
         let salto = document.createElement('br');
@@ -180,19 +180,21 @@
         let cancel = document.createElement('input');
         cancel.setAttribute('type', 'button');
         cancel.setAttribute('value', 'Cancelar');
-        cancel.setAttribute('class', 'btn btn-secondary');
-        cancel.setAttribute('id', 'cancel_update');
+        cancel.setAttribute('class', 'btn btn-secondary cancel_update');
         formulario.appendChild(input);
         formulario.appendChild(salto);
         formulario.appendChild(subm);
         formulario.appendChild(cancel);
         event.target.parentNode.appendChild(formulario);
-        $('#cancel_update').click(cancelar);
+        for(let i = 0; i<document.getElementsByClassName('cancel_update').length; i++) {
+            document.getElementsByClassName('cancel_update')[i].onclick = cancelar;
+        }
     }
 
     function cancelar(event) {
         event.target.parentNode.parentNode.removeChild(event.target.parentNode);
-        $('.btn-light').eq(0).click(actualizarDato);
+        document.getElementById('chg_name').onclick = actualizarDato;
+        document.getElementById('chg_email').onclick = actualizarDato;
     }
 
     $('.dispositivos_list').on('click', function () {

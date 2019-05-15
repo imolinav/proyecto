@@ -6,7 +6,7 @@ if (isset($_POST['upd_name'])) {
     $usuario->updateNombre($conexion, $_POST['upd_name']);
 }
 if (isset($_POST['upd_dni'])) {
-    $usuario->updateDni($conexion, $_POST['upd_dni']);
+    $usuario->updateEmail($conexion, $_POST['upd_email']);
 }
 if (isset($_FILES['upd_foto'])) {
     $fichero = $_FILES['upd_foto'];

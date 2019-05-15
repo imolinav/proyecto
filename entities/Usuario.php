@@ -42,6 +42,17 @@ class Usuario {
         $this->setNombre($nombre);
     }
 
+    public function updateEmail($conexion, $new_email) {
+        try {
+            $stmt = $conexion->prepare("UPDATE usuario SET email = :new_email WHERE email = :email");
+            $parameters = [':new_email'=>$new_email, ':email'=>$this->email];
+            $stmt->execute($parameters);
+            $this->setNombre($new_email);
+        } catch (Error $e) {
+            return $e;
+        }
+    }
+
     public function updateFoto($conexion, $foto) {
         $stmt = $conexion->prepare("UPDATE usuario SET foto = :foto WHERE email = :email");
         $parameters = [':foto'=>$foto, ':email'=>$this->email];
