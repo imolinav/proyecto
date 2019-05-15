@@ -84,15 +84,18 @@ if (isset($_POST['activar'])) {
         $cant_programa = $stmt_cnt2->fetch(PDO::FETCH_ASSOC);
         $id_prg = $cant_programa['id'];
 
-        $stmt_prg_escena = $conexion->prepare("SELECT P.id as id, P.dia_inicio as dia_inicio, P.hora_inicio as hora_inicio, P.dia_fin as dia_fin, P.hora_fin as hora_fin, P.temp_inicio as temp_inicio, P.temp_fin as temp_fin, P.temperatura as temperatura FROM programa P, compuesta C, escena E WHERE P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
+        $stmt_prg_escena = $conexion->prepare("SELECT P.dispositivo_id as dispositivo_id, P.dia_inicio as dia_inicio, P.hora_inicio as hora_inicio, P.dia_fin as dia_fin, P.hora_fin as hora_fin, P.temp_inicio as temp_inicio, P.temp_fin as temp_fin, P.temperatura as temperatura FROM programa P, compuesta C, escena E WHERE P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
         $parameters = [':id'=>$dato['id_escena']];
         $stmt_prg_escena->execute($parameters);
         $programas = $stmt_prg_escena->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach($programas as $programa) {
-            addPrgrm($conexion, $programa['id'], $programa['dia_inicio'], $programa['hora_inicio'], $programa['dia_fin'], $programa['hora_fin'], $programa['temp_inicio'], $programa['temp_fin'], $programa['temperatura']);
+        /*var_dump($programas);
+        die();*/
 
+        foreach($programas as $program) {
             $id_prg++;
+
+            addPrgrm($conexion, $program['dispositivo_id'], $program['dia_inicio'], $program['hora_inicio'], $program['dia_fin'], $program['hora_fin'], $program['temp_inicio'], $program['temp_fin'], $program['temperatura']);
 
             $stmt_contiene = $conexion->prepare("INSERT INTO compuesta VALUES(:id1, :id2)");
             $parameters_contiene = [':id1' => $escena_id, ':id2' => $id_prg];

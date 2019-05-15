@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://C:/wamp64/www/precrm/.idea/precrm.iml" filepath="C:/wamp64/www/precrm/.idea/precrm.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/proyecto.iml" filepath="$PROJECT_DIR$/.idea/proyecto.iml" />
     </modules>
   </component>
