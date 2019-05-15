@@ -91,8 +91,7 @@ function buscarDispositivo($conexion, $id)
 
 // Añadir dispositivo
 
-function addDispositivo($conexion, $nombre, $habitacion, $usuario_email, $pin, $tipo)
-{
+function addDispositivo($conexion, $nombre, $habitacion, $usuario_email, $pin, $tipo) {
     $stmt_disp = $conexion->prepare("INSERT INTO dispositivo (nombre, habitacion, encendido, num_encendidos, tiempo_encendido, temperatura, usuario_email, pin, tipo) VALUES (:nombre, :habitacion, 0, 0, 0, :temperatura, :usuario, :pin, :tipo)");
     if ($tipo == 2) {
         $parameters_disp = [':nombre' => $nombre, ':habitacion' => $habitacion, ':temperatura' => 0, ':usuario' => $usuario_email, ':pin' => $pin, ':tipo' => $tipo];
@@ -104,8 +103,15 @@ function addDispositivo($conexion, $nombre, $habitacion, $usuario_email, $pin, $
 
 // Añadir programa
 
-function addPrgrm($conexion, $disp, $d_ini, $h_ini, $d_fin, $h_fin, $t_ini, $t_fin, $temp)
-{
+function getPrgrms($conexion, $id) {
+    $stmt = $conexion->prepare("SELECT * FROM programa WHERE dispositivo_id = :id");
+    $parameters = [':id'=>$id];
+    $stmt->execute($parameters);
+    $programas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $programas;
+}
+
+function addPrgrm($conexion, $disp, $d_ini, $h_ini, $d_fin, $h_fin, $t_ini, $t_fin, $temp) {
     $stmt = $conexion->prepare("INSERT INTO programa(dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temp_inicio, temp_fin, temperatura) VALUES (:disp, :inicio_d, :inicio_h, :fin_d, :fin_h, :temp_ini, :temp_fin, :temp)");
     $parameters = [':disp' => $disp, ':inicio_d' => $d_ini, ':inicio_h' => $h_ini, ':fin_d' => $d_fin, ':fin_h' => $h_fin, ':temp_ini' => $t_ini, ':temp_fin' => $t_fin, ':temp' => $temp];
     $stmt->execute($parameters);
@@ -126,8 +132,7 @@ if (isset($_POST['logout'])) {
 
 //Carga de API OpenWeather
 
-function cargaTiempo($latitud, $longitud)
-{
+function cargaTiempo($latitud, $longitud) {
     $clave = "http://api.openweathermap.org/data/2.5/forecast?lat=" . $latitud . "&lon=" . $longitud . "&APPID=d0cb0d8b429769a6e1105782251c99aa&units=metric&lang=es";
     $data = file_get_contents($clave);
     $data_parsed = json_decode($data, true);

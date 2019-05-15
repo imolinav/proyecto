@@ -179,6 +179,8 @@
                             quitarCargando();
                             if (httpRequest.responseText === "bien") {
                                 seleccionar(dispositivo);
+                            } else {
+                                alert(httpRequest.responseText);
                             }
 
                         }
