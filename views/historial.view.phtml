@@ -1,5 +1,27 @@
 <div class="container mt-4">
     <div class="row">
+        <div class="col3 mr-3">
+            <label>Fecha inicio</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                </div>
+                <input type="date" class="form-control" name="log_start">
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+            </div>
+        </div>
+        <div class="col3">
+            <label>Fecha fin</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
+                </div>
+                <input type="date" class="form-control" name="log_end">
+                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
         <div class="col-12 code_container">
             <?php if (!empty($logs)) : ?>
             <code>
@@ -22,3 +44,47 @@
     <?php endif; ?>
 </div>
 </div>
+<script>
+    let f_inicio = "", f_fin = "";
+    document.getElementsByName('log_start')[0].onchange = actualizarInicio;
+    document.getElementsByName('log_end')[0].onchange = actualizarFin;
+
+    function actualizarInicio(event) {
+        f_inicio = event.target.value;
+        actualizarLog();
+    }
+
+    function actualizarFin(event) {
+        f_fin = event.target.value;
+        actualizarLog();
+    }
+
+    function actualizarLog() {
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'actualizar_log.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 1) {
+                cargando();
+            }
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
+                    quitarCargando();
+                }
+                document.getElementsByClassName('code_container')[0].removeChild(document.getElementsByTagName('code')[0]);
+                //document.getElementsByClassName('code_container')[0].append(httpRequest.responseText);
+                $('.code_container').eq(0).append(httpRequest.responseText);
+            }
+        };
+        let datos = new Datos_log(f_inicio, f_fin);
+        datos = JSON.stringify(datos);
+        httpRequest.send('log_query=' + datos);
+    }
+
+    function Datos_log(f_inicio, f_fin) {
+        this.f_inicio = f_inicio;
+        this.f_fin = f_fin;
+    }
+
+
+</script>
