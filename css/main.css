@@ -359,6 +359,9 @@ code {
     background-color: rgba(244, 244, 244, 1);
     padding: 30px 40px;
 }
+#btn_log_reset {
+    margin-top: 31px;
+}
 
 /* CHAT */
 

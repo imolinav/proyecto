@@ -1,6 +1,6 @@
 <div class="container mt-4">
     <div class="row">
-        <div class="col3 mr-3">
+        <div class="col-3">
             <label>Fecha inicio</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -10,7 +10,7 @@
                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
         </div>
-        <div class="col3">
+        <div class="col-3">
             <label>Fecha fin</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -19,6 +19,19 @@
                 <input type="date" class="form-control" name="log_end">
                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
+        </div>
+        <div class="col-3">
+            <label>Posicion/escena</label>
+            <select class="form-control" name="log_hab">
+                <option selected disabled>Elige habitacion/escena</option>
+                <option disabled>-----------------------</option>
+                <?php foreach($hab_logs as $habs) : ?>
+                <option value="<?= $habs['habitacion'] ?>"><?= $habs['habitacion'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-primary hvr-icon-rotate" id="btn_log_reset"><i class="fas fa-redo hvr-icon"></i></button>
         </div>
     </div>
     <div class="row mt-3">
@@ -45,9 +58,15 @@
 </div>
 </div>
 <script>
-    let f_inicio = "", f_fin = "";
+    let f_inicio = "", f_fin = "", habitacion = "";
     document.getElementsByName('log_start')[0].onchange = actualizarInicio;
     document.getElementsByName('log_end')[0].onchange = actualizarFin;
+    document.getElementsByName('log_hab')[0].onchange = actualizarHab;
+    document.getElementById('btn_log_reset').onclick = limpiarLog;
+
+    function limpiarLog() {
+        document.location.href = "historial.php";
+    }
 
     function actualizarInicio(event) {
         f_inicio = event.target.value;
@@ -56,6 +75,11 @@
 
     function actualizarFin(event) {
         f_fin = event.target.value;
+        actualizarLog();
+    }
+
+    function actualizarHab(event) {
+        habitacion = event.target.value;
         actualizarLog();
     }
 
@@ -76,14 +100,15 @@
                 $('.code_container').eq(0).append(httpRequest.responseText);
             }
         };
-        let datos = new Datos_log(f_inicio, f_fin);
+        let datos = new Datos_log(f_inicio, f_fin, habitacion);
         datos = JSON.stringify(datos);
         httpRequest.send('log_query=' + datos);
     }
 
-    function Datos_log(f_inicio, f_fin) {
+    function Datos_log(f_inicio, f_fin, habitacion) {
         this.f_inicio = f_inicio;
         this.f_fin = f_fin;
+        this.habitacion = habitacion;
     }
 
 
