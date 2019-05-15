@@ -620,12 +620,25 @@ code {
 .icon_on {
     color: #007BFF;
 }
+.prg_disp {
+    max-height: 250px;
+    overflow: auto;
+}
 
 /* GRAFICAS */
 
 .graficas {
     min-height: 400px;
     width: 100%;
+}
+.cover1 {
+    height: 12px;
+    width: auto;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    left:0;
+    right: 0;
 }
 
 /* CARGANDO */

@@ -301,12 +301,17 @@
                             document.getElementsByName('reuse_scn_btn')[0].onclick = opcionesEscena;
                         }
                         $('#scn_modify').click(foo);
+                        $('#scn_clone').click(opcionesEscena);
                         $('#scn_delete_conf').click(confirmarDelete);
                         $('[name=reuse_scn_date').change(activarReuse);
                     }
                 }
             };
             httpRequest.send('scn=' + escena);
+        }
+
+        function clonarEscena() {
+            alert(escena);
         }
 
         function foo() {
@@ -419,6 +424,8 @@
                         } else if (httpRequest.responseText === "actualizado") {
                             seleccionarEscena(escena);
                             document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.add('icon_on');
+                        } else if (httpRequest.responseText === "clonado") {
+                            document.location.href = "control.php";
                         }
                     }
                 }

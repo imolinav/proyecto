@@ -63,6 +63,43 @@ if (isset($_POST['activar'])) {
         $stmt_scn_upd->execute($parameters);
         $info = "Escena con nombre \"" . $escena['nombre'] . "\" apagada.";
         echo "apagado";
+    } else if($dato['accion'] == 'scn_clone') {
+        //TODO: revisar esto
+        $escena = getEscena($conexion, $dato['id_escena']);
+
+        $stmt_escena = $conexion->prepare("INSERT INTO escena (nombre, activa, usuario_email) VALUES (:nombre, 1, :email)");
+        $parameters_escena = [':nombre' => $escena['nombre'], ':email' => $usuario->getEmail()];
+        $stmt_escena->execute($parameters_escena);
+
+        $info = "Escena con nombre \"" . $escena['nombre'] . "\" clonada.";
+        $usuario->addLog($conexion, date("Y-m-d"), $info, date("H:i:s"));
+
+        $stmt_cnt = $conexion->prepare("SELECT MAX(id) as id FROM escena");
+        $stmt_cnt->execute();
+        $escena_id = $stmt_cnt->fetch(PDO::FETCH_ASSOC);
+        $escena_id = $escena_id['id'];
+
+        $stmt_cnt2 = $conexion->prepare("SELECT MAX(id) as id FROM programa");
+        $stmt_cnt2->execute();
+        $cant_programa = $stmt_cnt2->fetch(PDO::FETCH_ASSOC);
+        $id_prg = $cant_programa['id'];
+
+        $stmt_prg_escena = $conexion->prepare("SELECT P.id as id, P.dia_inicio as dia_inicio, P.hora_inicio as hora_inicio, P.dia_fin as dia_fin, P.hora_fin as hora_fin, P.temp_inicio as temp_inicio, P.temp_fin as temp_fin, P.temperatura as temperatura FROM programa P, compuesta C, escena E WHERE P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
+        $parameters = [':id'=>$dato['id_escena']];
+        $stmt_prg_escena->execute($parameters);
+        $programas = $stmt_prg_escena->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($programas as $programa) {
+            addPrgrm($conexion, $programa['id'], $programa['dia_inicio'], $programa['hora_inicio'], $programa['dia_fin'], $programa['hora_fin'], $programa['temp_inicio'], $programa['temp_fin'], $programa['temperatura']);
+
+            $id_prg++;
+
+            $stmt_contiene = $conexion->prepare("INSERT INTO compuesta VALUES(:id1, :id2)");
+            $parameters_contiene = [':id1' => $escena_id, ':id2' => $id_prg];
+            $stmt_contiene->execute($parameters_contiene);
+        }
+
+        echo "clonado";
     }
 }
 $usuario->addLog($conexion, date('Y-m-d'), $info, date('H:i:s'));

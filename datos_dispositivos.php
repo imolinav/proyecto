@@ -39,20 +39,22 @@ if (isset($_POST['disp'])) {
 
             <hr>
 
-            <?php if (!empty($programas)) {
-                foreach ($programas as $programa) {
-                    if ($programa['dispositivo_id'] == $dispositivo['id']):?>
-                        <form method="post" action="control.php" id="form_del_prg">
-                            <button type="button" class="btn btn-danger" style="float: right;" id="btn_del_prg"><i class="far fa-trash-alt"></i></button>
-                            <p><?= $i_disp_texto5 ?></p>
-                            <p><?= $programa['dia_inicio'] . " " . $programa['hora_inicio'] ?></p>
-                            <p><?= $programa['dia_fin'] . " " . $programa['hora_fin'] ?></p>
-                            <input type="hidden" name="del_prg" value="<?= $programa['id'] ?>">
-                        </form>
-                        <hr>
-                    <?php endif;
-                }
-            } ?>
+            <?php if (!empty($programas)) : ?>
+                <div class="prg_disp">
+                    <?php foreach ($programas as $programa) {
+                        if ($programa['dispositivo_id'] == $dispositivo['id']):?>
+                            <form method="post" action="control.php" id="form_del_prg">
+                                <button type="button" class="btn btn-danger" style="float: right;" id="btn_del_prg"><i class="far fa-trash-alt"></i></button>
+                                <p><?= $i_disp_texto5 ?></p>
+                                <p><?= $programa['dia_inicio'] . " " . $programa['hora_inicio'] ?></p>
+                                <p><?= $programa['dia_fin'] . " " . $programa['hora_fin'] ?></p>
+                                <input type="hidden" name="del_prg" value="<?= $programa['id'] ?>">
+                            </form>
+                            <hr>
+                        <?php endif;
+                    } ?>
+                </div>
+            <?php endif; ?>
 
             <p><?= $i_disp_texto6 ?></p>
             <div class="input-group mb-3">
@@ -128,8 +130,11 @@ if (isset($_POST['disp'])) {
                 <p><?= $disp['dia_fin'] . " " . $disp['hora_fin'] ?></p>
             <?php endforeach; ?>
             <hr>
-            <button type="button" class="btn btn-primary mb-3" id="scn_modify">Modificar escena</button>
-            <button type="button" class="btn btn-danger mb-3" id="scn_delete_conf"><i class="far fa-trash-alt"></i>
+            <div class="btn-group btn-group-sm" role="group">
+                <button type="button" class="btn btn-primary mb-3" id="scn_modify">Modificar</button>
+                <button type="button" class="btn btn-success mb-3" id="scn_clone">Clonar</button>
+                <button type="button" class="btn btn-danger mb-3" id="scn_delete_conf">Eliminar</button>
+            </div>
             </button>
         </div>
 

@@ -1,20 +1,47 @@
-<div class="container-fluid mt-5">
-    <div class="row">
-        <div class="col-12 col-md-5 offset-md-1 graficas">
-            <div id="chartEncendidos"></div>
+<div class="container-fluid mt-2">
+    <ul class="nav nav-tabs nav-fill" id="myTab2" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="tab_graph_mensual" data-toggle="tab" href="#graph_mensual" role="tab" aria-controls="graph_mensual" aria-selected="true">Mensual</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab_graph_anual" data-toggle="tab" href="#graph_anual" role="tab" aria-controls="graph_anual" aria-selected="false">Anual</a>
+        </li>
+    </ul>
+    <div class="tab-content mt-5" id="myTabContent">
+        <div class="tab-pane fade active show" id="graph_mensual" role="tabpanel" aria-labelledby="tab_graph_mensual">
+            <div class="row">
+                <div class="col-12 col-md-5 offset-md-1 graficas">
+                    <div id="chartEncendidos"></div>
+                    <div class="cover1"></div>
+                </div>
+                <div class="col-12 col-md-5 graficas">
+                    <div id="chartTiempos"></div>
+                    <div class="cover1"></div>
+                </div>
+            </div>
         </div>
-        <div class="col-12 col-md-5 graficas">
-            <div id="chartTiempos"></div>
+        <div class="tab-pane fade" id="graph_anual" role="tabpanel" aria-labelledby="tab_graph_anual">
+            <div class="row">
+                <div class="col-12 col-md-5 offset-md-1 graficas">
+                    <div id="chartEncendidosTotales"></div>
+                    <div class="cover1"></div>
+                </div>
+                <div class="col-12 col-md-5 graficas">
+                    <div id="chartTiemposTotales"></div>
+                    <div class="cover1"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <script>
     window.onload = function () {
         let dispositivos = JSON.parse('<?= $disp ?>');
+
         let dataPoints = [];
         let chart = new CanvasJS.Chart("chartEncendidos", {
             title: {
-                text: "Cantidad de veces encendido por dispositivos",
+                text: "Cantidad de veces encendido por dispositivos (mensual)",
                 fontFamily: "Calibri"
             },
             data: [
@@ -29,10 +56,11 @@
                 y: parseInt(dispositivos[i]['num_encendidos'])
             });
         }
+
         let dataPoints2 = [];
         let chart2 = new CanvasJS.Chart("chartTiempos", {
             title: {
-                text: "Tiempo encendido por dispositivos",
+                text: "Tiempo encendido por dispositivos (mensual)",
                 fontFamily: "Calibri"
             },
             data: [
@@ -47,8 +75,48 @@
                 y: parseInt(dispositivos[i]['tiempo_encendido'])
             });
         }
+
+        /*let dataPoints3 = [];
+        let chart3 = new CanvasJS.Chart("chartEncendidosTotales", {
+            title: {
+                text: "Cantidad de veces encendido por dispositivos (total)",
+                fontFamily: "Calibri"
+            },
+            data: [
+                {
+                    type: "bar",
+                    dataPoints: dataPoints3
+                }]
+        });
+        for (let i = 0; i < dispositivos.length; i++) {
+            dataPoints3.push({
+                label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
+                y: parseInt(dispositivos[i]['num_encendidos_totales'])
+            });
+        }
+
+        let dataPoints4 = [];
+        let chart4 = new CanvasJS.Chart("chartTiemposTotales", {
+            title: {
+                text: "Tiempo encendido por dispositivos (total)",
+                fontFamily: "Calibri"
+            },
+            data: [
+                {
+                    type: "pie",
+                    dataPoints: dataPoints4
+                }]
+        });
+        for (let i = 0; i < dispositivos.length; i++) {
+            dataPoints4.push({
+                label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
+                y: parseInt(dispositivos[i]['tiempo_encendido_total'])
+            });
+        }*/
+
         chart.render();
         chart2.render();
+        /*chart3.render();
+        chart4.render();*/
     }
-
 </script>
