@@ -1,3 +1,19 @@
+<div id="scroll_apartados">
+    <ul class="list-group list-group-flush">
+        <a href="#index_aboutus" class="hvr-forward">
+            <li class="list-group-item hvr-underline-from-left2">Sobre nosotros</li>
+        </a>
+        <a href="#index_video" class="hvr-forward">
+            <li class="list-group-item hvr-underline-from-left2">Nuestro trabajo</li>
+        </a>
+        <a href="#index_clientes" class="hvr-forward">
+            <li class="list-group-item hvr-underline-from-left2">Nuestros clientes</li>
+        </a>
+        <a href="#index_metas" class="hvr-forward">
+            <li class="list-group-item hvr-underline-from-left2">Nuestras metas</li>
+        </a>
+    </ul>
+</div>
 <div class="container-fluid col-12">
     <div class="row">
         <div class="col-12 imagen_index mb-3">
@@ -19,26 +35,8 @@
         </div>
     </div>
 </div>
-<div class="container col-12 col-md-8 mt-5">
-    <!--
+<div class="container col-12 col-md-8 pt-5 mb-5" id="index_aboutus">
     <div class="row">
-        <div class="col-12 col-lg-4" id="info_tiempo">
-            <h3 class="mt-3"><?= $i_index_texto3 ?></h3>
-            <p class="text-muted"><?= $i_index_texto4 ?></p>
-            <select class="form-control mt-3" id="selec_comunidad">
-                <option selected disabled class="text-muted"><?= $i_index_select1 ?></option>
-                <option disabled class="text-muted">------------------------------</option>
-                <?php foreach ($comunidades as $comunidad): ?>
-                <option value="<?= $comunidad['id'] ?>"><?= $comunidad['comunidad'] ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="col-12 col-lg-8 mt-3" id="datos_tiempo">
-
-        </div>
-    </div>
-    -->
-    <div class="row mt-5">
         <div class="col-6">
             <!-- <span class="loading"></span> -->
         </div>
@@ -63,7 +61,7 @@
         </div>
     </div>
 </div>
-<div class="container mt-5">
+<div class="container mt-5" id="index_video">
     <div class="row mt-5">
         <div class="col-12 mt-5">
             <iframe id="videoYT" width="100%" src="https://www.youtube.com/embed/UPGir81FUpY" frameborder="0"
@@ -72,7 +70,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid mt-5">
+<div class="container-fluid pt-5" id="index_clientes">
     <div class="row mt-5">
         <div class="col-12 col-md-6 quotes">
             <i class="fas fa-quote-left hvr-grow-rotate"></i>
@@ -94,7 +92,7 @@
         </div>
     </div>
 </div>
-<div class="container mt-5">
+<div class="container pt-5" id="index_metas">
     <div class="row pide_presupuesto">
         <div class="col-12 col-lg-6">
             <img src="imgs/dibujo.jpg" style="width: 100%">
@@ -143,12 +141,32 @@
 
 <a href="#" id="go_up" class="hvr-icon-up" onclick="topFunction()"><i class="fas fa-chevron-up hvr-icon"></i></a>
 <script>
+    $('a[href*="#"]').not('[href="#"]').not('[href="#0"]').click(function (event) {
+        if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+                event.preventDefault();
+                $('html, body').animate({
+                    scrollTop: target.offset().top
+                }, 1500, function () {
+                    var $target = $(target);
+                    $target.focus();
+                    if ($target.is(":focus")) {
+                        return false;
+                    } else {
+                        $target.attr('tabindex', '-1');
+                        $target.focus();
+                    };
+                });
+            }
+        }
+    });
     window.onscroll = function () {
         scrollFunction()
     };
     document.body.onload = resizeIframe;
     document.body.onresize = resizeIframe;
-    $('#selec_comunidad').change(cargarProvincias);
 
     function resizeIframe() {
         let anchura = document.getElementById('videoYT').scrollWidth;
