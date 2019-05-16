@@ -79,7 +79,6 @@ if (isset($_POST['activar'])) {
         $info = "Escena con nombre \"" . $escena['nombre'] . "\" apagada.";
         echo "apagado";
     } else if($dato['accion'] == 'scn_clone') {
-        //TODO: revisar esto
         $escena = getEscena($conexion, $dato['id_escena']);
 
         $stmt_escena = $conexion->prepare("INSERT INTO escena (nombre, activa, usuario_email) VALUES (:nombre, 1, :email)");

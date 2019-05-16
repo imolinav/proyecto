@@ -6,17 +6,20 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Smart Living</title>
-    <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="css/fonts.css"/>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/hover.css"/>
     <link rel="stylesheet" href="css/weather.css"/>
+    <link rel="stylesheet" href="node_modules/select2/dist/css/select2.min.css"/>
+    <link rel="stylesheet" href="node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link type="text/plain" rel="author" href="humans.txt"/>
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/canvasjs.min.js"></script>
+    <script src="node_modules/select2/dist/js/select2.full.js"></script>
     <!--
     <script src="js/jsmpeg.min.js"></script>
     <script src="js/websocket.js"></script>

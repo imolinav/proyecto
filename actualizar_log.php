@@ -14,7 +14,7 @@ if (isset($_POST['log_query'])) {
         $fecha = "fecha>=:f_inicio && fecha<=:f_fin";
         $parameters = [':f_inicio' => $datos['f_inicio'], ':f_fin' => $datos['f_fin']];
     }
-    if ($datos['habitacion']!="") {
+    if ($datos['habitacion']!="all") {
         if($datos['f_inicio'] != "" || $datos['f_fin'] != "") {
             $habitacion = " AND habitacion = :habitacion ";
             $parameters[':habitacion'] = $datos['habitacion'];

@@ -141,7 +141,9 @@
                         $('#div_datos').append(httpRequest.responseText).children(':last').hide().fadeIn(900);
                         $('#controlador').click(cambiarEstado);
                         $('[name=prg_enviar]').eq(0).click(programarDisp);
-                        $('#btn_del_prg').click(confirmarDelPrg);
+                        for(let i = 0; i<document.getElementsByName('btn_del_prg').length; i++) {
+                            document.getElementsByName('btn_del_prg')[i].onclick = confirmarDelPrg;
+                        }
                         //document.getElementsByName('prg_enviar')[0].onclick = programarDisp;
                     }
                 }
@@ -236,11 +238,9 @@
             document.body.appendChild(difuminador);
 
             $('#prg_delete_cancel').click(cancelarDel);
-            $('#prg_delete').click(deletePrg);
-        }
-
-        function deletePrg() {
-            document.getElementById('btn_del_prg').parentNode.submit();
+            document.getElementById('prg_delete').onclick = (function() {
+                event.target.parentNode.submit();
+            })
         }
 
         function cambiarEstado(event) {

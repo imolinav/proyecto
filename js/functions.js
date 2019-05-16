@@ -62,3 +62,5 @@ $(function () {
 $(function () {
     $('[data-toggle="popover"]').popover()
 });
+
+$.fn.select2.defaults.set( "theme", "bootstrap" );

@@ -25,6 +25,7 @@
             <select class="form-control" name="log_hab">
                 <option selected disabled>Elige habitacion/escena</option>
                 <option disabled>-----------------------</option>
+                <option value="all">Todos</option>
                 <?php foreach($hab_logs as $habs) : ?>
                 <option value="<?= $habs['habitacion'] ?>"><?= $habs['habitacion'] ?></option>
                 <?php endforeach; ?>

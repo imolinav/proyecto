@@ -44,7 +44,7 @@ if (isset($_POST['disp'])) {
                     <?php foreach ($programas as $programa) {
                         if ($programa['dispositivo_id'] == $dispositivo['id']):?>
                             <form method="post" action="control.php" id="form_del_prg">
-                                <button type="button" class="btn btn-danger" style="float: right;" id="btn_del_prg"><i class="far fa-trash-alt"></i></button>
+                                <button type="button" class="btn btn-danger" style="float: right;" name="btn_del_prg"><i class="far fa-trash-alt"></i></button>
                                 <p><?= $i_disp_texto5 ?></p>
                                 <p><?= $programa['dia_inicio'] . " " . $programa['hora_inicio'] ?></p>
                                 <p><?= $programa['dia_fin'] . " " . $programa['hora_fin'] ?></p>

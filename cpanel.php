@@ -1,6 +1,8 @@
 <?php
 require_once "metodos.php";
 
+$stmt = $conexion->prepare("SELECT P.poblacion, C.codigopostalid FROM poblacion P, codigopostal C WHERE P.id = C.poblacionid");
+
 //Registro de usuarios
 
 if (isset($_POST['su_name'])) {
