@@ -1,5 +1,12 @@
 <?php
+
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+
 require_once "metodos.php";
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
 $stmt = $conexion->prepare("SELECT P.poblacion, C.codigopostalid FROM poblacion P, codigopostal C WHERE P.id = C.poblacionid");
 
@@ -16,8 +23,41 @@ if (isset($_POST['su_name'])) {
     } while (array_search($puerto, $puertos) != false);
 
     //Creamos el usuario
+
+    try {
+        $rand_pass = bin2hex(random_bytes(16));
+    } catch (\Exception $e) {
+        try {
+            $rand_pass = bin2hex(openssl_random_pseudo_bytes(16));
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    $email = $_POST['su_email'];
+    $mensaje = "Acceda a su cuenta con la siguiente contrasenya: ".$rand_pass." Una vez iniciada sesión se le pedira que la cambie.";
+    $email = new PHPMailer(TRUE);
+    try {
+        $email->setFrom('soporte@smartliving.com', 'Smart Living');
+        $email->addAddress($_POST['su_email'], $_POST['su_email']);
+        $email->Subject = '[SMART LIVING] - Gracias por registrarse';
+        $email->Body = $mensaje;
+        $email->isSMTP();
+        $email->Host = 'smtp.gmail.com';
+        $email->SMTPAuth = TRUE;
+        $email->SMTPSecure = 'tls';
+        $email->Username = 'iamovaz@gmail.com';
+        $email->Password = 'pdkfmhtdrmzhgkom';
+        $email->Port = 587;
+        if ($email->send()) {
+            $_SESSION['registrado'] = "bien";
+        } else {
+            $_SESSION['registrado'] = "mal";
+        }
+    } catch (Exception $e) {
+        echo $e->errorMessage();
+    }
     $stmt = $conexion->prepare("INSERT INTO usuario VALUES (:email, :nombre, './imgs/generic.png', :pass, 0, :puerto, 0, :ip, :cp)");
-    $parameters = [':email' => $_POST['su_email'], ':nombre' => $_POST['su_name'], ':pass' => password_hash($_POST['su_email'], PASSWORD_DEFAULT, ['cost' => 10]), ':puerto' => $puerto, ':ip' => $_POST['su_rbip'], ':cp' => $_POST['su_cp']];
+    $parameters = [':email' => $_POST['su_email'], ':nombre' => $_POST['su_name'], ':pass' => password_hash($rand_pass, PASSWORD_DEFAULT, ['cost' => 10]), ':puerto' => $puerto, ':ip' => $_POST['su_rbip'], ':cp' => $_POST['su_cp']];
     $stmt->execute($parameters);
 
     //Creamos un array de reles y uno de metodos donde meteremos los strings de texto pertinentes para crear el servidor .js
