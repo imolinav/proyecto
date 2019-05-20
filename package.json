@@ -18,6 +18,7 @@
   "homepage": "https://github.com/imolinav/proyecto#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "composer": "^4.1.0",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "gpio": "^0.2.10",

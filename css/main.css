@@ -531,6 +531,10 @@ code {
     text-align: center;
     margin-top: 20px;
 }
+.users_chats {
+    margin-bottom: 45px;
+    overflow: auto;
+}
 
 /* CONTROL DISPOSITIVOS */
 

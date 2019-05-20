@@ -135,7 +135,7 @@
             <div class="container" id="admin_chat">
                 <div class="row mt-2">
                     <div class="col-4" id="admin_chat_users">
-                        <div>
+                        <div class="users_chats">
                             <?php foreach ($usuarios_chat as $usuario_chat) {
                                 $cont = 0;
                                 if (!empty($mensajes_nl)) {
@@ -153,7 +153,7 @@
                                 <input type="hidden" value="<?= $usuario_chat['email'] ?>">
                             <?php } ?>
                         </div>
-                        <input type="text" class="form-control" id="user_search" placeholder="Busca a un usuario por nombre..." style="position: absolute; bottom: 0;">
+                        <input type="text" class="form-control" id="user_search" placeholder="Busca por nombre o correo..." style="position: absolute; bottom: 0;">
                     </div>
                     <div class="col-8 pt-3">
                         <div class="row">

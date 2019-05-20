@@ -7,6 +7,27 @@ require_once "entities/Usuario.php";
 $conexion = Connection::make();
 date_default_timezone_set("Europe/Madrid");
 
+//Cerrar sesión
+
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header('Location: index.php');
+}
+
+//Cambio de idioma
+
+$ruta = "lengC.php";
+if (isset($_POST['lengua'])) {
+    if ($_POST['lengua'] != "castellano") {
+        $ruta = "lengI.php";
+    }
+    header('Location: ' . $_POST['page']);
+} else if (isset($_SESSION['idioma'])) {
+    if ($_SESSION['idioma'] != "lengC.php") {
+        $ruta = "lengI.php";
+    }
+}
+
 //Mantener usuario si ha iniciado sesión
 
 if (isset($_SESSION['email'])) {
@@ -123,12 +144,6 @@ function deletePswdRec($conexion, $email) {
     $stmt->execute($parameters);
 }
 
-//Cerrar sesión
-
-if (isset($_POST['logout'])) {
-    session_destroy();
-    header('Location: index.php');
-}
 
 //Carga de API OpenWeather
 
@@ -139,19 +154,6 @@ function cargaTiempo($latitud, $longitud) {
     return $data_parsed;
 }
 
-//Cambio de idioma
-
-$ruta = "lengC.php";
-if (isset($_POST['lengua'])) {
-    if ($_POST['lengua'] != "castellano") {
-        $ruta = "lengI.php";
-    }
-    header('Location: ' . $_POST['page']);
-} else if (isset($_SESSION['idioma'])) {
-    if ($_SESSION['idioma'] != "lengC.php") {
-        $ruta = "lengI.php";
-    }
-}
 
 //Cerrar sesión con idioma mantenido (NOT USED)
 
@@ -195,5 +197,4 @@ function obtenerTweets($settings, $usuario, $cantidad)
         echo "Followers: " . $items['user']['follower_count'];
     }
 }
-
 ?>

@@ -5,7 +5,7 @@ require_once "metodos.php";
 if (isset($_POST['upd_name'])) {
     $usuario->updateNombre($conexion, $_POST['upd_name']);
 }
-if (isset($_POST['upd_dni'])) {
+if (isset($_POST['upd_email'])) {
     $usuario->updateEmail($conexion, $_POST['upd_email']);
 }
 if (isset($_FILES['upd_foto'])) {
