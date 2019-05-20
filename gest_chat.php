@@ -56,5 +56,35 @@ if (isset($_POST['user'])) {
             <td class="msg_user"><?= $datos['mensaje'] ?></td>
         </tr>
     <?php endif;
+} else if (isset($_POST['filter'])) {
+    $string = $_POST['filter'];
+    $stmt = $conexion->prepare("select U.nombre as usuario, U.email as email, U.foto as foto from usuario U, mensaje M where U.email = M.de and U.email<>'admin@smartliving.es' AND (U.nombre LIKE :cadena OR U.email LIKE :cadena) group by U.nombre order by M.fecha desc");
+
+    $parameters = [':cadena' => '%' . $string . '%'];
+    $stmt->execute($parameters);
+    $usuarios_chat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!empty($usuarios_chat)) : ?>
+        <div>
+            <?php foreach ($usuarios_chat as $users) {
+                $cont = 0;
+                if (!empty($mensajes_nl)) {
+                    foreach ($mensajes_nl as $mensaje_nl) {
+                        if ($mensaje_nl['de'] == $users['email']) {
+                            $cont++;
+                        }
+                    }
+                }
+                if ($cont > 0):?>
+                    <div class="new_msg_admin"><?= $cont ?></div>
+                <?php endif; ?>
+                <p class="user_chat"><img src="<?= $users['foto'] ?>"><?= $users['usuario'] ?>
+                </p>
+                <input type="hidden" value="<?= $users['email'] ?>">
+            <?php } ?>
+        </div>
+    <?php else : ?>
+        <div><p id="texto_error" class="error_chat">Usuarios no encontrados</p></div>
+    <?php endif;
 }
 ?>

@@ -66,7 +66,7 @@
                                 if ($programa['dispositivo_id'] == $dispositivo['id']):?>
                                     <p class="programas_list" data-container=".programas_list" data-html="true"
                                        data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>"
-                                       data-content='<?= $i_perfil_popover5 . $dispositivo['nombre'] ?><br><?= $i_perfil_popover8 . $programa['dia_inicio'] ?><br><?= $i_perfil_popover6 . $programa['hora_inicio'] ?><br><?= $i_perfil_popover9 . $programa['dia_fin'] ?><br><?= $i_perfil_popover7 . $programa['hora_fin'] ?>'><?= $dispositivo['nombre'] ?></p>
+                                       data-content='<?= $i_perfil_popover5 . $dispositivo['nombre'] ?><br><?= $i_perfil_popover8 . $programa['dia_inicio'] ?><br><?= $i_perfil_popover6 . $programa['hora_inicio'] ?><br><?= $i_perfil_popover9 . $programa['dia_fin'] ?><br><?= $i_perfil_popover7 . $programa['hora_fin'] ?>'><?= $dispositivo['nombre'] ." - ".$programa['dia_inicio'] ." - ".$programa['hora_inicio'] ?></p>
                                 <?php endif;
                             }
                         }
@@ -81,8 +81,8 @@
                     <?php if (!empty($escenas)) : ?>
                         <p class="habitacion_list"><?= $i_perfil_texto9 ?></p>
                         <?php foreach ($escenas as $escena) : ?>
-                            <p class="escenas_list" data-toggle="popover" data-trigger="focus"
-                               title="<?= $escena['nombre'] ?>" data-content="Datos"><?= $escena['nombre'] ?></p>
+                            <p class="escenas_list" ><?= $escena['nombre'] ?></p>
+                            <input type="hidden" name="id" value="<?= $escena['id'] ?>">
                         <?php endforeach;
                     else: ?>
                         <div style="text-align: center">
@@ -102,6 +102,9 @@
     document.getElementById('chg_name').onclick = actualizarDato;
     for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
         document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
+    }
+    for(let i = 0; i<document.getElementsByClassName('escenas_list').length; i++) {
+        document.getElementsByClassName('escenas_list')[i].onclick = verEscena;
     }
 
     function guardarTab(event) {
@@ -189,6 +192,10 @@
         for(let i = 0; i<document.getElementsByClassName('cancel_update').length; i++) {
             document.getElementsByClassName('cancel_update')[i].onclick = cancelar;
         }
+    }
+
+    function verEscena(event) {
+        window.location = "escena.php?id="+event.target.nextElementSibling.value;
     }
 
     function cancelar(event) {

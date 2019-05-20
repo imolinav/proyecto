@@ -114,6 +114,22 @@ class Usuario {
         $stmt_log->execute($parameters_log);
     }
 
+    public function getHistorial($conexion) {
+        $stmt = $conexion->prepare("SELECT * FROM disp_mensual WHERE usuario_email = :email");
+        $parameters = [':email'=>$this->email];
+        $stmt->execute($parameters);
+        $historial = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $historial;
+    }
+
+    public function getHistMeses($conexion) {
+        $stmt = $conexion->prepare("SELECT mes, anyo FROM disp_mensual WHERE usuario_email = :email GROUP BY mes");
+        $parameters = [':email'=>$this->email];
+        $stmt->execute($parameters);
+        $meses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $meses;
+    }
+
 
     /* -- GETTERS & SETTERS -- */
 

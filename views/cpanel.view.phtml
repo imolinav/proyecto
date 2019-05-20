@@ -12,6 +12,10 @@
             <a class="nav-link" id="chat_tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat"
                aria-selected="false"><?= $i_cpanel_tab3 ?></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="mail_tab" data-toggle="tab" href="#mail" role="tab" aria-controls="mail"
+               aria-selected="false">Mail</a>
+        </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade" id="add_user" role="tabpanel" aria-labelledby="add_user_tab">
@@ -131,22 +135,25 @@
             <div class="container" id="admin_chat">
                 <div class="row mt-2">
                     <div class="col-4" id="admin_chat_users">
-                        <?php foreach ($usuarios_chat as $usuario_chat) {
-                            $cont = 0;
-                            if (!empty($mensajes_nl)) {
-                                foreach ($mensajes_nl as $mensaje_nl) {
-                                    if ($mensaje_nl['de'] == $usuario_chat['email']) {
-                                        $cont++;
+                        <div>
+                            <?php foreach ($usuarios_chat as $usuario_chat) {
+                                $cont = 0;
+                                if (!empty($mensajes_nl)) {
+                                    foreach ($mensajes_nl as $mensaje_nl) {
+                                        if ($mensaje_nl['de'] == $usuario_chat['email']) {
+                                            $cont++;
+                                        }
                                     }
                                 }
-                            }
-                            if ($cont > 0):?>
-                                <div class="new_msg_admin"><?= $cont ?></div>
-                            <?php endif; ?>
-                            <p class="user_chat"><img src="<?= $usuario_chat['foto'] ?>"><?= $usuario_chat['usuario'] ?>
-                            </p>
-                            <input type="hidden" value="<?= $usuario_chat['email'] ?>">
-                        <?php } ?>
+                                if ($cont > 0):?>
+                                    <div class="new_msg_admin"><?= $cont ?></div>
+                                <?php endif; ?>
+                                <p class="user_chat"><img src="<?= $usuario_chat['foto'] ?>"><?= $usuario_chat['usuario'] ?>
+                                </p>
+                                <input type="hidden" value="<?= $usuario_chat['email'] ?>">
+                            <?php } ?>
+                        </div>
+                        <input type="text" class="form-control" id="user_search" placeholder="Busca a un usuario por nombre..." style="position: absolute; bottom: 0;">
                     </div>
                     <div class="col-8 pt-3">
                         <div class="row">
@@ -165,6 +172,11 @@
                 </div>
             </div>
         </div>
+        <div class="tab-pane fade" id="mail" role="tabpanel" aria-labelledby="mail_tab">
+            <div class="container">
+
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -172,17 +184,18 @@
         $('.select2-user').select2();
     });
     document.body.onload = cargarTab;
-    let div_hab = document.getElementsByClassName('habitaciones')[0].cloneNode(true);
-    let div_disp = document.getElementsByClassName('dispositivos')[0].cloneNode(true);
-    let new_div_hab, new_div_disp, usuario, elemento, user;
     document.getElementsByName('su_hab_num')[0].onchange = anyadirHab;
     document.getElementsByName('su_hab_cant_disp[]')[0].onchange = anyadirDisp;
     document.getElementsByName('submit_btn')[0].onclick = comprobarForm;
+    document.getElementById('enviar_admin').onclick = enviarMensaje;
+    document.getElementById('select_user').onchange = buscarUser;
+    document.getElementById('user_search').onkeyup = filtrarUser;
+    let div_hab = document.getElementsByClassName('habitaciones')[0].cloneNode(true);
+    let div_disp = document.getElementsByClassName('dispositivos')[0].cloneNode(true);
+    let new_div_hab, new_div_disp, usuario, elemento, user;
     for (let i = 0; i < document.getElementsByClassName('user_chat').length; i++) {
         document.getElementsByClassName('user_chat')[i].onclick = selecUser;
     }
-    document.getElementById('enviar_admin').onclick = enviarMensaje;
-    document.getElementById('select_user').onchange = buscarUser;
     for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
         document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
     }
@@ -341,6 +354,36 @@
             }
         }
         cargarMensajes(elemento, usuario);
+    }
+
+    function filtrarUser(event) {
+        let cadena = "";
+        if(event.target.value!=="") {
+            cadena = event.target.value;
+        }
+        //document.getElementById('admin_chat_users').removeChild(document.getElementById('admin_chat_users').firstChild);
+        //document.getElementById('admin_chat_users').removeChild(document.getElementById('admin_chat_users').firstChild);
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_chat.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState === 1) {
+                cargando();
+            }
+            if(httpRequest.readyState === 4) {
+                if(httpRequest.status === 200) {
+                    quitarCargando();
+                    if(document.getElementById('admin_chat_users').getElementsByTagName('div')[0]) {
+                        document.getElementById('admin_chat_users').removeChild(document.getElementById('admin_chat_users').getElementsByTagName('div')[0]);
+                    }
+                    document.getElementById('admin_chat_users').insertAdjacentHTML('afterbegin', httpRequest.responseText);
+                    for (let i = 0; i < document.getElementsByClassName('user_chat').length; i++) {
+                        document.getElementsByClassName('user_chat')[i].onclick = selecUser;
+                    }
+                }
+            }
+        };
+        httpRequest.send('filter='+cadena);
     }
 
     function cargarMensajes(elemento, usuario) {

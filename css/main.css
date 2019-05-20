@@ -16,6 +16,8 @@ Extra large devices (large desktops, 1200px and up)
 html {
     height: 100%;
     box-sizing: border-box;
+    margin:0;
+    padding:0;
 }
 body {
     position: relative;
@@ -139,13 +141,13 @@ footer a, footer a:hover {
 
 .img-index {
     margin-top: -100px;
-    width: 100%;
-    min-width: 900px;
+    width: 100% !important;
+    min-width: 100%;
 }
 .imagen_index {
     max-height: calc(100vh - 65px);
     overflow: hidden;
-    padding:0;
+    padding:0 !important;
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
 
@@ -271,8 +273,11 @@ footer a, footer a:hover {
 .list-group, .list-group-flush, .list-group-item {
     background-color: transparent;
 }
-.list-group a {
+li a {
     text-decoration: none;
+}
+.list-group a {
+    text-decoration: none !important;
     color: #343a40;
     font-family: "Champagne & Limousines";
 }
@@ -354,11 +359,11 @@ footer a, footer a:hover {
 /* HISTORIAL */
 
 code {
-    color: rgba(10, 10, 10, 0.8);
+    color: rgba(10, 10, 10, 0.8) !important;
 }
 .code_container {
     background-color: rgba(244, 244, 244, 1);
-    padding: 30px 40px;
+    padding: 30px 40px !important;
 }
 #btn_log_reset {
     margin-top: 31px;
@@ -521,6 +526,10 @@ code {
     top:0;
     left:0;
     margin-left: -20px;
+}
+.error_chat {
+    text-align: center;
+    margin-top: 20px;
 }
 
 /* CONTROL DISPOSITIVOS */

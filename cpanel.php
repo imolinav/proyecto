@@ -236,7 +236,7 @@ else if (isset($_POST['user_mod_option'])) {
 
 //Busqueda de usuarios que se han puesto en contacto con el administrador
 
-$stmt_usuarios = $conexion->prepare("select U.nombre as usuario, U.email as email, U.foto as foto from usuario U, mensaje M where U.email = M.de and U.email<>'admin@smartliving.es' group by U.nombre");
+$stmt_usuarios = $conexion->prepare("select U.nombre as usuario, U.email as email, U.foto as foto from usuario U, mensaje M where U.email = M.de and U.email<>'admin@smartliving.es' group by U.nombre order by M.fecha desc");
 $stmt_usuarios->execute();
 $usuarios_chat = $stmt_usuarios->fetchAll(PDO::FETCH_ASSOC);
 

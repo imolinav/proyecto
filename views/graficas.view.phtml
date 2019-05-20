@@ -1,42 +1,35 @@
 <div class="container-fluid mt-2">
-    <ul class="nav nav-tabs nav-fill" id="myTab2" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="tab_graph_mensual" data-toggle="tab" href="#graph_mensual" role="tab" aria-controls="graph_mensual" aria-selected="true">Mensual</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="tab_graph_anual" data-toggle="tab" href="#graph_anual" role="tab" aria-controls="graph_anual" aria-selected="false">Anual</a>
-        </li>
-    </ul>
-    <div class="tab-content mt-5" id="myTabContent">
-        <div class="tab-pane fade active show" id="graph_mensual" role="tabpanel" aria-labelledby="tab_graph_mensual">
-            <div class="row">
-                <div class="col-12 col-md-5 offset-md-1 graficas">
-                    <div id="chartEncendidos"></div>
-                    <div class="cover1"></div>
-                </div>
-                <div class="col-12 col-md-5 graficas">
-                    <div id="chartTiempos"></div>
-                    <div class="cover1"></div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-6 offset-3">
+            <select class="form-control">
+                <option selected disabled>Elige el mes del que quieres ver tus gáficas de uso</option>
+                <option disabled>--------------------------------------------------------</option>
+                <option value="actual">Actual</option>
+                <?php foreach($meses as $mes) {
+                    $dateObj = DateTime::createFromFormat('!m', $mes['mes']);
+                    $mes_act = $dateObj->format('F');?>
+                <option value="<?= $item ?>"><?= $mes_act ." ". $mes['anyo'] ?></option>
+                <?php
+                $item++;
+                } ?>
+            </select>
         </div>
-        <div class="tab-pane fade" id="graph_anual" role="tabpanel" aria-labelledby="tab_graph_anual">
-            <div class="row">
-                <div class="col-12 col-md-5 offset-md-1 graficas">
-                    <div id="chartEncendidosTotales"></div>
-                    <div class="cover1"></div>
-                </div>
-                <div class="col-12 col-md-5 graficas">
-                    <div id="chartTiemposTotales"></div>
-                    <div class="cover1"></div>
-                </div>
-            </div>
+        <div class="col-12 col-md-5 offset-md-1 graficas mt-5">
+            <div id="chartEncendidos"></div>
+            <div class="cover1"></div>
+        </div>
+        <div class="col-12 col-md-5 graficas mt-5"">
+            <div id="chartTiempos"></div>
+            <div class="cover1"></div>
         </div>
     </div>
 </div>
 <script>
-    window.onload = function () {
-        let dispositivos = JSON.parse('<?= $disp ?>');
+    document.getElementsByTagName('select')[0].onchange = function () {
+        let dispositivos;
+        if(document.getElementsByTagName('select')[0].value === "actual") {
+            dispositivos = JSON.parse('<?= $disp_actual ?>');
+        }
 
         let dataPoints = [];
         let chart = new CanvasJS.Chart("chartEncendidos", {
