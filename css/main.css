@@ -625,6 +625,12 @@ code {
     max-height: 250px;
     overflow: auto;
 }
+#form_del_prg button {
+    float: right;
+}
+#form_del_prg button i {
+    pointer-events: none;
+}
 
 /* GRAFICAS */
 

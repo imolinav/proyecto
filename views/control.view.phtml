@@ -151,21 +151,19 @@
             httpRequest.send('disp=' + dispositivo);
         }
 
-        function programarDisp() {
+        function programarDisp(event) {
+            if(document.getElementById('texto_error')) {
+                document.getElementById('texto_error').parentNode.removeChild(document.getElementById('texto_error'));
+            }
             let ok = true;
             if (document.getElementsByName('prg_date_start')[0].value === "") {
                 document.getElementsByName('prg_date_start')[0].classList.add('is-invalid');
                 ok = false;
             }
-            if (document.getElementsByName('prg_hour_start')[0].value === "") {
+            if (document.getElementsByName('prg_hour_start')[0].value === "" && document.getElementsByName('prg_temp_start')[0].value === "") {
                 document.getElementsByName('prg_hour_start')[0].classList.add('is-invalid');
+                document.getElementsByName('prg_temp_start')[0].classList.add('is-invalid');
                 ok = false;
-            }
-            if (document.getElementsByName('prg_temp_start')[0]) {
-                if (document.getElementsByName('prg_temp_start')[0].value === "") {
-                    document.getElementsByName('prg_temp_start')[0].classList.add('is-invalid');
-                    ok = false;
-                }
             }
             if (ok === true) {
                 let programa;
@@ -182,16 +180,19 @@
                             if (httpRequest.responseText === "bien") {
                                 seleccionar(dispositivo);
                             } else {
-                                alert(httpRequest.responseText);
+                                let texto_error = document.createElement('p');
+                                texto_error.setAttribute('id', 'texto_error');
+                                let texto = document.createTextNode('No puedes programar un dispositivo para un dia que ya esta programado.');
+                                texto_error.appendChild(texto);
+                                event.target.parentNode.insertBefore(texto_error, event.target);
                             }
-
                         }
                     }
                 };
                 if (!document.getElementsByName('prg_temp')[0]) {
                     programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, document.getElementsByName('prg_temp_start')[0].value, document.getElementsByName('prg_temp_end')[0].value, null);
                 } else {
-                    programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, document.getElementsByName('prg_tmp_start')[0].value, document.getElementsByName('prg_tmp_end')[0].value, document.getElementsByName('prg_temp')[0].value);
+                    programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, document.getElementsByName('prg_temp_start')[0].value, document.getElementsByName('prg_temp_end')[0].value, document.getElementsByName('prg_temp')[0].value);
                 }
                 let datos = JSON.stringify(programa);
                 httpRequest.send('programar=' + datos);
@@ -199,6 +200,7 @@
         }
 
         function confirmarDelPrg(event) {
+            let form = event.target.parentNode;
             let difuminador = document.createElement('div');
             difuminador.setAttribute('id', 'difuminador');
 
@@ -239,7 +241,7 @@
 
             $('#prg_delete_cancel').click(cancelarDel);
             document.getElementById('prg_delete').onclick = (function() {
-                event.target.parentNode.submit();
+                form.submit();
             })
         }
 
@@ -302,7 +304,7 @@
                         if (document.getElementsByName('reuse_scn_btn')[0]) {
                             document.getElementsByName('reuse_scn_btn')[0].onclick = opcionesEscena;
                         }
-                        $('#scn_modify').click(foo);
+                        $('#scn_modify').click(modificarEscena);
                         $('#scn_clone').click(opcionesEscena);
                         $('#scn_delete_conf').click(confirmarDelete);
                         $('[name=reuse_scn_date').change(activarReuse);
@@ -312,12 +314,8 @@
             httpRequest.send('scn=' + escena);
         }
 
-        function clonarEscena() {
-            alert(escena);
-        }
-
-        function foo() {
-            alert("hola");
+        function modificarEscena() {
+            window.location = "escena.php?id="+escena;
         }
 
         function activarReuse(event) {
@@ -393,6 +391,7 @@
                     if (httpRequest.status === 200) {
                         quitarCargando();
                         if (httpRequest.responseText === "apagado") {
+                            $('#scn_apagar').prop('onclick', null).off('click');
                             document.getElementById('scn_apagar').src = "http://localhost/proyecto/imgs/off.png";
                             document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.remove('icon_on');
                             let date = document.createElement('input');

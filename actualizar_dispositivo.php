@@ -33,12 +33,21 @@ if (isset($_POST['activar'])) {
     }
     $programas = getPrgrms($conexion, $datos['id_disp']);
 
-    $stmt_prg_rep = $conexion->prepare("SELECT * FROM programa WHERE dia_inicio = :d_ini OR hora_inicio = :h_ini OR dia_fin = :d_fin AND dia_fin<>'0000-00-00' AND dia_fin IS NOT NULL OR hora_fin = :h_fin AND hora_fin<>'00:00:00' AND hora_fin IS NOT NULL");
+    //var_dump($datos);
+    //die();
+
+    //$stmt_prg_rep = $conexion->prepare("SELECT * FROM programa WHERE dia_inicio = :d_ini OR hora_inicio = :h_ini OR dia_fin = :d_fin AND dia_fin<>'0000-00-00' AND dia_fin IS NOT NULL OR hora_fin = :h_fin AND hora_fin<>'00:00:00' AND hora_fin IS NOT NULL");
 
     $ok = true;
     foreach($programas as $program) {
-        if(($program['dia_inicio']==$datos['dia_ini'] && $program['hora_inicio']==$datos['hora_ini']) || (($program['dia_fin']==$datos['dia_fin'] && $program['hora_fin']==$datos['hora_fin']) && ($program['dia_fin']!=null || $program['dia_fin']!='0000-00-00'))) {
-            $ok = false;
+        if(!is_null($datos['hora_ini']) && !is_null($program['hora_inicio'])) {
+            if($datos['dia_ini'] == $program['dia_inicio'] && $datos['hora_ini'].':00' == $program['hora_inicio']) {
+                $ok = false;
+            }
+        } else if(!is_null($datos['temp_ini']) && !is_null($program['temp_inicio'])) {
+            if($datos['dia_ini'] == $program['dia_inicio'] && $datos['temp_ini'] == $program['temp_inicio']) {
+                $ok = false;
+            }
         }
     }
     if($ok == true) {
@@ -46,8 +55,8 @@ if (isset($_POST['activar'])) {
         $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": dispositivo programado para el dia " . $datos['dia_ini'] . " a las " . $datos['hora_ini'];
         echo "bien";
     } else {
-        echo "mal";
         $info="";
+        echo "mal";
     }
 
 } else if (isset($_POST['escena'])) {

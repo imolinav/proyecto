@@ -19,7 +19,7 @@ $programas = $stmt_prog->fetchAll(PDO::FETCH_ASSOC);
 
 $escena = getEscena($conexion, $id);
 
-$disp_scn = $conexion->prepare("SELECT D.id, D.nombre, D.habitacion, P.dia_inicio, P.hora_inicio, P.dia_fin, P.hora_fin, P.temperatura FROM dispositivo D, programa P, compuesta C, escena E WHERE D.id = P.dispositivo_id AND P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
+$disp_scn = $conexion->prepare("SELECT D.id, D.nombre, D.habitacion, P.dia_inicio, P.hora_inicio, P.dia_fin, P.hora_fin, P.temp_inicio, P.temp_fin, P.temperatura FROM dispositivo D, programa P, compuesta C, escena E WHERE D.id = P.dispositivo_id AND P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
 $disp_scn->execute($parameters);
 $disp_escenas = $disp_scn->fetchAll(PDO::FETCH_ASSOC);
 
@@ -44,10 +44,24 @@ if (isset($_POST['disp'])) {
                     <?php foreach ($programas as $programa) {
                         if ($programa['dispositivo_id'] == $dispositivo['id']):?>
                             <form method="post" action="control.php" id="form_del_prg">
-                                <button type="button" class="btn btn-danger" style="float: right;" name="btn_del_prg"><i class="far fa-trash-alt"></i></button>
+                                <button type="button" class="btn btn-danger" name="btn_del_prg"><i class="far fa-trash-alt"></i></button>
                                 <p><?= $i_disp_texto5 ?></p>
-                                <p><?= $programa['dia_inicio'] . " " . $programa['hora_inicio'] ?></p>
-                                <p><?= $programa['dia_fin'] . " " . $programa['hora_fin'] ?></p>
+                                <p>Dia: <?= $programa['dia_inicio']?></p>
+                                <?php if(!is_null($programa['hora_inicio'])) : ?>
+                                <p>Hora inicio: <?=$programa['hora_inicio'] ?></p>
+                                <?php endif;
+                                if(!is_null($programa['hora_fin'])) : ?>
+                                <p>Hora fin: <?=$programa['hora_fin'] ?></p>
+                                <?php endif;
+                                if (!is_null($programa['temp_inicio'])) : ?>
+                                <p>Temperatura inicio: <?= $programa['temp_inicio']?></p>
+                                <?php endif;
+                                if (!is_null($programa['temp_fin'])) : ?>
+                                <p>Temperatura fin: <?= $programa['temp_fin']?></p>
+                                <?php endif;
+                                if (!is_null($programa['temperatura'])) : ?>
+                                <p>Temperatura: <?= $programa['temperatura']?></p>
+                                <?php endif; ?>
                                 <input type="hidden" name="del_prg" value="<?= $programa['id'] ?>">
                             </form>
                             <hr>
@@ -126,10 +140,27 @@ if (isset($_POST['disp'])) {
             <?php endif;
             foreach ($disp_escenas as $disp) :?>
                 <p><?= $disp['habitacion'] . " - " . $disp['nombre'] ?></p>
-                <p><?= $disp['dia_inicio'] . " " . $disp['hora_inicio'] ?></p>
-                <p><?= $disp['dia_fin'] . " " . $disp['hora_fin'] ?></p>
+                <p>Dia inicio: <?= $disp['dia_inicio'] ?></p>
+                <?php if(!is_null($disp['dia_fin'])) :?>
+                <p>Dia fin: <?= $disp['dia_fin'] ?></p>
+                <?php endif;
+                if(!is_null($disp['hora_inicio'])) :?>
+                <p>Hora inicio: <?= $disp['hora_inicio'] ?></p>
+                <?php endif;
+                if(!is_null($disp['hora_fin'])) :?>
+                <p>Hora fin: <?= $disp['hora_fin'] ?></p>
+                <?php endif;
+                if(!is_null($disp['temp_inicio'])) :?>
+                <p>Temperatura inicio: <?= $disp['temp_inicio'] ?></p>
+                <?php endif;
+                if(!is_null($disp['temp_fin'])) :?>
+                <p>Temperatura fin: <?= $disp['temp_fin'] ?></p>
+                <?php endif;
+                if(!is_null($disp['temperatura'])) :?>
+                <p>Temperatura: <?= $disp['temperatura'] ?></p>
+                <?php endif; ?>
+                <hr>
             <?php endforeach; ?>
-            <hr>
             <div class="btn-group btn-group-sm" role="group">
                 <button type="button" class="btn btn-primary mb-3" id="scn_modify">Modificar</button>
                 <button type="button" class="btn btn-success mb-3" id="scn_clone">Clonar</button>
