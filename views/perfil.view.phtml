@@ -6,36 +6,75 @@
                     <form action="perfil.php" method="post" enctype="multipart/form-data">
                         <img src="<?= $usuario->getFoto() ?>">
                         <br>
-                        <button type="button" class="btn btn-secondary btn-sm mt-3"
-                                id="update_foto"><?= $i_perfil_boton1 ?></button>
+                        <button type="button" class="btn btn-secondary btn-sm mt-3" id="update_foto"><?= $i_perfil_boton1 ?></button>
                     </form>
                 </div>
                 <div class="col-12 col-sm-6 col-md-12">
-                    <p class="mt-3"><?= $i_perfil_texto1 . $usuario->getNombre() ?> <i id="chg_name" class="btn btn-light far fa-edit"></i></p>
+                    <p class="mt-3"><?= $i_perfil_texto1 . $usuario->getNombre() ?> <i id="chg_name" class="btn btn-light far fa-edit"></i>
+                    </p>
                     <p><?= $i_perfil_texto2 . $usuario->getEmail() ?> <i class="btn btn-light far fa-edit" id="chg_email"></i></p>
                     <p><?= $i_perfil_texto3 . count($dispositivos) ?></p>
                     <p><?= $i_perfil_texto4 . count($escenas) ?></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
                     <p>Temperatura: <?= $tiempo['list'][0]['main']['temp'] ?> ºC</p>
+                    <p>
+                        <?php switch ($tiempo['list'][0]['weather'][0]['icon']) {
+                            case "01d" :
+                                ?>
+                                <i class="wi wi-day-sunny hvr-pulse"></i>
+                            <?php case "01n" : ?>
+                                <i class="wi wi-night-clear hvr-pulse"></i>
+                                <?php break;
+                            case "02d" : ?>
+                                <i class="wi wi-day-cloudy hvr-pulse"></i>
+                                <?php break;
+                            case "02n" : ?>
+                                <i class="wi wi-night-alt-cloudy hvr-pulse"></i>
+                                <?php break;
+                            case "03d" :
+                            case "03n" : ?>
+                                <i class="wi wi-cloud hvr-pulse"></i>
+                                <?php break;
+                            case "04d" :
+                            case "04n" : ?>
+                                <i class="wi wi-cloudy hvr-pulse"></i>
+                                <?php break;
+                            case "09d" :
+                            case "09n" : ?>
+                                <i class="wi wi-rain hvr-pulse"></i>
+                                <?php break;
+                            case "10d" : ?>
+                                <i class="wi wi-day-rain hvr-pulse"></i>
+                                <?php break;
+                            case "10n" : ?>
+                                <i class="wi wi-night-alt-rain hvr-pulse"></i>
+                                <?php break;
+                            case "11d" :
+                            case "11n" : ?>
+                                <i class="wi wi-storm-showers hvr-pulse"></i>
+                                <?php break;
+                            case "13d" :
+                            case "13n" : ?>
+                                <i class="wi wi-snow hvr-pulse"></i>
+                                <?php break;
+                            case "50d" :
+                            case "50n" : ?>
+                                <i class="wi wi-fog hvr-pulse"></i>
+                                <?php break;
+                        } ?>
+                        <?= $tiempo['list'][0]['weather'][0]['description'] ?></p>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-5 col-lg-4 mt-5 mt-md-0">
             <ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link" id="disp_tab" data-toggle="tab" href="#disp" role="tab" aria-controls="disp"
-                       aria-selected="true"><?= $i_perfil_tab1 ?></a>
+                    <a class="nav-link" id="disp_tab" data-toggle="tab" href="#disp" role="tab" aria-controls="disp" aria-selected="true"><?= $i_perfil_tab1 ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="prg_tab" data-toggle="tab" href="#prg" role="tab" aria-controls="prg"
-                       aria-selected="false"><?= $i_perfil_tab2 ?></a>
+                    <a class="nav-link" id="prg_tab" data-toggle="tab" href="#prg" role="tab" aria-controls="prg" aria-selected="false"><?= $i_perfil_tab2 ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="scn_tab" data-toggle="tab" href="#scn" role="tab" aria-controls="scn"
-                       aria-selected="false"><?= $i_perfil_tab3 ?></a>
+                    <a class="nav-link" id="scn_tab" data-toggle="tab" href="#scn" role="tab" aria-controls="scn" aria-selected="false"><?= $i_perfil_tab3 ?></a>
                 </li>
             </ul>
 
@@ -66,7 +105,7 @@
                                 if ($programa['dispositivo_id'] == $dispositivo['id']):?>
                                     <p class="programas_list" data-container=".programas_list" data-html="true"
                                        data-toggle="popover" data-placement="left" title="<?= $dispositivo['nombre'] ?>"
-                                       data-content='<?= $i_perfil_popover5 . $dispositivo['nombre'] ?><br><?= $i_perfil_popover8 . $programa['dia_inicio'] ?><br><?= $i_perfil_popover6 . $programa['hora_inicio'] ?><br><?= $i_perfil_popover9 . $programa['dia_fin'] ?><br><?= $i_perfil_popover7 . $programa['hora_fin'] ?>'><?= $dispositivo['nombre'] ." - ".$programa['dia_inicio'] ." - ".$programa['hora_inicio'] ?></p>
+                                       data-content='<?= $i_perfil_popover5 . $dispositivo['nombre'] ?><br><?= $i_perfil_popover8 . $programa['dia_inicio'] ?><br><?= $i_perfil_popover6 . $programa['hora_inicio'] ?><br><?= $i_perfil_popover9 . $programa['dia_fin'] ?><br><?= $i_perfil_popover7 . $programa['hora_fin'] ?>'><?= $dispositivo['nombre'] . " - " . $programa['dia_inicio'] . " - " . $programa['hora_inicio'] ?></p>
                                 <?php endif;
                             }
                         }
@@ -81,7 +120,7 @@
                     <?php if (!empty($escenas)) : ?>
                         <p class="habitacion_list"><?= $i_perfil_texto9 ?></p>
                         <?php foreach ($escenas as $escena) : ?>
-                            <p class="escenas_list" ><?= $escena['nombre'] ?></p>
+                            <p class="escenas_list"><?= $escena['nombre'] ?></p>
                             <input type="hidden" name="id" value="<?= $escena['id'] ?>">
                         <?php endforeach;
                     else: ?>
@@ -97,19 +136,18 @@
 </div>
 <script>
     $(document).ready(cargarTab);
-    //document.body.onload = cargarTab;
     $('#update_foto').click(actualizarFoto);
     document.getElementById('chg_email').onclick = actualizarDato;
     document.getElementById('chg_name').onclick = actualizarDato;
     for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
         document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
     }
-    for(let i = 0; i<document.getElementsByClassName('escenas_list').length; i++) {
+    for (let i = 0; i < document.getElementsByClassName('escenas_list').length; i++) {
         document.getElementsByClassName('escenas_list')[i].onclick = verEscena;
     }
 
     function guardarTab(event) {
-        if(sessionStorage.getItem('aceptadas') === "si") {
+        if (sessionStorage.getItem('aceptadas') === "si") {
             sessionStorage.setItem('active_tab_perfil', event.target.id);
         }
     }
@@ -192,14 +230,14 @@
         formulario.appendChild(subm);
         formulario.appendChild(cancel);
         event.target.parentNode.appendChild(formulario);
-        for(let i = 0; i<document.getElementsByClassName('cancel_update').length; i++) {
+        for (let i = 0; i < document.getElementsByClassName('cancel_update').length; i++) {
             document.getElementsByClassName('cancel_update')[i].onclick = cancelar;
         }
         alert(event.target.id);
     }
 
     function verEscena(event) {
-        window.location = "escena.php?id="+event.target.nextElementSibling.value;
+        window.location = "escena.php?id=" + event.target.nextElementSibling.value;
     }
 
     function cancelar(event) {
