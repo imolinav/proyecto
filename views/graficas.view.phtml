@@ -2,16 +2,15 @@
     <div class="row">
         <div class="col-6 offset-3">
             <select class="form-control">
-                <option selected disabled>Elige el mes del que quieres ver tus gáficas de uso</option>
+                <option disabled>Elige el mes del que quieres ver tus gáficas de uso</option>
                 <option disabled>--------------------------------------------------------</option>
-                <option value="actual">Actual</option>
+                <option value="actual" selected >Mes actual</option>
                 <?php foreach($meses as $mes) {
                     $dateObj = DateTime::createFromFormat('!m', $mes['mes']);
                     $mes_act = $dateObj->format('F');?>
-                <option value="<?= $item ?>"><?= $mes_act ." ". $mes['anyo'] ?></option>
-                <?php
-                $item++;
-                } ?>
+                <option value="<?= $mes['mes']."-".$mes['anyo'] ?>"><?= $mes_act ." ". $mes['anyo'] ?></option>
+                <?php } ?>
+                <option value="total">Total</option>
             </select>
         </div>
         <div class="col-12 col-md-5 offset-md-1 graficas mt-5">
@@ -25,91 +24,69 @@
     </div>
 </div>
 <script>
-    document.getElementsByTagName('select')[0].onchange = function () {
+    document.getElementsByTagName('select')[0].onchange = cargarGraficas;
+    document.body.onload = cargarGraficas;
+
+    function cargarGraficas() {
+        //alert(event.target.value);
+        let valor = document.getElementsByTagName('select')[0].value;
         let dispositivos;
-        if(document.getElementsByTagName('select')[0].value === "actual") {
-            dispositivos = JSON.parse('<?= $disp_actual ?>');
-        }
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_graficas.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 1) {
+                cargando();
+            }
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
+                    quitarCargando();
+                    dispositivos = JSON.parse(httpRequest.responseText);
 
-        let dataPoints = [];
-        let chart = new CanvasJS.Chart("chartEncendidos", {
-            title: {
-                text: "Cantidad de veces encendido por dispositivos (mensual)",
-                fontFamily: "Calibri"
-            },
-            data: [
-                {
-                    type: "bar",
-                    dataPoints: dataPoints
-                }]
-        });
-        for (let i = 0; i < dispositivos.length; i++) {
-            dataPoints.push({
-                label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
-                y: parseInt(dispositivos[i]['num_encendidos'])
-            });
-        }
+                    let dataPoints = [];
+                    let chart = new CanvasJS.Chart("chartEncendidos", {
+                        title: {
+                            text: "Cantidad de veces encendido por dispositivos (mensual)",
+                            fontFamily: "Calibri"
+                        },
+                        data: [
+                            {
+                                type: "bar",
+                                dataPoints: dataPoints
+                            }]
+                    });
+                    for (let i = 0; i < dispositivos.length; i++) {
+                        dataPoints.push({
+                            label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
+                            y: parseInt(dispositivos[i]['num_encendidos'])
+                        });
+                    }
 
-        let dataPoints2 = [];
-        let chart2 = new CanvasJS.Chart("chartTiempos", {
-            title: {
-                text: "Tiempo encendido por dispositivos (mensual)",
-                fontFamily: "Calibri"
-            },
-            data: [
-                {
-                    type: "pie",
-                    dataPoints: dataPoints2
-                }]
-        });
-        for (let i = 0; i < dispositivos.length; i++) {
-            dataPoints2.push({
-                label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
-                y: parseInt(dispositivos[i]['tiempo_encendido'])
-            });
-        }
+                    let dataPoints2 = [];
+                    let chart2 = new CanvasJS.Chart("chartTiempos", {
+                        title: {
+                            text: "Tiempo encendido por dispositivos (mensual)",
+                            fontFamily: "Calibri"
+                        },
+                        data: [
+                            {
+                                type: "pie",
+                                dataPoints: dataPoints2
+                            }]
+                    });
+                    for (let i = 0; i < dispositivos.length; i++) {
+                        dataPoints2.push({
+                            label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
+                            y: parseInt(dispositivos[i]['tiempo_encendido'])
+                        });
+                    }
 
-        /*let dataPoints3 = [];
-        let chart3 = new CanvasJS.Chart("chartEncendidosTotales", {
-            title: {
-                text: "Cantidad de veces encendido por dispositivos (total)",
-                fontFamily: "Calibri"
-            },
-            data: [
-                {
-                    type: "bar",
-                    dataPoints: dataPoints3
-                }]
-        });
-        for (let i = 0; i < dispositivos.length; i++) {
-            dataPoints3.push({
-                label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
-                y: parseInt(dispositivos[i]['num_encendidos_totales'])
-            });
-        }
+                    chart.render();
+                    chart2.render();
 
-        let dataPoints4 = [];
-        let chart4 = new CanvasJS.Chart("chartTiemposTotales", {
-            title: {
-                text: "Tiempo encendido por dispositivos (total)",
-                fontFamily: "Calibri"
-            },
-            data: [
-                {
-                    type: "pie",
-                    dataPoints: dataPoints4
-                }]
-        });
-        for (let i = 0; i < dispositivos.length; i++) {
-            dataPoints4.push({
-                label: dispositivos[i]['habitacion'] + " - " + dispositivos[i]['nombre'],
-                y: parseInt(dispositivos[i]['tiempo_encendido_total'])
-            });
-        }*/
-
-        chart.render();
-        chart2.render();
-        /*chart3.render();
-        chart4.render();*/
+                }
+            }
+        };
+        httpRequest.send('graph=' + valor);
     }
 </script>
