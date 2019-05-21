@@ -144,7 +144,12 @@
                         for(let i = 0; i<document.getElementsByName('btn_del_prg').length; i++) {
                             document.getElementsByName('btn_del_prg')[i].onclick = confirmarDelPrg;
                         }
-                        //document.getElementsByName('prg_enviar')[0].onclick = programarDisp;
+                        document.getElementsByName('prg_date_start')[0].onchange = function(event) {
+                            document.getElementsByName('prg_date_end')[0].min = event.target.value;
+                        };
+                        document.getElementsByName('prg_date_end')[0].onchange = function(event) {
+                            document.getElementsByName('prg_date_start')[0].max = event.target.value;
+                        };
                     }
                 }
             };

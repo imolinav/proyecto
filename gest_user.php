@@ -69,11 +69,11 @@ if (isset($_POST['buscar'])) {
                                     </select>
                                     <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                                 </div>
-                                <div class="col-6 col-md-3 mb-3">
+                                <!-- <div class="col-6 col-md-3 mb-3">
                                     <label><?= $i_cpanel_form8 ?></label>
                                     <input type="text" class="form-control" name="new_su_disp_pin[]">
                                     <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

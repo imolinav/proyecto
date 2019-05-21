@@ -68,7 +68,8 @@ if (isset($_POST['su_name'])) {
     // TODO: ~ Modificar la creacion de scripts
     // Guardamos los dispositivos y los pins en variables para acceder a ellas de forma mas sencilla
     $dispositivos = $_POST['su_disp_name'];
-    $pins = $_POST['su_disp_pin'];
+    //$pins = $_POST['su_disp_pin'];
+    $pin = 2;
     $tipos = $_POST['su_disp_type'];
 
     for ($i = 0; $i < $_POST['su_hab_num']; $i++) {
@@ -76,7 +77,7 @@ if (isset($_POST['su_name'])) {
 
             //Sacamos del array el primer dispositivo, el primer pin y el primer tipo
             $dispositivo = array_shift($dispositivos);
-            $pin = array_shift($pins);
+            //$pin = array_shift($pins);
             $tipo = array_shift($tipos);
 
             addDispositivo($conexion, $dispositivo, $_POST['su_hab_name'][$i], $_POST['su_email'], $pin, $tipo);
@@ -111,6 +112,7 @@ if (isset($_POST['su_name'])) {
             array_push($relays_metodos, $metodos_txt);
 
             $relay_num++;
+            $pin++;
         }
     }
 
@@ -253,16 +255,23 @@ else if (isset($_POST['user_mod_option'])) {
         $stmt_delete->execute($parameters);
     } else if ($option == "add") {
         $dispositivos = $_POST['new_su_disp_name'];
-        $pins = $_POST['new_su_disp_pin'];
+        $stmt_pin = $conexion->prepare("SELECT MAX(pin) as pin FROM dispositivo WHERE usuario_email = :email");
+        $parameters_pin = [':email'=>$email];
+        $stmt_pin->execute($parameters_pin);
+        $pin_max = $stmt_pin->fetch(PDO::FETCH_ASSOC);
+        $pin = $pin_max['pin'] + 1;
+        //$pins = $_POST['new_su_disp_pin'];
         $tipos = $_POST['new_su_disp_type'];
 
         for ($i = 0; $i < $_POST['new_su_hab_num']; $i++) {
             for ($j = 0; $j < $_POST['new_su_hab_cant_disp'][$i]; $j++) {
                 $dispositivo = array_shift($dispositivos);
-                $pin = array_shift($pins);
+                //$pin = array_shift($pins);
                 $tipo = array_shift($tipos);
 
                 addDispositivo($conexion, $dispositivo, $_POST['new_su_hab_name'][$i], $_POST['user_mod_email'], $pin, $tipo);
+
+                $pin++;
             }
         }
     } else if ($option == "update") {
