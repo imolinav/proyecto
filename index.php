@@ -10,11 +10,9 @@ if (isset($_POST['li_email'])) {
         $_SESSION['email'] = $usuario->getEmail();
         $reco = getPsswRec($conexion, $usuario->getEmail());
         if (!empty($reco)) {
-            /*$stmt_del = $conexion->prepare("DELETE FROM pswd_rec WHERE usuario_email = :email");
-            $parameters_del = [':email' => $usuario->getEmail()];
-            $stmt_del->execute($parameters_del);*/
             deletePswdRec($conexion, $usuario->getEmail());
         }
+        /* $usuario->deleteProgramas($conexion, ) */
     } else {
         echo "<script type='text/javascript'>alert('La contrasenya no es correcta');</script>";
     }
@@ -37,10 +35,6 @@ if (isset($_POST['pass_recovery'])) {
     $stmt = $conexion->prepare("UPDATE usuario SET pass = :pass, activo = 1 WHERE email = :email");
     $parameters = [':pass' => password_hash($_POST['pass_recovery'], PASSWORD_DEFAULT, ['cost' => 10]), ':email' => $_POST['user_email_recovery']];
     $stmt->execute($parameters);
-
-    /*$stmt_del = $conexion->prepare("DELETE FROM pswd_rec WHERE usuario_email = :email");
-    $parameters_del = [':email' => $_POST['user_email_recovery']];
-    $stmt_del->execute($parameters_del);*/
     deletePswdRec($conexion, $_POST['user_email_recovery']);
 }
 
