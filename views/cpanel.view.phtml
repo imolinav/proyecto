@@ -183,7 +183,8 @@
     $(document).ready(function() {
         $('.select2-user').select2();
     });
-    document.body.onload = cargarTab;
+    $(document).ready(cargarTab);
+    //document.body.onload = cargarTab;
     document.getElementsByName('su_hab_num')[0].onchange = anyadirHab;
     document.getElementsByName('su_hab_cant_disp[]')[0].onchange = anyadirDisp;
     document.getElementsByName('submit_btn')[0].onclick = comprobarForm;
@@ -202,7 +203,9 @@
     let regex_email = /^.+@.+\..+$/;
 
     function guardarTab(event) {
-        sessionStorage.setItem('active_tab', event.target.id);
+        if(sessionStorage.getItem('aceptadas') === "si") {
+            sessionStorage.setItem('active_tab', event.target.id);
+        }
     }
 
     function cargarTab() {

@@ -5,6 +5,46 @@ function logout(event) {
     event.target.parentNode.submit();
 }
 
+/* SESSIONSTORAGE */
+
+document.body.onload = avisarCookies;
+function avisarCookies() {
+    let aceptadas = sessionStorage.getItem('aceptadas');
+    if(aceptadas == null) {
+        let div = document.createElement('div');
+        div.setAttribute('class', 'aviso_cookies');
+        let texto1 = document.createTextNode('Esta página no utiliza cookies, pero si que guarda algunas de tus decisiones en el navegador para hacer tu navegación más comoda.');
+        let texto2 = document.createTextNode('Si aun asi prefiere que no las guardemos, haga click en "No guardar".');
+        let p1 = document.createElement('p');
+        let p2 = document.createElement('p');
+        p1.appendChild(texto1);
+        p2.appendChild(texto2);
+        let boton1 = document.createElement('input');
+        boton1.setAttribute('type', 'button');
+        boton1.setAttribute('class', 'btn btn-primary mr-4 mt-3');
+        boton1.setAttribute('name', 'aceptar_cookies');
+        boton1.setAttribute('value', 'Aceptar');
+        let boton2 = document.createElement('input');
+        boton2.setAttribute('type', 'button');
+        boton2.setAttribute('class', 'btn btn-danger ml-4 mt-3');
+        boton2.setAttribute('name', 'cancelar_cookies');
+        boton2.setAttribute('value', 'No guardar');
+        div.appendChild(p1);
+        div.appendChild(p2);
+        div.appendChild(boton1);
+        div.appendChild(boton2);
+        document.body.appendChild(div);
+        document.getElementsByName('aceptar_cookies')[0].onclick = function() {
+            sessionStorage.setItem('aceptadas', 'si');
+            document.body.removeChild(document.getElementsByClassName('aviso_cookies')[0]);
+        };
+        document.getElementsByName('cancelar_cookies')[0].onclick = function() {
+            sessionStorage.setItem('aceptadas', 'no');
+            document.body.removeChild(document.getElementsByClassName('aviso_cookies')[0]);
+        };
+    }
+}
+
 /* CARGANDO */
 
 function cargando() {

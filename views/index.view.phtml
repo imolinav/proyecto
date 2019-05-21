@@ -165,7 +165,8 @@
     window.onscroll = function () {
         scrollFunction()
     };
-    document.body.onload = resizeIframe;
+    $(document).ready(resizeIframe);
+    //document.body.onload = resizeIframe;
     document.body.onresize = resizeIframe;
 
     function resizeIframe() {

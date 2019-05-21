@@ -96,7 +96,8 @@
     </div>
 </div>
 <script>
-    document.body.onload = cargarTab;
+    $(document).ready(cargarTab);
+    //document.body.onload = cargarTab;
     $('#update_foto').click(actualizarFoto);
     document.getElementById('chg_email').onclick = actualizarDato;
     document.getElementById('chg_name').onclick = actualizarDato;
@@ -108,7 +109,9 @@
     }
 
     function guardarTab(event) {
-        sessionStorage.setItem('active_tab_perfil', event.target.id);
+        if(sessionStorage.getItem('aceptadas') === "si") {
+            sessionStorage.setItem('active_tab_perfil', event.target.id);
+        }
     }
 
     function cargarTab() {

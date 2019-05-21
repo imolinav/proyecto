@@ -25,7 +25,8 @@
 </div>
 <script>
     document.getElementsByTagName('select')[0].onchange = cargarGraficas;
-    document.body.onload = cargarGraficas;
+    //document.body.onload = cargarGraficas;
+    $(document).ready(cargarGraficas);
 
     function cargarGraficas() {
         //alert(event.target.value);
