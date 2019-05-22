@@ -33,14 +33,24 @@ if (isset($_POST['su_name'])) {
             echo $e->getMessage();
         }
     }
-    $email = $_POST['su_email'];
-    $mensaje = "Acceda a su cuenta con la siguiente contrasenya: ".$rand_pass." Una vez iniciada sesión se le pedira que la cambie.";
+    //$email = $_POST['su_email'];
+
+    $mensaje = "<h2>Bienvenido a SmartLiving!</h2><br>";
+    $mensaje .= "<p>Enseguida podra empezar a controlar su casa desde cualquier dispositivo.</p><br>";
+    $mensaje .= "<p>Para empezar inicie sesion con su correo</p><br>";
+    $mensaje .= "<b>".$rand_pass."</b><br>";
+    $mensaje .= "<p>Para cualquier duda no dude en ponerse en contacto</p><br>";
+    $mensaje .= "<i>iamovaz@gmail.com</i>";
+
+    $mensajeAlt = "Acceda a su cuenta con la siguiente contrasenya: ".$rand_pass." Una vez iniciada sesión se le pedira que la cambie.";
     $email = new PHPMailer(TRUE);
     try {
         $email->setFrom('soporte@smartliving.com', 'Smart Living');
         $email->addAddress($_POST['su_email'], $_POST['su_email']);
         $email->Subject = '[SMART LIVING] - Gracias por registrarse';
+        $email->isHTML(true);
         $email->Body = $mensaje;
+        $email->AltBody = $mensajeAlt;
         $email->isSMTP();
         $email->Host = 'smtp.gmail.com';
         $email->SMTPAuth = TRUE;

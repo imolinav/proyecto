@@ -22,15 +22,24 @@ if (isset($_POST['email_chg'])) {
                 echo $e->getMessage();
             }
         }
-        $email = $_POST['email_chg'];
+        //$email = $_POST['email_chg'];
         $direccion = "localhost/proyecto/rec_pass.php?id=" . $id . "&token=" . $token;
-        $mensaje = "Para recuperar su contraseña acceda al siguiente link: " . $direccion;
+
+        $mensaje = "<p>Para recuperar su contrasenya acceda al siguiente enlace.</p><br>";
+        $mensaje .= "<b>".$direccion."</b><br>";
+        $mensaje .= "<p>Este enlace estara operativo por 24h, si no logra entrar vuelva a intentar pedir otro enlace nuevo o pongase en contacto con nosotros.</p><br>";
+        $mensaje .= "<i>iamovaz@gmail.com</i>";
+
+        $mensajeAlt = "Para recuperar su contraseña acceda al siguiente link: " . $direccion;
+
         $email = new PHPMailer(TRUE);
         try {
             $email->setFrom('soporte@smartliving.com', 'Smart Living');
             $email->addAddress($_POST['email_chg'], $_POST['email_chg']);
             $email->Subject = '[SMART LIVING] - Recuperacion de contrasenya';
+            $email->isHTML(true);
             $email->Body = $mensaje;
+            $email->AltBody = $mensajeAlt;
             $email->isSMTP();
             $email->Host = 'smtp.gmail.com';
             $email->SMTPAuth = TRUE;

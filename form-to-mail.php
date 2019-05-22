@@ -13,12 +13,16 @@ if (isset($_POST['email_contacto'])) {
     if ($opcion == 'otra') {
         $opcion = $_POST['opcion_contacto'];
     }
-    $mensaje = "
-    De: " . $_POST['nombre_contacto'] . "
-    Email: " . $_POST['email_contacto'] . "
-    Razón de contacto: " . $opcion . "
-    ----------------------------------------------------
-    " . $_POST['mensaje_contacto'];
+    $mensaje = "<p>De: ".$_POST['nombre_contacto']."</p><br>";
+    $mensaje .= "<p>Email: ".$_POST['email_contacto']."</p><br>";
+    $mensaje .= "<p>Razon de contacto: ".$opcion."</p><hr>";
+    $mensaje .= "<p>".$_POST['mensaje_contacto']."</p>";
+
+    $mensajeAlt = "De: " . $_POST['nombre_contacto'];
+    $mensajeAlt .= "Email: " . $_POST['email_contacto'];
+    $mensajeAlt .= "Razón de contacto: " . $opcion;
+    $mensajeAlt .= "----------------------------------------------------";
+    $mensajeAlt .= $_POST['mensaje_contacto'];
 
     $email = new PHPMailer(TRUE);
 
@@ -26,7 +30,9 @@ if (isset($_POST['email_contacto'])) {
         $email->setFrom($_POST['email_contacto'], $_POST['nombre_contacto']);
         $email->addAddress('iamovaz@gmail.com', 'Ian Molina');
         $email->Subject = '[SMART LIVING] - ' . $opcion;
+        $email->isHTML(true);
         $email->Body = $mensaje;
+        $email->AltBody = $mensajeAlt;
 
         $email->isSMTP();
         $email->Host = 'smtp.gmail.com';
