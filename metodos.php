@@ -132,9 +132,9 @@ function getPrgrms($conexion, $id) {
     return $programas;
 }
 
-function addPrgrm($conexion, $disp, $d_ini, $h_ini, $d_fin, $h_fin, $t_ini, $t_fin, $temp) {
-    $stmt = $conexion->prepare("INSERT INTO programa(dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temp_inicio, temp_fin, temperatura) VALUES (:disp, :inicio_d, :inicio_h, :fin_d, :fin_h, :temp_ini, :temp_fin, :temp)");
-    $parameters = [':disp' => $disp, ':inicio_d' => $d_ini, ':inicio_h' => $h_ini, ':fin_d' => $d_fin, ':fin_h' => $h_fin, ':temp_ini' => $t_ini, ':temp_fin' => $t_fin, ':temp' => $temp];
+function addPrgrm($conexion, $disp, $d_ini, $h_ini, $d_fin, $h_fin, $t_ini, $t_fin, $temp, $repeats, $semanal) {
+    $stmt = $conexion->prepare("INSERT INTO programa(dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temp_inicio, temp_fin, temperatura, repetir_dias, repetir_sem) VALUES (:disp, :inicio_d, :inicio_h, :fin_d, :fin_h, :temp_ini, :temp_fin, :temp, :dias, :sem)");
+    $parameters = [':disp' => $disp, ':inicio_d' => $d_ini, ':inicio_h' => $h_ini, ':fin_d' => $d_fin, ':fin_h' => $h_fin, ':temp_ini' => $t_ini, ':temp_fin' => $t_fin, ':temp' => $temp, ':dias'=>$repeats, ':sem'=>$semanal];
     $stmt->execute($parameters);
 }
 

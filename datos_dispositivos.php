@@ -122,6 +122,43 @@ if (isset($_POST['disp'])) {
                     <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                 </div>
             <?php endif; ?>
+            <div class="row mt-4">
+                <div class="container">
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="repeat1" name="prg_repeats[]" value="si">
+                        <label class="custom-control-label" for="repeat1">Lunes</label>
+                    </div>
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="repeat2" name="prg_repeats[]" value="si">
+                        <label class="custom-control-label" for="repeat2">Martes</label>
+                    </div>
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="repeat3" name="prg_repeats[]" value="si">
+                        <label class="custom-control-label" for="repeat3">Miércoles</label>
+                    </div>
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="repeat4" name="prg_repeats[]" value="si">
+                        <label class="custom-control-label" for="repeat4">Jueves</label>
+                    </div>
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="repeat5" name="prg_repeats[]" value="si">
+                        <label class="custom-control-label" for="repeat5">Viernes</label>
+                    </div>
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="repeat6" name="prg_repeats[]" value="si">
+                        <label class="custom-control-label" for="repeat6">Sábado</label>
+                    </div>
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="repeat7" name="prg_repeats[]" value="si">
+                        <label class="custom-control-label" for="repeat7">Domingo</label>
+                    </div>
+                    <hr>
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2 mb-3">
+                        <input type="checkbox" class="custom-control-input" id="weekly" name="prg_weekly">
+                        <label class="custom-control-label" for="weekly">Semanal</label>
+                    </div>
+                </div>
+            </div>
             <input type="button" class="btn btn-primary" value="<?= $i_disp_boton1 ?>" name="prg_enviar">
         </div>
     <?php endif;

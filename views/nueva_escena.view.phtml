@@ -57,6 +57,43 @@
             </div>
         </div>
         <div class="row mt-4">
+            <div class="form-check-inline ml-3">
+                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="repeat1" name="scn_repeats[]" value="si">
+                    <label class="custom-control-label" for="repeat1">Lunes</label>
+                </div>
+                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="repeat2" name="scn_repeats[]" value="si">
+                    <label class="custom-control-label" for="repeat2">Martes</label>
+                </div>
+                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="repeat3" name="scn_repeats[]" value="si">
+                    <label class="custom-control-label" for="repeat3">Miércoles</label>
+                </div>
+                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="repeat4" name="scn_repeats[]" value="si">
+                    <label class="custom-control-label" for="repeat4">Jueves</label>
+                </div>
+                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="repeat5" name="scn_repeats[]" value="si">
+                    <label class="custom-control-label" for="repeat5">Viernes</label>
+                </div>
+                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="repeat6" name="scn_repeats[]" value="si">
+                    <label class="custom-control-label" for="repeat6">Sábado</label>
+                </div>
+                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="repeat7" name="scn_repeats[]" value="si">
+                    <label class="custom-control-label" for="repeat7">Domingo</label>
+                </div>
+                <span class="mr-3 ml-2"> - </span>
+                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                    <input type="checkbox" class="custom-control-input" id="weekly" name="scn_weekly">
+                    <label class="custom-control-label" for="weekly">Semanal</label>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
             <div class="col-12">
                 <input type="button" name="new_scn_disp" value="Añadir dispositivo" class="btn btn-primary mr-3">
                 <input type="button" name="del_scn_disp" value="Quitar dispositivo" class="btn btn-danger mr-3">
@@ -143,6 +180,12 @@
                     document.getElementsByName('scn_disp_tmp[]')[i].classList.add('is-invalid');
                     ok = false;
                 }
+            }
+        }
+        for(let i=0; i<document.getElementsByName('scn_repeats[]').length; i++) {
+            if(document.getElementsByName('scn_repeats[]')[i].checked === false) {
+                document.getElementsByName('scn_repeats[]')[i].checked = true;
+                document.getElementsByName('scn_repeats[]')[i].value = "no";
             }
         }
         if (ok === true) {

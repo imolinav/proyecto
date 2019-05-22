@@ -197,10 +197,22 @@
                         }
                     }
                 };
+                let prg_repeats = "";
+                for(let i = 0; i<document.getElementsByName('prg_repeats[]').length; i++) {
+                    if(document.getElementsByName('prg_repeats[]')[i].checked === true) {
+                        prg_repeats = prg_repeats + "S";
+                    } else {
+                        prg_repeats = prg_repeats + "N";
+                    }
+                }
+                let prg_weekly = 0;
+                if(document.getElementsByName('prg_weekly')[0].checked === true) {
+                    prg_weekly = 1;
+                }
                 if (!document.getElementsByName('prg_temp')[0]) {
-                    programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, document.getElementsByName('prg_temp_start')[0].value, document.getElementsByName('prg_temp_end')[0].value, null);
+                    programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, document.getElementsByName('prg_temp_start')[0].value, document.getElementsByName('prg_temp_end')[0].value, null, prg_repeats, prg_weekly);
                 } else {
-                    programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, document.getElementsByName('prg_temp_start')[0].value, document.getElementsByName('prg_temp_end')[0].value, document.getElementsByName('prg_temp')[0].value);
+                    programa = new Program(dispositivo, document.getElementsByName('prg_date_start')[0].value, document.getElementsByName('prg_hour_start')[0].value, document.getElementsByName('prg_date_end')[0].value, document.getElementsByName('prg_hour_end')[0].value, document.getElementsByName('prg_temp_start')[0].value, document.getElementsByName('prg_temp_end')[0].value, document.getElementsByName('prg_temp')[0].value, prg_repeats, prg_weekly);
                 }
                 let datos = JSON.stringify(programa);
                 httpRequest.send('programar=' + datos);
@@ -448,7 +460,7 @@
             httpRequest.send('escena=' + escena_datos);
         }
 
-        function Program(id_disp, dia_ini, hora_ini, dia_fin, hora_fin, temp_ini, temp_fin, temp) {
+        function Program(id_disp, dia_ini, hora_ini, dia_fin, hora_fin, temp_ini, temp_fin, temp, repeats, weekly) {
             this.id_disp = id_disp;
             this.dia_ini = dia_ini;
             this.hora_ini = hora_ini;
@@ -457,6 +469,8 @@
             this.temp_ini = temp_ini;
             this.temp_fin = temp_fin;
             this.temp = temp;
+            this.repeats = repeats;
+            this.weekly = weekly;
         }
 
         function Scene(id_escena, accion, fecha) {

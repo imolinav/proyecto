@@ -51,7 +51,7 @@ if (isset($_POST['activar'])) {
         }
     }
     if($ok == true) {
-        addPrgrm($conexion, $datos['id_disp'], $datos['dia_ini'], $datos['hora_ini'], $datos['dia_fin'], $datos['hora_fin'], $datos['temp_ini'], $datos['temp_fin'], $datos['temp']);
+        addPrgrm($conexion, $datos['id_disp'], $datos['dia_ini'], $datos['hora_ini'], $datos['dia_fin'], $datos['hora_fin'], $datos['temp_ini'], $datos['temp_fin'], $datos['temp'], $datos['repeats'], $datos['weekly']);
         $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": dispositivo programado para el dia " . $datos['dia_ini'] . " a las " . $datos['hora_ini'];
         echo "bien";
     } else {

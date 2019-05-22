@@ -20,6 +20,21 @@ if (isset($_POST['scn_name'])) {
     $programas = $stmt_cnt2->fetch(PDO::FETCH_ASSOC);
     $id_prg = $programas['id'];
 
+    $repeats = "";
+
+    foreach($_POST['scn_repeats'] as $repeat) {
+        if($repeat == "si") {
+            $repeats .= "S";
+        } else {
+            $repeats .= "N";
+        }
+    }
+
+    $weekly = 0;
+    if (isset($_POST['scn_weekly'])) {
+        $weekly = 1;
+    }
+
 
     for ($i = 0; $i < count($_POST['scn_disp_name']); $i++) {
 
@@ -39,9 +54,9 @@ if (isset($_POST['scn_name'])) {
             $_POST['scn_disp_tmp'][$i] = null;
         }
 
-        $stmt_prgr = $conexion->prepare("INSERT INTO programa (dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temp_inicio, temp_fin, temperatura) VALUES (:id, :dia_inicio, :hora_inicio, :dia_fin, :hora_fin, :temp_ini, :temp_fin, :temp)");
+        $stmt_prgr = $conexion->prepare("INSERT INTO programa (dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temp_inicio, temp_fin, temperatura, repetir_dias, repetir_sem) VALUES (:id, :dia_inicio, :hora_inicio, :dia_fin, :hora_fin, :temp_ini, :temp_fin, :temp, :dias, :semanal)");
 
-        $parameters_prgr = [':id' => $_POST['scn_disp_name'][$i], ':dia_inicio' => $_POST['scn_date'], ':hora_inicio' => $_POST['scn_disp_start'][$i], ':dia_fin' => null, ':hora_fin' => $_POST['scn_disp_end'][$i], ':temp_ini' => $_POST['scn_disp_tmp_start'][$i], ':temp_fin' => $_POST['scn_disp_tmp_end'][$i], ':temp' => $_POST['scn_disp_tmp'][$i]];
+        $parameters_prgr = [':id' => $_POST['scn_disp_name'][$i], ':dia_inicio' => $_POST['scn_date'], ':hora_inicio' => $_POST['scn_disp_start'][$i], ':dia_fin' => null, ':hora_fin' => $_POST['scn_disp_end'][$i], ':temp_ini' => $_POST['scn_disp_tmp_start'][$i], ':temp_fin' => $_POST['scn_disp_tmp_end'][$i], ':temp' => $_POST['scn_disp_tmp'][$i], ':dias'=>$repeats, ':semanal'=>$weekly];
 
         $stmt_prgr->execute($parameters_prgr);
 
