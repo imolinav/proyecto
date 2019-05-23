@@ -265,16 +265,37 @@ footer a, footer a:hover {
 #scroll_apartados {
     position: fixed;
     top: 50%;
+    left: -9.2%;
     transform: translate(0, -50%);
-    padding-left: 20px;
     padding-right: 20px;
     z-index: 100;
+    text-align: right;
 }
 .list-group, .list-group-flush, .list-group-item {
-    background-color: transparent;
+    background-color: white;
 }
 li a {
     text-decoration: none;
+}
+#scroll_apartados li {
+    text-align: right;
+    transition: 0.5s ease-in-out;
+}
+#scroll_apartados ul:first-child a {
+    border-top-right-radius:5px ;
+}
+#scroll_apartados ul:last-child a {
+    border-bottom-right-radius:5px ;
+}
+#scroll_apartados li span {
+    padding-left: 20px !important;
+}
+#scroll_apartados li i {
+    margin-left: 20px !important;
+    text-align: center;
+}
+#scroll_apartados li:hover {
+    transform: translate(60%, 0);
 }
 .list-group a {
     text-decoration: none !important;
