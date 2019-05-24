@@ -63,15 +63,28 @@ header .h1-cont {
     cursor: pointer;
     padding: 9px 0;
 }
-.dropdown-toggle img {
-    height: auto;
-    width: auto;
-    max-height: 40px;
-    max-width: 40px;
+.dropdown-toggle span {
+    line-height: 40px;
+}
+.dropdown-toggle div {
+    float: left;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
+    height: 40px;
+    width: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    margin-right: 15px;
+    overflow: hidden;
+    text-align: center;
+}
+.dropdown-toggle img {
+    height: 100%;
+    /*width: 100%;*/
     background-color: white;
+    margin-left: 50%;
+    transform: translateX(-50%);
 }
 .dropdown-menu {
     margin-top: 3px;
@@ -265,7 +278,7 @@ footer a, footer a:hover {
 #scroll_apartados {
     position: fixed;
     top: 50%;
-    left: -9.2%;
+    left: -140px;
     transform: translate(0, -50%);
     padding-right: 20px;
     z-index: 100;
@@ -552,7 +565,7 @@ code {
     text-align: center;
     position: absolute;
     right: 5%;
-    margin-top: 12px;
+    margin-top: 20px;
 }
 .msgs_nl_admin {
     display: block;
@@ -574,6 +587,10 @@ code {
 .users_chats {
     margin-bottom: 45px;
     overflow: auto;
+}
+#user_search {
+    position: absolute;
+    bottom: 0;
 }
 
 /* CONTROL DISPOSITIVOS */

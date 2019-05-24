@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/hover.css"/>
     <link rel="stylesheet" href="css/weather.css"/>
+    <link rel="stylesheet" href="css/animate.css"/>
     <link rel="stylesheet" href="node_modules/select2/dist/css/select2.min.css"/>
     <link rel="stylesheet" href="node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -41,7 +42,7 @@
             } ?>
             <div class="dropdown-toggle d-none d-md-block" id="dropdownMenuId" data-toggle="dropdown"
                  aria-haspopup="true" aria-expanded="false" style="color: white">
-                <img class="mr-3" src="<?= $usuario->getFoto() ?>"><?= $usuario->getNombre() ?>
+                <div><img class="mr-3" src="<?= $usuario->getFoto() ?>"></div><span><?= $usuario->getNombre() ?></span>
             </div>
             <div class="dropdown-toggle d-md-none" id="dropdownMenuId" data-toggle="dropdown" aria-haspopup="true"
                  aria-expanded="false" style="color: white">

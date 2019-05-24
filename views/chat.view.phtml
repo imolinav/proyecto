@@ -21,9 +21,23 @@
 </div>
 <!--<script src="/socket.io/socket.io.js"></script>-->
 <script>
+    $(document).ready(avisarMsg);
     $('#cabecera_chat').click(minMax);
     $('[name=chat_enviar]').eq(0).click(enviarMsg);
     $('#texto_msg').keyup(comprobarText);
+
+    function avisarMsg() {
+        setInterval(animar, 10000);
+    }
+
+    function animar() {
+        document.getElementById('new_msg_user').classList.add('heartBeat');
+        document.getElementById('new_msg_user').classList.add('animated');
+        document.getElementById('new_msg_user').classList.add('slow');
+        setTimeout(function() {document.getElementById('new_msg_user').classList.remove('heartBeat');
+            document.getElementById('new_msg_user').classList.remove('animated');
+            document.getElementById('new_msg_user').classList.remove('slow');}, 2000);
+    }
 
     function minMax() {
         if (document.getElementById('cuerpo_chat').style.display === "none") {
@@ -67,6 +81,9 @@
     function comprobarText(event) {
         if (event.target.value !== "") {
             $('[name=chat_enviar]').eq(0).prop("disabled", false);
+            if(event.key==="Enter") {
+                enviarMsg();
+            }
         } else {
             $('[name=chat_enviar]').eq(0).prop("disabled", true);
         }
