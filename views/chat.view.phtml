@@ -27,7 +27,9 @@
     $('#texto_msg').keyup(comprobarText);
 
     function avisarMsg() {
-        setInterval(animar, 10000);
+        if(document.getElementById('new_msg_user')) {
+            setInterval(animar, 10000);
+        }
     }
 
     function animar() {

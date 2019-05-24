@@ -27,6 +27,7 @@
                                     <p class="dispositivos_list"><?= $dispositivo['nombre'] ?><i class="fas fa-power-off icon_disp"></i></p>
                                     <?php endif; ?>
                                     <input type="hidden" value="<?= $dispositivo['id'] ?>">
+                                    <input type="hidden" value="<?= $dispositivo['pin'] ?>">
                                 <?php endif;
                             } endforeach; ?>
                     </div>
@@ -80,8 +81,11 @@
             <?php endif; ?>
         </div>
     </div>-->
-    </div>
+
+    <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
     <script>
+        var socket = io.connect('http://<?= $usuario->getRbIp() ?>:<?= $usuario->getPuerto() ?>', {reconnect: true});
+
         $(document).ready(cargarTab);
         //document.body.onload = cargarTab;
         let $dispositivos = $('.dispositivos_list');
@@ -92,7 +96,7 @@
         for (let i = 0; i < $escenas.length; i++) {
             $escenas.eq(i).click(seleccionarScn);
         }
-        let dispositivo = "", escena = "", accion = "";
+        let dispositivo = "", escena = "", accion = "", pin = "";
         for (let i = 0; i < document.getElementsByClassName('nav-link').length; i++) {
             document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
         }
@@ -117,6 +121,7 @@
 
         function seleccionarDisp(event) {
             dispositivo = event.target.nextElementSibling.value;
+            pin = event.target.nextElementSibling.nextElementSibling.value;
             seleccionar(dispositivo);
             for (let i = 0; i < $dispositivos.length; i++) {
                 if (event.target === $dispositivos[i]) {
@@ -144,6 +149,7 @@
                         $('#div_datos').append(httpRequest.responseText).children(':last').hide().fadeIn(900);
                         $('#controlador').click(cambiarEstado);
                         $('[name=prg_enviar]').eq(0).click(programarDisp);
+                        $('#upd_temp_disp').click(cambiarTemp);
                         for(let i = 0; i<document.getElementsByName('btn_del_prg').length; i++) {
                             document.getElementsByName('btn_del_prg')[i].onclick = confirmarDelPrg;
                         }
@@ -157,6 +163,91 @@
                 }
             };
             httpRequest.send('disp=' + dispositivo);
+        }
+
+        function cambiarEstado(event) {
+            let ok = true;
+            let temp = "no";
+            if(document.getElementsByName('disp_temp')[0] && event.target.src === "http://localhost/proyecto/imgs/off.png") {
+                document.getElementsByName('disp_temp')[0].classList.remove('is-invalid');
+                if(document.getElementsByName('disp_temp')[0].value==="") {
+                    ok = false;
+                } else {
+                    temp = document.getElementsByName('disp_temp')[0].value;
+                }
+            }
+            if(ok === true) {
+                let accion = "";
+                let httpRequest = obtainXMLHttpRequest();
+                httpRequest.open('POST', 'actualizar_dispositivo.php', true);
+                httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                httpRequest.onreadystatechange = function () {
+                    if (httpRequest.readyState === 1) {
+                        cargando();
+                    }
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200) {
+                            quitarCargando();
+                            if (httpRequest.responseText === "bien") {
+                                if (event.target.src === "http://localhost/proyecto/imgs/off.png") {
+                                    event.target.src = "http://localhost/proyecto/imgs/on.png";
+                                    document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.add('icon_on');
+                                    accion = 1;
+                                } else {
+                                    event.target.src = "http://localhost/proyecto/imgs/off.png";
+                                    document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.remove('icon_on');
+                                    accion = 2;
+                                }
+                            }
+                            let data = new SocketData(pin, accion, 0, 0, 0, 0);
+                            data = JSON.stringify(data);
+                            socket.emit(data);
+                        }
+                    }
+                };
+                let data = new Device(dispositivo, temp);
+                data = JSON.stringify(data);
+                httpRequest.send('activar=' + data);
+            } else {
+                document.getElementsByName('disp_temp')[0].classList.add('is-invalid');
+            }
+        }
+
+        function cambiarTemp() {
+            let ok = true;
+            let temp = "";
+            if(document.getElementsByName('disp_temp')[0].value==="") {
+                ok = false;
+            } else {
+                temp = document.getElementsByName('disp_temp')[0].value;
+            }
+            if(ok === true) {
+                let accion = "";
+                let httpRequest = obtainXMLHttpRequest();
+                httpRequest.open('POST', 'actualizar_dispositivo.php', true);
+                httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                httpRequest.onreadystatechange = function () {
+                    if (httpRequest.readyState === 1) {
+                        cargando();
+                    }
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200) {
+                            quitarCargando();
+                            if (httpRequest.responseText === "bien") {
+                            }
+                            let data = new SocketData(pin, accion, 0, 0, 0, 0);
+                            data = JSON.stringify(data);
+                            socket.emit(data);
+                        }
+                    }
+                };
+                let data = new Device(dispositivo, temp);
+                data = JSON.stringify(data);
+                httpRequest.send('temp=' + data);
+            } else {
+                document.getElementsByName('disp_temp')[0].classList.add('is-invalid');
+            }
+
         }
 
         function programarDisp(event) {
@@ -263,32 +354,6 @@
             document.getElementById('prg_delete').onclick = (function() {
                 form.submit();
             })
-        }
-
-        function cambiarEstado(event) {
-            let httpRequest = obtainXMLHttpRequest();
-            httpRequest.open('POST', 'actualizar_dispositivo.php', true);
-            httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            httpRequest.onreadystatechange = function () {
-                if (httpRequest.readyState === 1) {
-                    cargando();
-                }
-                if (httpRequest.readyState === 4) {
-                    if (httpRequest.status === 200) {
-                        quitarCargando();
-                        if (httpRequest.responseText === "bien") {
-                            if (event.target.src === "http://localhost/proyecto/imgs/off.png") {
-                                event.target.src = "http://localhost/proyecto/imgs/on.png";
-                                document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.add('icon_on');
-                            } else {
-                                event.target.src = "http://localhost/proyecto/imgs/off.png";
-                                document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.remove('icon_on');
-                            }
-                        }
-                    }
-                }
-            };
-            httpRequest.send('activar=' + dispositivo);
         }
 
         function seleccionarScn(event) {
@@ -460,6 +525,11 @@
             httpRequest.send('escena=' + escena_datos);
         }
 
+        function Device(id, temp) {
+            this.id = id;
+            this.temp = temp;
+        }
+
         function Program(id_disp, dia_ini, hora_ini, dia_fin, hora_fin, temp_ini, temp_fin, temp, repeats, weekly) {
             this.id_disp = id_disp;
             this.dia_ini = dia_ini;
@@ -477,6 +547,15 @@
             this.id_escena = id_escena;
             this.accion = accion;
             this.fecha = fecha;
+        }
+
+        function SocketData(disp, action, date, temp, repeats, weekly) {
+            this.disp = disp;
+            this.action = action;
+            this.date = date;
+            this.temp = temp;
+            this.repeats = repeats;
+            this.weekly = weekly;
         }
 
     </script>

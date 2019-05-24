@@ -110,9 +110,9 @@ class Usuario {
         return $logs;
     }
 
-    public function addLog($conexion, $dia, $info, $hora) {
-        $stmt = $conexion->prepare("INSERT INTO log (fecha, info, usuario_email, hora) VALUES (:dia, :info, :usuario_email, :hora)");
-        $parameters = [':dia' => $dia, ':info' => $info, ':usuario_email' => $this->email, ':hora' => $hora];
+    public function addLog($conexion, $dia, $info, $hora, $habitacion) {
+        $stmt = $conexion->prepare("INSERT INTO log (fecha, info, usuario_email, hora, habitacion) VALUES (:dia, :info, :usuario_email, :hora, :habitacion)");
+        $parameters = [':dia' => $dia, ':info' => $info, ':usuario_email' => $this->email, ':hora' => $hora, ':habitacion'=>$habitacion];
         $stmt->execute($parameters);
     }
 

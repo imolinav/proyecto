@@ -1,7 +1,14 @@
 <?php
 require_once "metodos.php";
+$habitacion = "";
 if (isset($_POST['activar'])) {
-    $disp = $_POST['activar'];
+    $datos = $_POST['activar'];
+    $datos = json_decode($datos, true);
+    $disp = $datos['id'];
+    $temp = $datos['temp'];
+    if($temp == "no") {
+        $temp = null;
+    }
     $dispositivo = buscarDispositivo($conexion, $disp);
     $accion = "";
 
@@ -11,18 +18,32 @@ if (isset($_POST['activar'])) {
         $stmt_faux->execute($parameters);
         $faux = $stmt_faux->fetch(PDO::FETCH_ASSOC);
         $new_time = time() - $faux['fecha_aux'];
-        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 0, num_encendidos = num_encendidos+1, tiempo_encendido = tiempo_encendido + :fnew WHERE id = :id");
-        $parameters = [':fnew' => $new_time, ':id' => $disp];
+        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 0, num_encendidos = num_encendidos+1, tiempo_encendido = tiempo_encendido + :fnew, temperatura = :temp WHERE id = :id");
+        $parameters = [':fnew' => $new_time, ':temp'=>$temp, ':id' => $disp];
         $accion = " apagado.";
     } else {
-        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 1, num_encendidos = num_encendidos+1, fecha_aux = :faux  WHERE id = :id");
-        $parameters = [':faux' => time(), ':id' => $disp];
+        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 1, num_encendidos = num_encendidos+1, fecha_aux = :faux, temperatura = :temp   WHERE id = :id");
+        $parameters = [':faux' => time(), ':temp'=>$temp, ':id' => $disp];
         $accion = " encendido.";
     }
     $stmt->execute($parameters);
     $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": dispositivo " . $accion;
+    $habitacion = $dispositivo['habitacion'];
     echo "bien";
 
+} else if(isset($_POST['temp'])) {
+    $datos = $_POST['temp'];
+    $datos = json_decode($datos, true);
+    $disp = $datos['id'];
+    $temp = $datos['temp'];
+    $dispositivo = buscarDispositivo($conexion, $disp);
+
+    $stmt = $conexion->prepare("UPDATE dispositivo SET temperatura = :temp WHERE id = :id");
+    $parameters = [':temp'=>$temp, ':id'=>$disp];
+    $stmt->execute($parameters);
+    $info = "Cambiada la temperatura de ".$dispositivo['habitacion']." - ".$dispositivo['nombre']." a ".$temp."ºC";
+    $habitacion = $dispositivo['habitacion'];
+    echo "bien";
 } else if (isset($_POST['programar'])) {
     $datos = json_decode($_POST['programar'], true);
     $dispositivo = buscarDispositivo($conexion, $datos['id_disp']);
@@ -53,6 +74,7 @@ if (isset($_POST['activar'])) {
     if($ok == true) {
         addPrgrm($conexion, $datos['id_disp'], $datos['dia_ini'], $datos['hora_ini'], $datos['dia_fin'], $datos['hora_fin'], $datos['temp_ini'], $datos['temp_fin'], $datos['temp'], $datos['repeats'], $datos['weekly']);
         $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": dispositivo programado para el dia " . $datos['dia_ini'] . " a las " . $datos['hora_ini'];
+        $habitacion = $dispositivo['habitacion'];
         echo "bien";
     } else {
         $info="";
@@ -63,6 +85,7 @@ if (isset($_POST['activar'])) {
     $dato = json_decode($_POST['escena'], true);
     $escena = getEscena($conexion, $dato['id_escena']);
     $parameters = [':id' => $dato['id_escena']];
+    $habitacion = "Escena";
     if ($dato['accion'] == "scn_delete") {
         $stmt_scn_del = $conexion->prepare("DELETE FROM escena WHERE id = :id");
         $stmt_scn_del->execute($parameters);
@@ -129,6 +152,6 @@ if (isset($_POST['activar'])) {
     }
 }
 if($info!="") {
-    $usuario->addLog($conexion, date('Y-m-d'), $info, date('H:i:s'));
+    $usuario->addLog($conexion, date('Y-m-d'), $info, date('H:i:s'), $habitacion);
 }
 ?>

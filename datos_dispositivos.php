@@ -32,6 +32,16 @@ if (isset($_POST['disp'])) {
             <?php else: ?>
                 <img src="imgs/off.png" height="100px" class="mb-5 hvr-grow" id="controlador">
             <?php endif; ?>
+            <?php if ($dispositivo['temperatura'] != null): ?>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-thermometer-quarter"></i></span>
+                    </div>
+                    <input type="number" class="form-control" name="disp_temp" placeholder="0" min="0" value="<?= $dispositivo['temperatura'] ?>"/>
+                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+                </div>
+                <button type="button" class="btn btn-primary mb-4" id="upd_temp_disp">Actualizar temperatura</button>
+            <?php endif; ?>
             <p><?= $i_disp_texto1 . $dispositivo['habitacion'] ?></p>
             <p><?= $i_disp_texto2 . $dispositivo['nombre'] ?></p>
             <p><?= $i_disp_texto3 . $dispositivo['num_encendidos'] ?></p>
