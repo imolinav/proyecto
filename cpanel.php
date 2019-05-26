@@ -37,7 +37,7 @@ if (isset($_POST['su_name'])) {
 
     $mensaje = "<h2>Bienvenido a SmartLiving!</h2><br>";
     $mensaje .= "<p>Enseguida podra empezar a controlar su casa desde cualquier dispositivo.</p><br>";
-    $mensaje .= "<p>Para empezar inicie sesion con su correo</p><br>";
+    $mensaje .= "<p>Para empezar inicie sesion con su correo y la siguiente contrasenya</p><br>";
     $mensaje .= "<b>".$rand_pass."</b><br>";
     $mensaje .= "<p>Para cualquier duda no dude en ponerse en contacto</p><br>";
     $mensaje .= "<i>iamovaz@gmail.com</i>";

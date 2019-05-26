@@ -318,6 +318,12 @@ li a {
 .list-group-item {
     box-shadow: 0 4px 8px 0 rgba(248, 248, 248, 0.2), 0 6px 20px 0 rgba(248, 248, 248, 0.19);
 }
+#index_aboutus h1 {
+    font-family: "Gobold Regular";
+    text-align: justify;
+    padding: 50px;
+    font-size: 3em;
+}
 
 /* FORMULARIO INICIO SESION */
 

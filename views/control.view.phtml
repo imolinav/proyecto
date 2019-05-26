@@ -8,9 +8,6 @@
             <a class="nav-link" id="escenas_tab" data-toggle="tab" href="#escenas" role="tab" aria-controls="escenas"
                aria-selected="false"><?= $i_control_tab2 ?></a>
         </li>
-        <!--<li class="nav-item">
-            <a class="nav-link" id="camaras_tab" data-toggle="tab" href="#camaras" role="tab" aria-controls="camaras" aria-selected="false"><?= $i_control_tab3 ?></a>
-        </li>-->
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade" id="dispositivos" role="tabpanel" aria-labelledby="dispositivos_tab">
@@ -21,10 +18,10 @@
                             <p class="habitacion_list"><?= $habitacion['habitacion'] ?></p>
                             <?php foreach ($dispositivos as $dispositivo) {
                                 if ($dispositivo['habitacion'] == $habitacion['habitacion']):?>
-                                    <?php if ($dispositivo['encendido']==1) : ?>
-                                    <p class="dispositivos_list"><?= $dispositivo['nombre'] ?><i class="fas fa-power-off icon_disp icon_on"></i></p>
-                                    <?php else :?>
-                                    <p class="dispositivos_list"><?= $dispositivo['nombre'] ?><i class="fas fa-power-off icon_disp"></i></p>
+                                    <?php if ($dispositivo['encendido'] == 1) : ?>
+                                        <p class="dispositivos_list"><?= $dispositivo['nombre'] ?><i class="fas fa-power-off icon_disp icon_on"></i></p>
+                                    <?php else : ?>
+                                        <p class="dispositivos_list"><?= $dispositivo['nombre'] ?><i class="fas fa-power-off icon_disp"></i></p>
                                     <?php endif; ?>
                                     <input type="hidden" value="<?= $dispositivo['id'] ?>">
                                     <input type="hidden" value="<?= $dispositivo['pin'] ?>">
@@ -39,55 +36,41 @@
             <div class="container w-75 mt-4">
 
                 <?php if (!empty($escenas)) : ?>
-                <div class="row mt-5" id="div_scns">
-                    <div class="col-12 col-md-6 mt-3">
-                        <p class="scene_title">Escenas</p>
-                        <?php foreach ($escenas as $escena) : ?>
-                            <?php if ($escena['activa']==1) :?>
-                            <p class="scenes_list"><?= $escena['nombre'] ?><i class="fas fa-power-off icon_disp icon_on"></i></p>
-                            <?php else :?>
-                            <p class="scenes_list"><?= $escena['nombre'] ?><i class="fas fa-power-off icon_disp"></i></p>
-                            <?php endif; ?>
-                            <input type="hidden" value="<?= $escena['id'] ?>">
-                        <?php endforeach; ?>
-                        <a href="nueva_escena.php" class="btn btn-primary mt-3">Escena nueva</a>
+                    <div class="row mt-5" id="div_scns">
+                        <div class="col-12 col-md-6 mt-3">
+                            <p class="scene_title">Escenas</p>
+                            <?php foreach ($escenas as $escena) : ?>
+                                <?php if ($escena['activa'] == 1) : ?>
+                                    <p class="scenes_list"><?= $escena['nombre'] ?><i class="fas fa-power-off icon_disp icon_on"></i></p>
+                                <?php else : ?>
+                                    <p class="scenes_list"><?= $escena['nombre'] ?><i class="fas fa-power-off icon_disp"></i></p>
+                                <?php endif; ?>
+                                <input type="hidden" value="<?= $escena['id'] ?>">
+                            <?php endforeach; ?>
+                            <a href="nueva_escena.php" class="btn btn-primary mt-3">Escena nueva</a>
+                        </div>
                     </div>
-                </div>
+                <?php else: ?>
+                    <div align="center" class="mt-5">
+                        <h2 class="mt-3"><?= $i_control_texto1 ?></h2>
+                        <h3 class="mt-3"><?= $i_control_texto2 ?></h3>
+                        <a href="nueva_escena.php" class="btn btn-primary mt-3 mb-3"><?= $i_control_boton1 ?></a>
+                    </div>
+                <?php endif; ?>
             </div>
-            <?php else: ?>
-                <div align="center" class="mt-5">
-                    <h2 class="mt-3"><?= $i_control_texto1 ?></h2>
-                    <h3 class="mt-3"><?= $i_control_texto2 ?></h3>
-                    <a href="nueva_escena.php" class="btn btn-primary mt-3 mb-3"><?= $i_control_boton1 ?></a>
-                </div>
-            <?php endif; ?>
         </div>
+    </div>
 
-        <!--<div class="tab-pane fade" id="camaras" role="tabpanel" aria-labelledby="camaras_tab">
-            <?php if (!empty($camaras)) : ?>
-            <div class="row">
-                <?php foreach ($camaras as $camara) : ?>
-                <div class="offset-1 col-10">
-                    <div class="jsmpeg" data-url="video.ts"></div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-            <?php else: ?>
-            <div align="center" class="mt-5">
-                <h2 class="mt-3"><?= $i_control_texto3 ?></h2>
-                <h3 class="mt-3"><?= $i_control_texto4 ?></h3>
-                <a href="contacto.php" class="btn btn-primary mt-3 mb-3"><?= $i_control_boton2 ?></a>
-            </div>
-            <?php endif; ?>
-        </div>
-    </div>-->
 
     <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
     <script>
-        var socket = io.connect('http://<?= $usuario->getRbIp() ?>:<?= $usuario->getPuerto() ?>', {reconnect: true});
+        try {
+            var socket = io.connect('http://<?= $usuario->getRbIp() ?>:<?= $usuario->getPuerto() ?>', {reconnect: true});
+        } catch (err) {
+            alert(err.message);
+        }
 
         $(document).ready(cargarTab);
-        //document.body.onload = cargarTab;
         let $dispositivos = $('.dispositivos_list');
         let $escenas = $('.scenes_list');
         for (let i = 0; i < $dispositivos.length; i++) {
@@ -101,8 +84,15 @@
             document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
         }
 
+        if (typeof socket !== "undefined") {
+            socket.on('connected', function (data) {
+                //  TODO: ~ Modificar estado dispositivos a 0;
+                alert(data);
+            });
+        }
+
         function guardarTab(event) {
-            if(sessionStorage.getItem('aceptadas') === "si") {
+            if (sessionStorage.getItem('aceptadas') === "si") {
                 sessionStorage.setItem('active_tab_control', event.target.id);
             }
         }
@@ -150,13 +140,13 @@
                         $('#controlador').click(cambiarEstado);
                         $('[name=prg_enviar]').eq(0).click(programarDisp);
                         $('#upd_temp_disp').click(cambiarTemp);
-                        for(let i = 0; i<document.getElementsByName('btn_del_prg').length; i++) {
+                        for (let i = 0; i < document.getElementsByName('btn_del_prg').length; i++) {
                             document.getElementsByName('btn_del_prg')[i].onclick = confirmarDelPrg;
                         }
-                        document.getElementsByName('prg_date_start')[0].onchange = function(event) {
+                        document.getElementsByName('prg_date_start')[0].onchange = function (event) {
                             document.getElementsByName('prg_date_end')[0].min = event.target.value;
                         };
-                        document.getElementsByName('prg_date_end')[0].onchange = function(event) {
+                        document.getElementsByName('prg_date_end')[0].onchange = function (event) {
                             document.getElementsByName('prg_date_start')[0].max = event.target.value;
                         };
                     }
@@ -168,15 +158,15 @@
         function cambiarEstado(event) {
             let ok = true;
             let temp = "no";
-            if(document.getElementsByName('disp_temp')[0] && event.target.src === "http://localhost/proyecto/imgs/off.png") {
+            if (document.getElementsByName('disp_temp')[0] && event.target.src === "http://localhost/proyecto/imgs/off.png") {
                 document.getElementsByName('disp_temp')[0].classList.remove('is-invalid');
-                if(document.getElementsByName('disp_temp')[0].value==="") {
+                if (document.getElementsByName('disp_temp')[0].value === "") {
                     ok = false;
                 } else {
                     temp = document.getElementsByName('disp_temp')[0].value;
                 }
             }
-            if(ok === true) {
+            if (ok === true) {
                 let accion = "";
                 let httpRequest = obtainXMLHttpRequest();
                 httpRequest.open('POST', 'actualizar_dispositivo.php', true);
@@ -196,12 +186,16 @@
                                 } else {
                                     event.target.src = "http://localhost/proyecto/imgs/off.png";
                                     document.getElementsByClassName('disp_act')[0].getElementsByTagName('i')[0].classList.remove('icon_on');
-                                    accion = 2;
+                                    accion = 0;
                                 }
                             }
-                            let data = new SocketData(pin, accion, 0, 0, 0, 0);
-                            data = JSON.stringify(data);
-                            socket.emit(data);
+                            if (typeof socket !== "undefined") {
+                                socket.emit("activar", {
+                                    disp: pin,
+                                    action: accion,
+                                    temp: null
+                                })
+                            }
                         }
                     }
                 };
@@ -216,12 +210,12 @@
         function cambiarTemp() {
             let ok = true;
             let temp = "";
-            if(document.getElementsByName('disp_temp')[0].value==="") {
+            if (document.getElementsByName('disp_temp')[0].value === "") {
                 ok = false;
             } else {
                 temp = document.getElementsByName('disp_temp')[0].value;
             }
-            if(ok === true) {
+            if (ok === true) {
                 let accion = "";
                 let httpRequest = obtainXMLHttpRequest();
                 httpRequest.open('POST', 'actualizar_dispositivo.php', true);
@@ -233,11 +227,13 @@
                     if (httpRequest.readyState === 4) {
                         if (httpRequest.status === 200) {
                             quitarCargando();
-                            if (httpRequest.responseText === "bien") {
+                            if (typeof socket !== "undefined") {
+                                socket.emit('activar', {
+                                    disp: pin,
+                                    action: accion,
+                                    temp: temp
+                                })
                             }
-                            let data = new SocketData(pin, accion, 0, 0, 0, 0);
-                            data = JSON.stringify(data);
-                            socket.emit(data);
                         }
                     }
                 };
@@ -251,11 +247,18 @@
         }
 
         function programarDisp(event) {
-            if(document.getElementById('texto_error')) {
+            let temp = "", temp_ext = "", date = "", hour = "", prg_repeats = "", prg_weekly = 0, date_end = "",
+                hour_end = "", temp_end = "";
+            if (document.getElementById('texto_error')) {
                 document.getElementById('texto_error').parentNode.removeChild(document.getElementById('texto_error'));
             }
-            let ok = true;
-            if (document.getElementsByName('prg_date_start')[0].value === "") {
+            let ok = true, repeated = false;
+            for (let i = 0; i < document.getElementsByName('prg_repeats[]').length; i++) {
+                if (document.getElementsByName('prg_repeats[]')[i].checked) {
+                    repeated = true;
+                }
+            }
+            if ((document.getElementsByName('prg_date_start')[0].value === "" && repeated === false) || (document.getElementsByName('prg_date_start')[0].value !== "" && repeated === true)) {
                 document.getElementsByName('prg_date_start')[0].classList.add('is-invalid');
                 ok = false;
             }
@@ -278,6 +281,52 @@
                             quitarCargando();
                             if (httpRequest.responseText === "bien") {
                                 seleccionar(dispositivo);
+                                if (document.getElementsByName('prg_date_start')[0].value !== "") {
+                                    date = document.getElementsByName('prg_date_start')[0].value;
+                                }
+                                if (document.getElementsByName('prg_hour_start')[0].value !== "") {
+                                    hour = document.getElementsByName('prg_hour_start')[0].value;
+                                }
+                                if (document.getElementsByName('prg_temp_start')[0].value !== "") {
+                                    temp_ext = document.getElementsByName('prg_temp_start')[0].value;
+                                }
+                                if (document.getElementsByName('prg_date_end')[0].value !== "") {
+                                    date_end = document.getElementsByName('prg_date_end')[0].value;
+                                }
+                                if (document.getElementsByName('prg_hour_end')[0].value !== "") {
+                                    hour_end = document.getElementsByName('prg_hour_end')[0].value;
+                                }
+                                if (document.getElementsByName('prg_temp_end')[0].value !== "") {
+                                    temp_end = document.getElementsByName('prg_temp_end')[0].value;
+                                }
+                                if (document.getElementsByName('prg_temp')[0]) {
+                                    if (document.getElementsByName('prg_temp')[0].value !== "") {
+                                        temp = document.getElementsByName('prg_temp')[0].value;
+                                    }
+                                }
+                                //  TODO: ~ revisar esto
+                                if (typeof socket !== "undefined") {
+                                    socket.emit('programar', {
+                                        disp: pin,
+                                        date: date,
+                                        hour: hour,
+                                        temp: temp,
+                                        temp_ext: temp_ext,
+                                        repeats: prg_repeats,
+                                        weekly: prg_weekly
+                                    });
+                                    if (date_end !== "") {
+                                        socket.emit('programar', {
+                                            disp: pin,
+                                            date: date_end,
+                                            hour: hour_end,
+                                            temp: temp,
+                                            temp_ext: temp_end,
+                                            repeats: prg_repeats,
+                                            weekly: prg_weekly
+                                        });
+                                    }
+                                }
                             } else {
                                 let texto_error = document.createElement('p');
                                 texto_error.setAttribute('id', 'texto_error');
@@ -286,18 +335,17 @@
                                 event.target.parentNode.insertBefore(texto_error, event.target);
                             }
                         }
+
                     }
                 };
-                let prg_repeats = "";
-                for(let i = 0; i<document.getElementsByName('prg_repeats[]').length; i++) {
-                    if(document.getElementsByName('prg_repeats[]')[i].checked === true) {
-                        prg_repeats = prg_repeats + "S";
+                for (let i = 0; i < document.getElementsByName('prg_repeats[]').length; i++) {
+                    if (document.getElementsByName('prg_repeats[]')[i].checked === true) {
+                        prg_repeats += "S";
                     } else {
-                        prg_repeats = prg_repeats + "N";
+                        prg_repeats += "N";
                     }
                 }
-                let prg_weekly = 0;
-                if(document.getElementsByName('prg_weekly')[0].checked === true) {
+                if (document.getElementsByName('prg_weekly')[0].checked === true) {
                     prg_weekly = 1;
                 }
                 if (!document.getElementsByName('prg_temp')[0]) {
@@ -351,7 +399,7 @@
             document.body.appendChild(difuminador);
 
             $('#prg_delete_cancel').click(cancelarDel);
-            document.getElementById('prg_delete').onclick = (function() {
+            document.getElementById('prg_delete').onclick = (function () {
                 form.submit();
             })
         }
@@ -400,7 +448,7 @@
         }
 
         function modificarEscena() {
-            window.location = "escena.php?id="+escena;
+            window.location = "escena.php?id=" + escena;
         }
 
         function activarReuse(event) {
@@ -547,15 +595,6 @@
             this.id_escena = id_escena;
             this.accion = accion;
             this.fecha = fecha;
-        }
-
-        function SocketData(disp, action, date, temp, repeats, weekly) {
-            this.disp = disp;
-            this.action = action;
-            this.date = date;
-            this.temp = temp;
-            this.repeats = repeats;
-            this.weekly = weekly;
         }
 
     </script>

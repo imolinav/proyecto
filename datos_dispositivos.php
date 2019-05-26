@@ -85,7 +85,7 @@ if (isset($_POST['disp'])) {
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                 </div>
-                <input type="date" class="form-control" name="prg_date_start">
+                <input type="date" class="form-control" name="prg_date_start" min="<?= date('Y-m-d') ?>">
                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
             <div class="input-group mb-3">
