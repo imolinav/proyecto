@@ -13,63 +13,70 @@
                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
             </div>
         </div>
-        <?php foreach ($datos_scn as $dato) :?>
-        <div class="row mt-4 row_disp">
-            <div class="col-2">
-                <label>Dispositivo</label>
-                <select class="form-control" name="scn_disp_name[]">
-                    <option disabled value="no">Elige el dispositivo</option>
-                    <option disabled value="no">----------------------</option>
-                    <?php foreach ($dispositivos as $dispositivo) {
-                        if ($dispositivo['temperatura'] != null) {
-                            if($dispositivo['habitacion']==$dato['habitacion'] && $dispositivo['nombre']==$dato['nombre']): ?>
-                            <option selected value="<?= $dispositivo['id'] ?>" class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
-                            <?php else: ?>
-                            <option value="<?= $dispositivo['id'] ?>" class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
-                            <?php endif;
+        <?php foreach ($datos_scn as $dato) : ?>
+            <div class="row mt-4 row_disp">
+                <div class="col-2">
+                    <label>Dispositivo</label>
+                    <select class="form-control" name="scn_disp_name[]">
+                        <option disabled value="no">Elige el dispositivo</option>
+                        <option disabled value="no">----------------------</option>
+                        <?php foreach ($dispositivos as $dispositivo) {
+                            if ($dispositivo['temperatura'] != null) {
+                                if ($dispositivo['habitacion'] == $dato['habitacion'] && $dispositivo['nombre'] == $dato['nombre']): ?>
+                                    <option selected value="<?= $dispositivo['id'] ?>"
+                                            class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
+                                <?php else: ?>
+                                    <option value="<?= $dispositivo['id'] ?>"
+                                            class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
+                                <?php endif;
                             } else {
-                            if($dispositivo['habitacion']==$dato['habitacion'] && $dispositivo['nombre']==$dato['nombre']): ?>
-                            <option selected value="<?= $dispositivo['id'] ?>"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
-                            <?php else: ?>
-                            <option value="<?= $dispositivo['id'] ?>"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
-                            <?php endif;
+                                if ($dispositivo['habitacion'] == $dato['habitacion'] && $dispositivo['nombre'] == $dato['nombre']): ?>
+                                    <option selected
+                                            value="<?= $dispositivo['id'] ?>"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
+                                <?php else: ?>
+                                    <option value="<?= $dispositivo['id'] ?>"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
+                                <?php endif;
                             } ?>
-                        <?php
-                    } ?>
+                            <?php
+                        } ?>
 
-                </select>
-                <input type="hidden" value="<?= $dato['id_prg'] ?>" name="scn_prg_id[]">
-                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+                    </select>
+                    <input type="hidden" value="<?= $dato['id_prg'] ?>" name="scn_prg_id[]">
+                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+                </div>
+                <div class="col-2">
+                    <label>Hora inicio</label>
+                    <input type="time" class="form-control" name="scn_disp_start[]" value="<?= $dato['hora_inicio'] ?>">
+                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+                </div>
+                <div class="col-2">
+                    <label>Hora fin</label>
+                    <input type="time" class="form-control" name="scn_disp_end[]" value="<?= $dato['hora_fin'] ?>">
+                </div>
+                <div class="col-2">
+                    <label>Temperatura inicio</label>
+                    <input type="number" min="0" class="form-control" name="scn_disp_tmp_start[]"
+                           value="<?= $dato['temp_inicio'] ?>">
+                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+                </div>
+                <div class="col-2">
+                    <label>Temperatura fin</label>
+                    <input type="number" min="0" class="form-control" name="scn_disp_tmp_end[]"
+                           value="<?= $dato['temp_fin'] ?>">
+                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+                </div>
+                <div class="col-2">
+                    <label>Temperatura</label>
+                    <?php if (!is_null($dato['temperatura'])) : ?>
+                        <input type="number" min="0" class="form-control" name="scn_disp_tmp[]"
+                               value="<?= $dato['temperatura'] ?>">
+                    <?php else: ?>
+                        <input type="number" min="0" class="form-control" name="scn_disp_tmp[]" placeholder="0"
+                               disabled>
+                    <?php endif; ?>
+                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
+                </div>
             </div>
-            <div class="col-2">
-                <label>Hora inicio</label>
-                <input type="time" class="form-control" name="scn_disp_start[]" value="<?= $dato['hora_inicio'] ?>">
-                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
-            </div>
-            <div class="col-2">
-                <label>Hora fin</label>
-                <input type="time" class="form-control" name="scn_disp_end[]" value="<?= $dato['hora_fin'] ?>">
-            </div>
-            <div class="col-2">
-                <label>Temperatura inicio</label>
-                <input type="number" min="0" class="form-control" name="scn_disp_tmp_start[]" value="<?= $dato['temp_inicio'] ?>">
-                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
-            </div>
-            <div class="col-2">
-                <label>Temperatura fin</label>
-                <input type="number" min="0" class="form-control" name="scn_disp_tmp_end[]" value="<?= $dato['temp_fin'] ?>">
-                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
-            </div>
-            <div class="col-2">
-                <label>Temperatura</label>
-                <?php if (!is_null($dato['temperatura'])) :?>
-                <input type="number" min="0" class="form-control" name="scn_disp_tmp[]" value="<?= $dato['temperatura'] ?>">
-                <?php else: ?>
-                <input type="number" min="0" class="form-control" name="scn_disp_tmp[]" placeholder="0" disabled>
-                <?php endif; ?>
-                <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
-            </div>
-        </div>
         <?php endforeach; ?>
         <div class="row mt-4 row_disp">
             <div class="col-2">
@@ -125,7 +132,7 @@
     </form>
 </div>
 <script>
-    let row_disp = document.getElementsByClassName('row_disp')[document.getElementsByClassName('row_disp').length-1].cloneNode(true);
+    let row_disp = document.getElementsByClassName('row_disp')[document.getElementsByClassName('row_disp').length - 1].cloneNode(true);
     document.getElementsByName('new_scn_disp')[0].onclick = nuevoDisp;
     document.getElementsByName('del_scn_disp')[0].onclick = quitarDisp;
     document.getElementsByName('scn_submit')[0].onclick = comprobarScnForm;
@@ -133,6 +140,7 @@
         document.getElementsByName('scn_disp_name[]')[i].onchange = habilitarInputs;
     }
 
+    // Añade un nuevo bloque de dispositivo
     function nuevoDisp(event) {
         event.target.parentNode.parentNode.parentNode.insertBefore(row_disp.cloneNode(true), event.target.parentNode.parentNode);
         for (let i = 0; i < document.getElementsByName('scn_disp_name[]').length; i++) {
@@ -140,12 +148,14 @@
         }
     }
 
+    // Elimina el ultimo bloque de dispositivo
     function quitarDisp(event) {
         if (document.getElementsByClassName('row_disp').length > 1) {
             event.target.parentNode.parentNode.parentNode.removeChild(document.getElementsByClassName('row_disp')[document.getElementsByClassName('row_disp').length - 1]);
         }
     }
 
+    // Al elegir un dispositivo, te permite rellenar su informacion
     function habilitarInputs(event) {
         for (let i = 0; i < document.getElementsByName('scn_disp_name[]').length; i++) {
             if (document.getElementsByName('scn_disp_name[]')[i] == event.target) {
@@ -162,6 +172,7 @@
         }
     }
 
+    // Comprueba que todos los datos minimos estan rellenos
     function comprobarScnForm() {
         for (let i = 0; i < document.getElementsByTagName('input').length; i++) {
             document.getElementsByTagName('input')[i].classList.remove('is-invalid');

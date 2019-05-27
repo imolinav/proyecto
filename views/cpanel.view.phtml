@@ -113,7 +113,7 @@
         <div class="tab-pane fade" id="modify_user" role="tabpanel" aria-labelledby="modify_user_tab">
             <div class="row mt-4">
                 <div class="col-12 col-md-6 offset-md-3">
-                    <select class="select2-user form-control" data-live-search="true" id="select_user" >
+                    <select class="select2-user form-control" data-live-search="true" id="select_user">
                         <option selected disabled><?= $i_cpanel_option1 ?></option>
                         <?php foreach ($usuarios as $user) : ?>
                             <option value="<?= $user['email'] ?>"><?= $user['nombre'] ?></option>
@@ -128,7 +128,9 @@
                     <div class="col-4" id="admin_chat_users">
                         <div class="users_chats">
                             <div>
-                            <?php foreach ($usuarios_chat as $usuario_chat) {
+                                <?php foreach ($usuarios_chat
+
+                                as $usuario_chat) {
                                 $cont = 0;
                                 if (!empty($mensajes_nl)) {
                                     foreach ($mensajes_nl as $mensaje_nl) {
@@ -140,13 +142,14 @@
                                 if ($cont > 0):?>
                                     <div class="new_msg_admin"><?= $cont ?></div>
                                 <?php endif; ?>
-                                <p class="user_chat"><?= $usuario_chat['usuario'] . " (" . $usuario_chat['email'] .")" ?>
+                                <p class="user_chat"><?= $usuario_chat['usuario'] . " (" . $usuario_chat['email'] . ")" ?>
                                 </p>
                                 <input type="hidden" value="<?= $usuario_chat['email'] ?>">
                             </div>
                             <?php } ?>
                         </div>
-                        <input type="text" class="form-control" id="user_search" placeholder="Busca por nombre o correo...">
+                        <input type="text" class="form-control" id="user_search"
+                               placeholder="Busca por nombre o correo...">
                     </div>
                     <div class="col-8 pt-3">
                         <div class="row">
@@ -168,7 +171,7 @@
     </div>
 </div>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.select2-user').select2();
     });
     $(document).ready(cargarTab);
@@ -189,12 +192,14 @@
     }
     let regex_email = /^.+@.+\..+$/;
 
+    // Guarda la pestaña actual si el usuario ha aceptado que guarden su info por sessionStorage
     function guardarTab(event) {
-        if(sessionStorage.getItem('aceptadas') === "si") {
+        if (sessionStorage.getItem('aceptadas') === "si") {
             sessionStorage.setItem('active_tab', event.target.id);
         }
     }
 
+    // Carga la ultima pestaña utilizada por el usuario si ha accedido a que se guarde su informacion
     function cargarTab() {
         let tab = sessionStorage.getItem('active_tab');
         if (tab == null) {
@@ -207,6 +212,7 @@
         document.getElementById(tab_p).classList.add('show');
     }
 
+    // Anyade un bloque de habitacion al formulario de registro de usuarios
     function anyadirHab(event) {
         let aux = "";
         if (event.target.name === "new_su_hab_num") {
@@ -226,6 +232,7 @@
         }
     }
 
+    // Anyade un bloque de dispositivos al formulario de registro de usuarios
     function anyadirDisp(event) {
         let aux = "";
         if (event.target.name === "new_su_hab_cant_disp[]") {
@@ -242,6 +249,7 @@
         }
     }
 
+    // Comprueba que todos los campos minimos necesarios esten rellenados
     function comprobarForm(event) {
         let aux = "";
         let ok = true;
@@ -279,6 +287,7 @@
         }
     }
 
+    // Carga al usuario seleccionado
     function buscarUser(event) {
         if (document.getElementById('modificar_usuario')) {
             document.getElementById('modificar_usuario').parentNode.removeChild(document.getElementById('modificar_usuario'));
@@ -306,11 +315,13 @@
         httpRequest.send('buscar=' + user);
     }
 
+    // Pide confirmacion a la hora de eliminar un usuario
     function confirmarDelete() {
         document.getElementsByName('user_mod_option')[0].value = "delete";
         document.getElementById('new_form_reg').submit();
     }
 
+    // Comprueba que el email cumple la expresión regular
     function comprobarEmail() {
         let regex_email = /^.+@.+\..+$/;
         document.getElementsByName('new_email')[0].classList.remove('is-invalid');
@@ -321,12 +332,14 @@
         }
     }
 
+    // Modifica el email del usuario
     function modificarEmail() {
         document.getElementsByName('user_mod_option')[0].value = "update";
         document.getElementById('new_form_reg').submit();
 
     }
 
+    // Elige el chat del usuario y carga sus mensajes
     function selecUser(event) {
         elemento = event.target;
         usuario = event.target.nextElementSibling.value;
@@ -342,22 +355,23 @@
         cargarMensajes(elemento, usuario);
     }
 
+    // Busca usuario por nombre o email
     function filtrarUser(event) {
         let cadena = "";
-        if(event.target.value!=="") {
+        if (event.target.value !== "") {
             cadena = event.target.value;
         }
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.onreadystatechange = function() {
-            if(httpRequest.readyState === 1) {
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 1) {
                 cargando();
             }
-            if(httpRequest.readyState === 4) {
-                if(httpRequest.status === 200) {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
                     quitarCargando();
-                    if(document.getElementById('admin_chat_users').getElementsByTagName('div')[0]) {
+                    if (document.getElementById('admin_chat_users').getElementsByTagName('div')[0]) {
                         document.getElementById('admin_chat_users').removeChild(document.getElementById('admin_chat_users').getElementsByTagName('div')[0]);
                     }
                     document.getElementById('admin_chat_users').insertAdjacentHTML('afterbegin', httpRequest.responseText);
@@ -367,9 +381,10 @@
                 }
             }
         };
-        httpRequest.send('filter='+cadena);
+        httpRequest.send('filter=' + cadena);
     }
 
+    // Carga los mensajes del usuario seleccionado
     function cargarMensajes(elemento, usuario) {
         if (elemento.previousElementSibling !== null) {
             if (elemento.previousElementSibling.classList.contains('new_msg_admin')) {
@@ -403,6 +418,7 @@
         httpRequest.send('user=' + usuario);
     }
 
+    // Envia mensajes al usuario seleccionado
     function enviarMensaje() {
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);

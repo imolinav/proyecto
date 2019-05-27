@@ -2,12 +2,17 @@
 //session_start();
 require_once "metodos.php";
 
+// Actualiza el nombre
 if (isset($_POST['upd_name'])) {
     $usuario->updateNombre($conexion, $_POST['upd_name']);
 }
+
+// Actualiza el email
 if (isset($_POST['upd_email'])) {
     $usuario->updateEmail($conexion, $_POST['upd_email']);
 }
+
+// Actualiza la foto
 if (isset($_FILES['upd_foto'])) {
     $fichero = $_FILES['upd_foto'];
     if ($fichero['size'] != 0) {
@@ -24,10 +29,10 @@ if (isset($_FILES['upd_foto'])) {
     }
 }
 
+// Recogemos los datos del usuario (dispositivos, escenas habitaciones y programas)
 $dispositivos = $usuario->getDispositivos($conexion);
 $escenas = $usuario->getEscenas($conexion);
 $habitaciones = $usuario->getHabitaciones($conexion);
-$camaras = $usuario->getCamaras($conexion);
 $programas = $usuario->getProgramas($conexion);
 
 include "views/partials/header.part.php";

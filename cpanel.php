@@ -22,6 +22,7 @@ if (isset($_POST['su_name'])) {
         $puerto = rand(0, 65535);
     } while (array_search($puerto, $puertos) != false);
 
+    // Creamos una contraseña aleatoria para el usuario
     try {
         $rand_pass = bin2hex(random_bytes(16));
     } catch (\Exception $e) {
@@ -32,6 +33,7 @@ if (isset($_POST['su_name'])) {
         }
     }
 
+    // Mandamos un correo al usuario con la contraseña generada. Esta se cambiara una vez inicie sesion por primera vez
     $mensaje = "<h2>Bienvenido a SmartLiving!</h2>";
     $mensaje .= "<p>Enseguida podra empezar a controlar su casa desde cualquier dispositivo.</p>";
     $mensaje .= "<p>Para empezar inicie sesion con su correo y la siguiente contrasenya: </p>";
@@ -116,28 +118,6 @@ if (isset($_POST['su_name'])) {
                     break;
             }
             array_push($relays, $relay_txt);
-
-            /*$metodos_txt = "
-            socket.on('zona" . $relay_num . "', function(data) {
-                relayStatus" . $relay_num . " = data;
-                if(relayStatus" . $relay_num . " != RELAY" . $relay_num . ".readSync()) {
-                    RELAY" . $relay_num . ".writeSync(relayStatus" . $relay_num . ");
-                }
-                registrar(logFile, 'Rele " . $relay_num . ": ' + relayStatus" . $relay_num . ");
-                socket.disconnect(true);
-                io.sockets.emit('relay" . $relay_num . "', data);
-            });
-            socket.on('relay" . $relay_num . "', function(data) {
-                relayStatus" . $relay_num . " = data;
-                if (relayStatus" . $relay_num . " != RELAY" . $relay_num . ".readSync()) {
-                    RELAY" . $relay_num . ".writeSync(relayStatus" . $relay_num . ");
-                    registrar(logFile,'Relé " . $relay_num . ": ' + relayStatus" . $relay_num . ");
-                    io.sockets.emit('relay" . $relay_num . "', data);
-                }
-            });
-            ";
-
-            array_push($relays_metodos, $metodos_txt);*/
 
             $relay_num++;
             $pin++;
@@ -289,8 +269,9 @@ if (isset($_POST['su_name'])) {
     fclose($fichero);
 
     header("Location: cpanel.php");
-} //Modificacion de usuarios
+}
 
+// Modificacion de usuarios
 else if (isset($_POST['user_mod_option'])) {
     $option = $_POST['user_mod_option'];
     $email = $_POST['user_mod_email'];
@@ -328,7 +309,7 @@ else if (isset($_POST['user_mod_option'])) {
     header("Location: cpanel.php");
 }
 
-//Busqueda de usuarios que se han puesto en contacto con el administrador
+// Busqueda de usuarios que se han puesto en contacto con el administrador
 
 $stmt_usuarios = $conexion->prepare("select U.nombre as usuario, U.email as email, U.foto as foto from usuario U, mensaje M where U.email = M.de and U.email<>'admin@smartliving.es' group by U.nombre order by M.fecha desc");
 $stmt_usuarios->execute();

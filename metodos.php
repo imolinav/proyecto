@@ -43,6 +43,14 @@ if (isset($_SESSION['email'])) {
     $tiempo = cargaTiempo($poblacion['latitud'], $poblacion['longitud']);
 }
 
+// Redireccionar
+
+function redirect($type) {
+    if($type === 'GET') {
+        header('Location: index.php');
+    }
+}
+
 // Get usuario (objeto)
 
 function getUsuario($conexion, $email)
@@ -77,7 +85,7 @@ function getPsswRec($conexion, $email)
     return $reco;
 }
 
-//Comprobar mensajes
+// Comprobar mensajes
 
 function comprobarMsgs($conexion, $email)
 {
@@ -144,8 +152,7 @@ function deletePswdRec($conexion, $email) {
     $stmt->execute($parameters);
 }
 
-
-//Carga de API OpenWeather
+// Carga de API OpenWeather
 
 function cargaTiempo($latitud, $longitud) {
     $clave = "http://api.openweathermap.org/data/2.5/forecast?lat=" . $latitud . "&lon=" . $longitud . "&APPID=d0cb0d8b429769a6e1105782251c99aa&units=metric&lang=es";
@@ -154,8 +161,7 @@ function cargaTiempo($latitud, $longitud) {
     return $data_parsed;
 }
 
-
-//Cerrar sesión con idioma mantenido (NOT USED)
+// Cerrar sesión con idioma mantenido (NOT USED)
 
 if (isset($_POST['cerrar'])) {
     $idioma = $_SESSION['idioma'];
@@ -167,34 +173,4 @@ if (isset($_POST['cerrar'])) {
 $_SESSION['idioma'] = $ruta;
 include $_SESSION['idioma'];
 
-//Metodos Twitter
-
-function publicarTweet($settings, $texto)
-{
-    $url = 'https://api.twitter.com/1.1/statuses/update.json';
-    $postfields = array('status' => $texto);
-    $requestMethod = 'POST';
-    $twitter = new TwitterAPIExchange($settings);
-    $twitter->setPostfields($postfields)->buildOauth($url, $requestMethod)->performRequest();
-}
-
-function obtenerTweets($settings, $usuario, $cantidad)
-{
-    $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-    $requestMethod = 'GET';
-    $getField = '?screen_name=' . $usuario . '&count=' . $cantidad;
-    $twitter = new TwitterAPIExchange($settings);
-    $informacion = json_decode($twitter->setGetfield($getField)->buildOauth($url, $requestMethod)->performRequest(), $assoc = TRUE);
-    if (array_key_exists("errors", $informacion)) {
-        echo "<h3>Lo sentimos, ha habido un problema</h3><p>Twitter ha devuelto el siguiente mensaje de error: </p><p><em>" . $informacion['errors'][0]['mensaje'] . "</em></p>";
-        exit();
-    }
-    foreach ($informacion as $items) {
-        echo "Fecha y hora del Tweet: " . $items['created_at'] . '<br>';
-        echo "Tweet: " . $items['text'] . '<br>';
-        echo "Usuario: " . $items['user']['name'] . '<br>';
-        echo "Nombre: " . $items['user']['screen_name'] . '<br>';
-        echo "Followers: " . $items['user']['follower_count'];
-    }
-}
 ?>

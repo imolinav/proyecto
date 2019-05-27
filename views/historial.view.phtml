@@ -26,8 +26,8 @@
                 <option selected disabled>Elige habitacion/escena</option>
                 <option disabled>-----------------------</option>
                 <option value="all">Todos</option>
-                <?php foreach($hab_logs as $habs) : ?>
-                <option value="<?= $habs['habitacion'] ?>"><?= $habs['habitacion'] ?></option>
+                <?php foreach ($hab_logs as $habs) : ?>
+                    <option value="<?= $habs['habitacion'] ?>"><?= $habs['habitacion'] ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -45,7 +45,8 @@
             </code>
         </div>
         <form action="" method="post">
-            <button class="btn btn-success mt-3" name="export_xls"><i class="far fa-file-excel mr-1"></i> Exportar log
+            <button class="btn btn-success mt-3" name="export_xls">
+                <i class="far fa-file-excel mr-1"></i> Exportar log
             </button>
         </form>
         <?php else: ?>
@@ -65,25 +66,30 @@
     document.getElementsByName('log_hab')[0].onchange = actualizarHab;
     document.getElementById('btn_log_reset').onclick = limpiarLog;
 
+    // Reinicia la busqueda del historial
     function limpiarLog() {
         document.location.href = "historial.php";
     }
 
+    // Filtra por fecha de inicio
     function actualizarInicio(event) {
         f_inicio = event.target.value;
         actualizarLog();
     }
 
+    // Filtra por fecha de fin
     function actualizarFin(event) {
         f_fin = event.target.value;
         actualizarLog();
     }
 
+    // Filtra por habitacion
     function actualizarHab(event) {
         habitacion = event.target.value;
         actualizarLog();
     }
 
+    // Recarga el historial
     function actualizarLog() {
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'actualizar_log.php', true);
@@ -111,6 +117,5 @@
         this.f_fin = f_fin;
         this.habitacion = habitacion;
     }
-
 
 </script>

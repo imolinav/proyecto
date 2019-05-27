@@ -20,11 +20,9 @@
                     <option disabled value="no">----------------------</option>
                     <?php foreach ($dispositivos as $dispositivo) {
                         if ($dispositivo['temperatura'] != null) :?>
-                            <option value="<?= $dispositivo['id'] ?>"
-                                    class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
+                            <option value="<?= $dispositivo['id'] ?>" class="has_temp"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
                         <?php else: ?>
                             <option value="<?= $dispositivo['id'] ?>"><?= $dispositivo['habitacion'] . ' - ' . $dispositivo['nombre'] ?></option>
-
                         <?php endif;
                     } ?>
 
@@ -112,6 +110,7 @@
         document.getElementsByName('scn_disp_name[]')[i].onchange = habilitarInputs;
     }
 
+    //Añade un nuevo bloque de dispositivo
     function nuevoDisp(event) {
         event.target.parentNode.parentNode.parentNode.insertBefore(row_disp.cloneNode(true), event.target.parentNode.parentNode);
         for (let i = 0; i < document.getElementsByName('scn_disp_name[]').length; i++) {
@@ -119,12 +118,14 @@
         }
     }
 
+    // Quita el ultimo bloque de dispositivo
     function quitarDisp(event) {
         if (document.getElementsByClassName('row_disp').length > 1) {
             event.target.parentNode.parentNode.parentNode.removeChild(document.getElementsByClassName('row_disp')[document.getElementsByClassName('row_disp').length - 1]);
         }
     }
 
+    // Habilita los inputs al seleccionar un dispositivo
     function habilitarInputs(event) {
         for (let i = 0; i < document.getElementsByName('scn_disp_name[]').length; i++) {
             if (document.getElementsByName('scn_disp_name[]')[i] == event.target) {
@@ -141,6 +142,7 @@
         }
     }
 
+    // Comprueba que todos los datos del formulario esten rellenos
     function comprobarScnForm() {
         for (let i = 0; i < document.getElementsByTagName('input').length; i++) {
             document.getElementsByTagName('input')[i].classList.remove('is-invalid');
@@ -182,8 +184,8 @@
                 }
             }
         }
-        for(let i=0; i<document.getElementsByName('scn_repeats[]').length; i++) {
-            if(document.getElementsByName('scn_repeats[]')[i].checked === false) {
+        for (let i = 0; i < document.getElementsByName('scn_repeats[]').length; i++) {
+            if (document.getElementsByName('scn_repeats[]')[i].checked === false) {
                 document.getElementsByName('scn_repeats[]')[i].checked = true;
                 document.getElementsByName('scn_repeats[]')[i].value = "no";
             }
@@ -197,26 +199,6 @@
             }
             document.getElementById('form_scn').submit();
         }
-
-
-        /*let ok = true;
-        for(let i =0; i<document.getElementById('form_scn').getElementsByTagName('input').length; i++) {
-            if(!document.getElementById('form_scn').getElementsByTagName('input')[i].disabled && document.getElementById('form_scn').getElementsByTagName('input')[i].required) {
-                if(!document.getElementById('form_scn').getElementsByTagName('input')[i].value) {
-                    ok = false;
-                }
-            }
-        }
-        if(ok === false) {
-        } else {
-            for(let i = 0; i<document.getElementsByName('scn_disp_tmp[]').length; i++) {
-                if(document.getElementsByName('scn_disp_tmp[]')[i].disabled == true) {
-                    document.getElementsByName('scn_disp_tmp[]')[i].disabled = false;
-                    document.getElementsByName('scn_disp_tmp[]')[i].value = null;
-                }
-            }
-            document.getElementById('form_scn').submit();
-        }*/
     }
 
 </script>

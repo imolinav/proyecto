@@ -108,34 +108,9 @@
         </div>
     </div>
 </div>
-
-<!--
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <iframe width="550" height="400" src="https://prezi.com/view/0XSkuukVNvlCd7ykEczP/embed" webkitallowfullscreen="1" mozallowfullscreen="1" allowfullscreen="1"></iframe>
-        </div>
-    </div>
-</div>
--->
-
-<!--
-<div class="container mt-3">
-        <div class="row">
-
-        <div class="col-8">
-
-        </div>
-        <div class="col-4">
-            <iframe src="https://open.spotify.com/embed/user/mnd1k44b3c2v6qbgrs08r3uod/playlist/7r15xKvOAhAU8dTgaZy6YI?si=mrY_N0wPRt6HcZAyPwEXSA" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-            <iframe src="https://open.spotify.com/follow/1/?uri=spotify:user:mnd1k44b3c2v6qbgrs08r3uod&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
-        </div>
-    </div>
-</div>
--->
-
 <a href="#" id="go_up" class="hvr-icon-up" onclick="topFunction()"><i class="fas fa-chevron-up hvr-icon"></i></a>
 <script>
+    // Crea un scroll a los diferentes puntos de la pagina
     $('a[href*="#"]').not('[href="#"]').not('[href="#0"]').click(function (event) {
         if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
             var target = $(this.hash);
@@ -152,23 +127,25 @@
                     } else {
                         $target.attr('tabindex', '-1');
                         $target.focus();
-                    };
+                    }
                 });
             }
         }
     });
+
     window.onscroll = function () {
         scrollFunction()
     };
     $(document).ready(resizeIframe);
-    //document.body.onload = resizeIframe;
     document.body.onresize = resizeIframe;
 
+    // Ajusta el video a la anchura de la pantalla para que no pierda la proporcion
     function resizeIframe() {
         let anchura = document.getElementById('videoYT').scrollWidth;
         document.getElementById('videoYT').height = anchura * 0.5625;
     }
 
+    // Activa el boton de volver al inicio de la pagina
     function scrollFunction() {
         if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
             document.getElementById("go_up").style.display = "block";
@@ -177,65 +154,9 @@
         }
     }
 
+    // Vuelve al inicio de la pagina
     function topFunction() {
         $('html, body').animate({scrollTop: 0}, 'slow');
     }
-
-    /*function cargarProvincias(event) {
-        let httpRequest = new obtainXMLHttpRequest();
-        httpRequest.open('POST', 'gest_tiempo.php', true);
-        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.onreadystatechange = function() {
-            if(httpRequest.readyState === 4) {
-                if(httpRequest.status === 200) {
-                    if(document.getElementById('select_provincia')) {
-                        document.getElementById('info_tiempo').removeChild(document.getElementById('select_provincia'));
-                    }
-                    if(document.getElementById('select_municipio')) {
-                        document.getElementById('info_tiempo').removeChild(document.getElementById('select_municipio'));
-                    }
-                    $('#info_tiempo').append(httpRequest.responseText);
-                    $('#select_provincia').change(cargarMunicipios);
-                }
-            }
-        };
-        httpRequest.send('comunidad='+event.target.value);
-    }*/
-
-    /*function cargarMunicipios(event) {
-        let httpRequest = new obtainXMLHttpRequest();
-        httpRequest.open('POST', 'gest_tiempo.php', true);
-        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.onreadystatechange = function() {
-            if(httpRequest.readyState === 4) {
-                if(httpRequest.status === 200) {
-                    if(document.getElementById('select_municipio')) {
-                        document.getElementById('info_tiempo').removeChild(document.getElementById('select_municipio'));
-                    }
-                    $('#info_tiempo').append(httpRequest.responseText);
-                    $('#select_municipio').change(cargarTiempo);
-                }
-            }
-        };
-        httpRequest.send('provincia='+event.target.value);
-    }*/
-
-    /*function cargarTiempo(event) {
-        let httpRequest = new obtainXMLHttpRequest();
-        httpRequest.open('POST', 'gest_tiempo.php', true);
-        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.onreadystatechange = function() {
-            if(httpRequest.readyState === 4) {
-                if(httpRequest.status === 200) {
-                    if(document.getElementById('myTabContent')) {
-                        document.getElementById('datos_tiempo').removeChild(document.getElementById('myTabContent'));
-                        document.getElementById('datos_tiempo').removeChild(document.getElementById('myTab'));
-                    }
-                    $('#datos_tiempo').append(httpRequest.responseText);
-                }
-            }
-        };
-        httpRequest.send('municipio='+event.target.value);
-    }*/
 
 </script>

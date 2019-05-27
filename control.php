@@ -1,6 +1,7 @@
 <?php
 require_once "metodos.php";
 
+// Crea una escena
 if (isset($_POST['scn_name'])) {
 
     $stmt_escena = $conexion->prepare("INSERT INTO escena (nombre, activa, usuario_email) VALUES (:nombre, 1, :email)");
@@ -22,8 +23,8 @@ if (isset($_POST['scn_name'])) {
 
     $repeats = "";
 
-    foreach($_POST['scn_repeats'] as $repeat) {
-        if($repeat == "si") {
+    foreach ($_POST['scn_repeats'] as $repeat) {
+        if ($repeat == "si") {
             $repeats .= "S";
         } else {
             $repeats .= "N";
@@ -34,7 +35,6 @@ if (isset($_POST['scn_name'])) {
     if (isset($_POST['scn_weekly'])) {
         $weekly = 1;
     }
-
 
     for ($i = 0; $i < count($_POST['scn_disp_name']); $i++) {
 
@@ -56,7 +56,7 @@ if (isset($_POST['scn_name'])) {
 
         $stmt_prgr = $conexion->prepare("INSERT INTO programa (dispositivo_id, dia_inicio, hora_inicio, dia_fin, hora_fin, temp_inicio, temp_fin, temperatura, repetir_dias, repetir_sem) VALUES (:id, :dia_inicio, :hora_inicio, :dia_fin, :hora_fin, :temp_ini, :temp_fin, :temp, :dias, :semanal)");
 
-        $parameters_prgr = [':id' => $_POST['scn_disp_name'][$i], ':dia_inicio' => $_POST['scn_date'], ':hora_inicio' => $_POST['scn_disp_start'][$i], ':dia_fin' => null, ':hora_fin' => $_POST['scn_disp_end'][$i], ':temp_ini' => $_POST['scn_disp_tmp_start'][$i], ':temp_fin' => $_POST['scn_disp_tmp_end'][$i], ':temp' => $_POST['scn_disp_tmp'][$i], ':dias'=>$repeats, ':semanal'=>$weekly];
+        $parameters_prgr = [':id' => $_POST['scn_disp_name'][$i], ':dia_inicio' => $_POST['scn_date'], ':hora_inicio' => $_POST['scn_disp_start'][$i], ':dia_fin' => null, ':hora_fin' => $_POST['scn_disp_end'][$i], ':temp_ini' => $_POST['scn_disp_tmp_start'][$i], ':temp_fin' => $_POST['scn_disp_tmp_end'][$i], ':temp' => $_POST['scn_disp_tmp'][$i], ':dias' => $repeats, ':semanal' => $weekly];
 
         $stmt_prgr->execute($parameters_prgr);
 
@@ -67,6 +67,8 @@ if (isset($_POST['scn_name'])) {
         $stmt_contiene->execute($parameters_contiene);
     }
     header("Location: control.php");
+
+// Elimina una escena
 } else if (isset($_POST['del_prg'])) {
     $id = $_POST['del_prg'];
     $stmt_del_prg = $conexion->prepare("DELETE FROM programa WHERE id = :id");
@@ -77,7 +79,6 @@ if (isset($_POST['scn_name'])) {
 $dispositivos = $usuario->getDispositivos($conexion);
 $escenas = $usuario->getEscenas($conexion);
 $habitaciones = $usuario->getHabitaciones($conexion);
-$camaras = $usuario->getCamaras($conexion);
 
 include "views/partials/header.part.php";
 include "views/control.view.phtml";

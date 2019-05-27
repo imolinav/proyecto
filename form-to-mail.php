@@ -1,5 +1,6 @@
 <?php
 require "metodos.php";
+redirect($_SERVER['REQUEST_METHOD']);
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -7,6 +8,8 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
+
+// Creamos un email con informacion rellenada por el usuario y nos lo mandamos a nosotros mismos
 
 if (isset($_POST['email_contacto'])) {
     $opcion = $_POST['opciones_contacto'];

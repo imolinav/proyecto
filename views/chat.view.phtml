@@ -19,7 +19,6 @@
         </div>
     </div>
 </div>
-<!--<script src="/socket.io/socket.io.js"></script>-->
 <script>
     $(document).ready(avisarMsg);
     $('#cabecera_chat').click(minMax);
@@ -27,20 +26,24 @@
     $('#texto_msg').keyup(comprobarText);
 
     function avisarMsg() {
-        if(document.getElementById('new_msg_user')) {
+        if (document.getElementById('new_msg_user')) {
             setInterval(animar, 10000);
         }
     }
 
+    // Anima la alerta de mensajes nuevos
     function animar() {
         document.getElementById('new_msg_user').classList.add('heartBeat');
         document.getElementById('new_msg_user').classList.add('animated');
         document.getElementById('new_msg_user').classList.add('slow');
-        setTimeout(function() {document.getElementById('new_msg_user').classList.remove('heartBeat');
+        setTimeout(function () {
+            document.getElementById('new_msg_user').classList.remove('heartBeat');
             document.getElementById('new_msg_user').classList.remove('animated');
-            document.getElementById('new_msg_user').classList.remove('slow');}, 2000);
+            document.getElementById('new_msg_user').classList.remove('slow');
+        }, 2000);
     }
 
+    // Minimiza/maximiza el chat
     function minMax() {
         if (document.getElementById('cuerpo_chat').style.display === "none") {
             $('#cuerpo_chat').fadeIn(300, function () {
@@ -58,6 +61,7 @@
         }
     }
 
+    // Carga los mensajes al maximizar el chat
     function cargarMsg() {
         if (document.getElementById('new_msg_user')) {
             document.getElementById('new_msg_user').parentNode.removeChild(document.getElementById('new_msg_user'));
@@ -80,10 +84,11 @@
         httpRequest.send('user=<?= $usuario->getEmail() ?>');
     }
 
+    // Evita que mandes mensajes vacios
     function comprobarText(event) {
         if (event.target.value !== "") {
             $('[name=chat_enviar]').eq(0).prop("disabled", false);
-            if(event.key==="Enter") {
+            if (event.key === "Enter") {
                 enviarMsg();
             }
         } else {
@@ -102,11 +107,8 @@
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
                     quitarCargando();
-                    //document.getElementById('texto_msg').value="";
                     $('#texto_msg').val("");
                     $('#cuerpo_chat table').append(httpRequest.responseText);
-                    //document.getElementById('cuerpo_chat').getElementsByTagName('table')[0].innerHTML += httpRequest.responseText;
-                    //cargarMsg();
                     actualizarScroll();
                 }
             }
@@ -116,6 +118,7 @@
         httpRequest.send('new_msg=' + datos);
     }
 
+    // Hace que al cargar los mensajes, la ventana de los mensajes salga bajada para leer los ultimos primero
     function actualizarScroll() {
         document.getElementById('cuerpo_chat').scrollTop = document.getElementById('cuerpo_chat').scrollHeight;
     }

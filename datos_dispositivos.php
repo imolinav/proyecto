@@ -1,5 +1,7 @@
 <?php
 require_once "metodos.php";
+redirect($_SERVER['REQUEST_METHOD']);
+
 if (isset($_POST['disp'])) {
     $id = $_POST['disp'];
 } else if (isset($_POST['scn'])) {
@@ -23,7 +25,7 @@ $disp_scn = $conexion->prepare("SELECT D.id, D.nombre, D.habitacion, P.dia_inici
 $disp_scn->execute($parameters);
 $disp_escenas = $disp_scn->fetchAll(PDO::FETCH_ASSOC);
 
-
+// Devolvemos los datos del dispositivo seleccionado
 if (isset($_POST['disp'])) {
     if (!empty($dispositivo)):?>
         <div class="col-12 col-md-6 col-lg-5 col-xl-4 mt-5 mt-md-0 offset-lg-1 offset-xl-2 pl-5" id="datos_disp">
@@ -37,7 +39,8 @@ if (isset($_POST['disp'])) {
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1"><i class="fas fa-thermometer-quarter"></i></span>
                     </div>
-                    <input type="number" class="form-control" name="disp_temp" placeholder="0" min="0" value="<?= $dispositivo['temperatura'] ?>"/>
+                    <input type="number" class="form-control" name="disp_temp" placeholder="0" min="0"
+                           value="<?= $dispositivo['temperatura'] ?>"/>
                     <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                 </div>
                 <button type="button" class="btn btn-primary mb-4" id="upd_temp_disp">Actualizar temperatura</button>
@@ -56,21 +59,21 @@ if (isset($_POST['disp'])) {
                             <form method="post" action="control.php" id="form_del_prg">
                                 <button type="button" class="btn btn-danger" name="btn_del_prg"><i class="far fa-trash-alt"></i></button>
                                 <p><?= $i_disp_texto5 ?></p>
-                                <p>Dia: <?= $programa['dia_inicio']?></p>
-                                <?php if(!is_null($programa['hora_inicio'])) : ?>
-                                <p>Hora inicio: <?=$programa['hora_inicio'] ?></p>
+                                <p>Dia: <?= $programa['dia_inicio'] ?></p>
+                                <?php if (!is_null($programa['hora_inicio'])) : ?>
+                                    <p>Hora inicio: <?= $programa['hora_inicio'] ?></p>
                                 <?php endif;
-                                if(!is_null($programa['hora_fin'])) : ?>
-                                <p>Hora fin: <?=$programa['hora_fin'] ?></p>
+                                if (!is_null($programa['hora_fin'])) : ?>
+                                    <p>Hora fin: <?= $programa['hora_fin'] ?></p>
                                 <?php endif;
                                 if (!is_null($programa['temp_inicio'])) : ?>
-                                <p>Temperatura inicio: <?= $programa['temp_inicio']?></p>
+                                    <p>Temperatura inicio: <?= $programa['temp_inicio'] ?></p>
                                 <?php endif;
                                 if (!is_null($programa['temp_fin'])) : ?>
-                                <p>Temperatura fin: <?= $programa['temp_fin']?></p>
+                                    <p>Temperatura fin: <?= $programa['temp_fin'] ?></p>
                                 <?php endif;
                                 if (!is_null($programa['temperatura'])) : ?>
-                                <p>Temperatura: <?= $programa['temperatura']?></p>
+                                    <p>Temperatura: <?= $programa['temperatura'] ?></p>
                                 <?php endif; ?>
                                 <input type="hidden" name="del_prg" value="<?= $programa['id'] ?>">
                             </form>
@@ -135,31 +138,38 @@ if (isset($_POST['disp'])) {
             <div class="row mt-4">
                 <div class="container">
                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="repeat1" name="prg_repeats[]" value="si">
+                        <input type="checkbox" class="custom-control-input" id="repeat1" name="prg_repeats[]"
+                               value="si">
                         <label class="custom-control-label" for="repeat1">Lunes</label>
                     </div>
                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="repeat2" name="prg_repeats[]" value="si">
+                        <input type="checkbox" class="custom-control-input" id="repeat2" name="prg_repeats[]"
+                               value="si">
                         <label class="custom-control-label" for="repeat2">Martes</label>
                     </div>
                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="repeat3" name="prg_repeats[]" value="si">
+                        <input type="checkbox" class="custom-control-input" id="repeat3" name="prg_repeats[]"
+                               value="si">
                         <label class="custom-control-label" for="repeat3">Miércoles</label>
                     </div>
                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="repeat4" name="prg_repeats[]" value="si">
+                        <input type="checkbox" class="custom-control-input" id="repeat4" name="prg_repeats[]"
+                               value="si">
                         <label class="custom-control-label" for="repeat4">Jueves</label>
                     </div>
                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="repeat5" name="prg_repeats[]" value="si">
+                        <input type="checkbox" class="custom-control-input" id="repeat5" name="prg_repeats[]"
+                               value="si">
                         <label class="custom-control-label" for="repeat5">Viernes</label>
                     </div>
                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="repeat6" name="prg_repeats[]" value="si">
+                        <input type="checkbox" class="custom-control-input" id="repeat6" name="prg_repeats[]"
+                               value="si">
                         <label class="custom-control-label" for="repeat6">Sábado</label>
                     </div>
                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" class="custom-control-input" id="repeat7" name="prg_repeats[]" value="si">
+                        <input type="checkbox" class="custom-control-input" id="repeat7" name="prg_repeats[]"
+                               value="si">
                         <label class="custom-control-label" for="repeat7">Domingo</label>
                     </div>
                     <hr>
@@ -172,6 +182,8 @@ if (isset($_POST['disp'])) {
             <input type="button" class="btn btn-primary" value="<?= $i_disp_boton1 ?>" name="prg_enviar">
         </div>
     <?php endif;
+
+// Devolvemos los datos de la escena seleccionada
 } else if (isset($_POST['scn'])) {
     if (!empty($escena)): ?>
 
@@ -180,7 +192,7 @@ if (isset($_POST['disp'])) {
                 <img src="imgs/on.png" height="100px" class="mb-5 hvr-grow" id="scn_apagar">
             <?php else: ?>
                 <img src="imgs/off.png" height="100px" class="mb-5 hvr-grow" id="scn_apagar">
-                <input type="date" name="reuse_scn_date" class="form-control mb-3">
+                <input type="date" name="reuse_scn_date" class="form-control mb-3" min="<?= date('Y-m-d') ?>">
                 <button type="button" name="reuse_scn_btn" class="btn btn-primary mb-3" id="scn_update" disabled>
                     Actualizar escena
                 </button>
@@ -188,23 +200,23 @@ if (isset($_POST['disp'])) {
             foreach ($disp_escenas as $disp) :?>
                 <p><?= $disp['habitacion'] . " - " . $disp['nombre'] ?></p>
                 <p>Dia inicio: <?= $disp['dia_inicio'] ?></p>
-                <?php if(!is_null($disp['dia_fin'])) :?>
-                <p>Dia fin: <?= $disp['dia_fin'] ?></p>
+                <?php if (!is_null($disp['dia_fin'])) : ?>
+                    <p>Dia fin: <?= $disp['dia_fin'] ?></p>
                 <?php endif;
-                if(!is_null($disp['hora_inicio'])) :?>
-                <p>Hora inicio: <?= $disp['hora_inicio'] ?></p>
+                if (!is_null($disp['hora_inicio'])) :?>
+                    <p>Hora inicio: <?= $disp['hora_inicio'] ?></p>
                 <?php endif;
-                if(!is_null($disp['hora_fin'])) :?>
-                <p>Hora fin: <?= $disp['hora_fin'] ?></p>
+                if (!is_null($disp['hora_fin'])) :?>
+                    <p>Hora fin: <?= $disp['hora_fin'] ?></p>
                 <?php endif;
-                if(!is_null($disp['temp_inicio'])) :?>
-                <p>Temperatura inicio: <?= $disp['temp_inicio'] ?></p>
+                if (!is_null($disp['temp_inicio'])) :?>
+                    <p>Temperatura inicio: <?= $disp['temp_inicio'] ?></p>
                 <?php endif;
-                if(!is_null($disp['temp_fin'])) :?>
-                <p>Temperatura fin: <?= $disp['temp_fin'] ?></p>
+                if (!is_null($disp['temp_fin'])) :?>
+                    <p>Temperatura fin: <?= $disp['temp_fin'] ?></p>
                 <?php endif;
-                if(!is_null($disp['temperatura'])) :?>
-                <p>Temperatura: <?= $disp['temperatura'] ?></p>
+                if (!is_null($disp['temperatura'])) :?>
+                    <p>Temperatura: <?= $disp['temperatura'] ?></p>
                 <?php endif; ?>
                 <hr>
             <?php endforeach; ?>

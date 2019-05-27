@@ -2,8 +2,6 @@
 //session_start();
 require_once "metodos.php";
 
-$item = 0;
-
 $dispositivos = $usuario->getDispositivos($conexion);
 $historial = $usuario->getHistorial($conexion);
 $meses = $usuario->getHistMeses($conexion);

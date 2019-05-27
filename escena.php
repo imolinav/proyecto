@@ -1,6 +1,6 @@
 <?php
 require_once "metodos.php";
-if(isset($_GET['id'])) {
+if (isset($_GET['id'])) {
     $escena = $_GET['id'];
 } else {
     $escena = $_POST['scn_id'];
@@ -9,20 +9,20 @@ if(isset($_GET['id'])) {
 $dispositivos = $usuario->getDispositivos($conexion);
 
 $stmt = $conexion->prepare("SELECT * FROM escena WHERE usuario_email = :email AND id = :id");
-$parameters = [':email'=>$usuario->getEmail(), ':id'=>$escena];
+$parameters = [':email' => $usuario->getEmail(), ':id' => $escena];
 $stmt->execute($parameters);
 $escena_usr = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Si la escena existe, procedemos
+if ($escena_usr || $_POST['scn_name']) {
 
-if($escena_usr || $_POST['scn_name']) {
-
-    if(isset($_POST['scn_name'])) {
+    if (isset($_POST['scn_name'])) {
         $stmt = $conexion->prepare("UPDATE escena SET nombre = :nombre, activa = 1 WHERE id = :id");
-        $parameters = [':nombre'=>$_POST['scn_name'], ':id'=>$_POST['scn_id']];
+        $parameters = [':nombre' => $_POST['scn_name'], ':id' => $_POST['scn_id']];
         $stmt->execute($parameters);
 
         $stmt2 = $conexion->prepare("SELECT P.id FROM programa P, escena E, compuesta C WHERE P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
-        $parameters2 = [':id'=>$_POST['scn_id']];
+        $parameters2 = [':id' => $_POST['scn_id']];
         $stmt2->execute($parameters2);
         $programas = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
@@ -33,11 +33,10 @@ if($escena_usr || $_POST['scn_name']) {
 
         $stmt_del = $conexion->prepare("DELETE FROM programa WHERE id = :id");
 
-        foreach($programas as $programa) {
-            $parameters_del = [':id'=>$programa['id']];
+        foreach ($programas as $programa) {
+            $parameters_del = [':id' => $programa['id']];
             $stmt_del->execute($parameters_del);
         }
-
 
 
         for ($i = 0; $i < count($_POST['scn_disp_name']); $i++) {
@@ -73,7 +72,7 @@ if($escena_usr || $_POST['scn_name']) {
     }
 
     $disp_scn = $conexion->prepare("SELECT D.id, D.nombre, D.habitacion, P.id as id_prg, P.dia_inicio, P.hora_inicio, P.dia_fin, P.hora_fin, P.temp_inicio, P.temp_fin, P.temperatura FROM dispositivo D, programa P, compuesta C, escena E WHERE D.id = P.dispositivo_id AND P.id = C.programa_id AND C.escena_id = E.id AND E.id = :id");
-    $parameters2 = [':id'=>$escena];
+    $parameters2 = [':id' => $escena];
     $disp_scn->execute($parameters2);
     $datos_scn = $disp_scn->fetchAll(PDO::FETCH_ASSOC);
 

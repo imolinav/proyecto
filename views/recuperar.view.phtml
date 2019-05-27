@@ -19,6 +19,7 @@
     document.getElementsByName('submit_recovery')[0].onclick = comprobarEmail;
     let regex_email = /^.+@.+\..+$/;
 
+    // Comprueba que el email es correcto respecto a la expresion regular
     function comprobarEmail(event) {
         if (document.getElementsByName('email_chg')[0].value === "" || regex_email.test(document.getElementsByName('email_chg')[0].value) === false) {
             document.getElementsByName('email_chg')[0].classList.add('is-invalid');

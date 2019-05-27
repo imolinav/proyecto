@@ -1,7 +1,7 @@
 <?php
-//session_start();
 require_once "metodos.php";
-//login
+
+// Login
 if (isset($_POST['li_email'])) {
     $usuario = getUsuario($conexion, $_POST['li_email']);
     if (empty($usuario)) {
@@ -27,10 +27,12 @@ if (isset($_POST['li_email'])) {
     $mensajes_nl = comprobarMsgs($conexion, $_POST['li_email']);
 }
 
-//cambio pass
+// Cambio pass la primera vez que inicias sesion
 if (isset($_POST['pass_chg'])) {
     $usuario->updatePassFT($conexion, $_POST['pass_chg']);
 }
+
+// Recuperacion de contraseña
 if (isset($_POST['pass_recovery'])) {
     $stmt = $conexion->prepare("UPDATE usuario SET pass = :pass, activo = 1 WHERE email = :email");
     $parameters = [':pass' => password_hash($_POST['pass_recovery'], PASSWORD_DEFAULT, ['cost' => 10]), ':email' => $_POST['user_email_recovery']];

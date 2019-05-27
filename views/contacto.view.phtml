@@ -57,8 +57,7 @@
                 <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                 <small class="form-text text-muted"><?= $i_contacto_texto6 ?></small>
                 <button type="button" name="submit_contacto"
-                        class="btn btn-primary mt-3 hvr-icon-wobble-horizontal"><?= $i_contacto_boton1 ?> <i
-                            class="fas fa-envelope hvr-icon ml-1"></i></button>
+                        class="btn btn-primary mt-3 hvr-icon-wobble-horizontal"><?= $i_contacto_boton1 ?> <i class="fas fa-envelope hvr-icon ml-1"></i></button>
             </div>
         </div>
     </form>
@@ -69,6 +68,7 @@
     document.getElementsByName('submit_contacto')[0].onclick = comprobarFormContacto;
     let regex_email = /^.+@.+\..+/;
 
+    // Permite escribir la razón de contacto al elegir la opcion "Otra"
     function habilitarInput(event) {
         if (event.target.value === "otra") {
             $('[name="opcion_contacto"]').eq(0).prop("disabled", false);
@@ -78,7 +78,8 @@
         }
     }
 
-    function comprobarFormContacto(event) {
+    // Comprueba que no hayan campos vacios a la hora de enviar el formulario
+    function comprobarFormContacto() {
         document.getElementsByName('nombre_contacto')[0].classList.remove('is-invalid');
         document.getElementsByName('email_contacto')[0].classList.remove('is-invalid');
         document.getElementsByName('mensaje_contacto')[0].classList.remove('is-invalid');

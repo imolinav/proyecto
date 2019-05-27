@@ -1,5 +1,8 @@
 <?php
 require_once "metodos.php";
+redirect($_SERVER['REQUEST_METHOD']);
+
+// Cargamos los mensajes del usuario
 if (isset($_POST['user'])) {
     $stmt_msgs = $conexion->prepare("SELECT * FROM mensaje WHERE de = :email OR para = :email ORDER BY fecha");
     $parameters = [':email' => $_POST['user']];
@@ -13,7 +16,7 @@ if (isset($_POST['user'])) {
     }
     $stmt_update->execute($parameters);
 
-
+    // Montamos la tabla de mensajes
     if (!empty($mensajes)): ?>
         <table>
             <?php foreach ($mensajes as $mensaje) : ?>
@@ -36,6 +39,7 @@ if (isset($_POST['user'])) {
         </table>
     <?php endif;
 
+// Guardamos nuevos mensajes
 } else if (isset($_POST['new_msg'])) {
     $datos = json_decode($_POST['new_msg'], true);
     if (isset($datos['mensaje'])) {
@@ -56,6 +60,8 @@ if (isset($_POST['user'])) {
             <td class="msg_user"><?= $datos['mensaje'] ?></td>
         </tr>
     <?php endif;
+
+// Filtro de usuarios que se han puesto en contacto con el administrador
 } else if (isset($_POST['filter'])) {
     $string = $_POST['filter'];
     $stmt = $conexion->prepare("select U.nombre as usuario, U.email as email, U.foto as foto from usuario U, mensaje M where U.email = M.de and U.email<>'admin@smartliving.es' AND (U.nombre LIKE :cadena OR U.email LIKE :cadena) group by U.nombre order by M.fecha desc");

@@ -84,14 +84,6 @@ class Usuario {
         return $habitaciones;
     }
 
-    public function getCamaras($conexion) {
-        $stmt = $conexion->prepare("SELECT * FROM camara WHERE usuario_email = :email");
-        $parameters = [':email'=>$this->email];
-        $stmt->execute($parameters);
-        $camaras = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $camaras;
-    }
-
     public function getEscenas($conexion) {
         $stmt = $conexion->prepare("SELECT * FROM escena WHERE usuario_email = :email");
         $parameters = [':email'=>$this->email];

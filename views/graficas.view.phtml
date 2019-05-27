@@ -25,9 +25,9 @@
 </div>
 <script>
     document.getElementsByTagName('select')[0].onchange = cargarGraficas;
-    //document.body.onload = cargarGraficas;
     $(document).ready(cargarGraficas);
 
+    // Lanza una peticion AJAX con el mes del que se quiere ver las gráficas, y crea las gráficas con los datos
     function cargarGraficas() {
         let valor = document.getElementsByTagName('select')[0].value;
         let dispositivos;

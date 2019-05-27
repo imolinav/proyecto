@@ -1,5 +1,7 @@
 <?php
 require_once "metodos.php";
+redirect($_SERVER['REQUEST_METHOD']);
+
 if (isset($_POST['buscar'])) {
     $usuario = $_POST['buscar'];
     $user = buscarUsuario($conexion, $usuario);
