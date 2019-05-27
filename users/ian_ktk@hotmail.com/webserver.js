@@ -38,7 +38,7 @@ let relays = [], pins = [], status = [], scripts = [];
 relays.push(RELAY1, RELAY2, RELAY3, RELAY4);
 pins.push(2, 3, 4, 5);
 status.push(relayStatus1, relayStatus2, relayStatus3, relayStatus4);
-scripts.push("activar2.js","activar3.js","activar4.js","activar5.js");
+//scripts.push("activar2.js","activar3.js","activar4.js","activar5.js");
 
 
 function leerTemp() {
@@ -62,19 +62,23 @@ setInterval(function() {
     lcd.clear();
     lcd.print('Temperatura: '+leerTemp()+'ºC');
     lcd.print('Humedad: '+leerHumedad()+'%');
-}, 300000);
+}, 60000);
+
+setInterval(function() {
+    for(let i = 0; i<status.length; i++) {
+        if(status[i]!==relays[i].readSync()) {
+            status[i] = relays[i].readSync;
+            socket.emit('actualizar',{
+                disp: pins[i],
+                status: status[i]
+            })
+        }
+    }
+}, 10000);
 
 io.sockets.on('connection', function (socket) {
 
-
     socket.emit('connected', status);
-
-        /*
-        { led1Status: relayStatus1,
-        led2Status: relayStatus2,
-        led3Status: relayStatus3,
-        led4Status: relayStatus4 });
-        */
 
     socket.on('activar', function(data) {
         // data => disp, action, date, temp, repeats, weekly
@@ -107,7 +111,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('programar', function(data) {
         let date = data.date.split('-');
-        let hour = data.hour.split(';');
+        let hour = data.hour.split(':');
         for(let i = 0; i<pins.length; i++) {
             if(data.disp === pins[i]) {
                 let reps = "";
@@ -132,11 +136,15 @@ io.sockets.on('connection', function (socket) {
                         relays[i].writeSync(1);
                         status[i]=1;
                     }
+                    socket.emit('actualizar', {
+                        disp: pins[i],
+                        status: status[i]
+                    })
                 }, null, true, 'Europe/Madrid');
                 break;
             }
         }
-    })
+    });
 });
 
 process.on('SIGINT', function () {

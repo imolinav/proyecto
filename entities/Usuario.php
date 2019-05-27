@@ -64,6 +64,18 @@ class Usuario {
         return $dispositivos;
     }
 
+    public function inicializarDisp($conexion) {
+        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 0 WHERE usuario_email = :email");
+        $parameters = [':email'=>$this->email];
+        $stmt->execute($parameters);
+    }
+
+    public function actualizarDisp($conexion, $pin, $estado) {
+        $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = :estado WHERE usuario_email = :email AND pin = :pin");
+        $parameters = [':estado'=>$estado, ':email'=>$this->email, ':pin'=>$pin];
+        $stmt->execute($parameters);
+    }
+
     public function getHabitaciones($conexion) {
         $stmt = $conexion->prepare("SELECT habitacion FROM dispositivo WHERE usuario_email = :email GROUP BY habitacion");
         $parameters = [':email'=>$this->email];

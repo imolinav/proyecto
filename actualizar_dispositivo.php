@@ -39,11 +39,32 @@ if (isset($_POST['activar'])) {
     $dispositivo = buscarDispositivo($conexion, $disp);
 
     $stmt = $conexion->prepare("UPDATE dispositivo SET temperatura = :temp WHERE id = :id");
-    $parameters = [':temp'=>$temp, ':id'=>$disp];
+    $parameters = [':temp' => $temp, ':id' => $disp];
     $stmt->execute($parameters);
-    $info = "Cambiada la temperatura de ".$dispositivo['habitacion']." - ".$dispositivo['nombre']." a ".$temp."ºC";
+    $info = "Cambiada la temperatura de " . $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . " a " . $temp . "ºC";
     $habitacion = $dispositivo['habitacion'];
     echo "bien";
+} else if(isset($_POST['actualizar'])) {
+    if($_POST['actualizar'] == "all") {
+        $usuario->inicializarDisp($conexion);
+        $info = "Inicializado el servidor de la RaspBerry. Reinicializados todos los dispositivos.";
+        $habitacion = "Alternativa";
+    } else {
+        $datos = json_decode($_POST['actualizar'], true);
+        $usuario->actualizarDisp($conexion, $datos['pin'], $datos['status']);
+        $stmt = $conexion->prepare("SELECT * FROM dispositivo WHERE pin = :pin AND usuario_email = :email");
+        $parameters = [':pin'=>$datos['pin'], ':email'=>$usuario->getEmail()];
+        $stmt->execute($parameters);
+        $disp = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($datos['status'] == 1) {
+            $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": Encendido el dispositivo de forma manual.";
+        } else {
+            $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": Apagado el dispositivo de forma manual.";
+        }
+        $habitacion = $disp['habitacion'];
+    }
+
+
 } else if (isset($_POST['programar'])) {
     $datos = json_decode($_POST['programar'], true);
     $dispositivo = buscarDispositivo($conexion, $datos['id_disp']);

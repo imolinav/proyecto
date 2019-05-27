@@ -84,12 +84,41 @@
             document.getElementsByClassName('nav-link')[i].onclick = guardarTab;
         }
 
-        if (typeof socket !== "undefined") {
-            socket.on('connected', function (data) {
-                //  TODO: ~ Modificar estado dispositivos a 0;
-                alert(data);
-            });
-        }
+        socket.on('connected', function () {
+            let httpRequest = obtainXMLHttpRequest();
+            httpRequest.open('POST', 'actualizar_dispositivo.php', true);
+            httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === 1) {
+                    cargando();
+                }
+                if (httpRequest.readyState === 4) {
+                    if (httpRequest.status === 200) {
+                        quitarCargando();
+                    }
+                }
+            };
+            httpRequest.send('actualizar=all');
+        });
+
+        socket.on('actualizar', function(data) {
+            let httpRequest = obtainXMLHttpRequest();
+            httpRequest.open('POST', 'actualizar_dispositivo.php', true);
+            httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === 1) {
+                    cargando();
+                }
+                if (httpRequest.readyState === 4) {
+                    if (httpRequest.status === 200) {
+                        quitarCargando();
+                    }
+                }
+            };
+            let obj = new Device_socket(data.disp, data.status);
+            let data_obj = JSON.stringify(obj);
+            httpRequest.send('actualizar=' + data_obj);
+        });
 
         function guardarTab(event) {
             if (sessionStorage.getItem('aceptadas') === "si") {
@@ -576,6 +605,11 @@
         function Device(id, temp) {
             this.id = id;
             this.temp = temp;
+        }
+
+        function Device_socket(pin, status) {
+            this.pin = pin;
+            this.status = status;
         }
 
         function Program(id_disp, dia_ini, hora_ini, dia_fin, hora_fin, temp_ini, temp_fin, temp, repeats, weekly) {
