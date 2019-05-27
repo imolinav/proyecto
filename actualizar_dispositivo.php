@@ -21,10 +21,16 @@ if (isset($_POST['activar'])) {
         $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 0, num_encendidos = num_encendidos+1, tiempo_encendido = tiempo_encendido + :fnew, temperatura = :temp WHERE id = :id");
         $parameters = [':fnew' => $new_time, ':temp'=>$temp, ':id' => $disp];
         $accion = " apagado.";
+        $stmt_total = $conexion->prepare("UPDATE disp_total SET num_encendidos = num_encendidos+1, tiempo_encendido = tiempo_encendido + :fnew WHERE id_dispositivo = :id");
+        $parameters_total = [':fnew'=>$new_time, ':id'=>$disp];
+        $stmt_total->execute($parameters_total);
     } else {
         $stmt = $conexion->prepare("UPDATE dispositivo SET encendido = 1, num_encendidos = num_encendidos+1, fecha_aux = :faux, temperatura = :temp   WHERE id = :id");
         $parameters = [':faux' => time(), ':temp'=>$temp, ':id' => $disp];
         $accion = " encendido.";
+        $stmt_total = $conexion->prepare("UPDATE disp_total SET num_encendidos = num_encendidos+1 WHERE id_dispositivo = :id");
+        $parameters_total = [':id'=>$disp];
+        $stmt_total->execute($parameters_total);
     }
     $stmt->execute($parameters);
     $info = $dispositivo['habitacion'] . " - " . $dispositivo['nombre'] . ": dispositivo " . $accion;

@@ -294,12 +294,6 @@ li a {
     text-align: right;
     transition: 0.5s ease-in-out;
 }
-#scroll_apartados ul:first-child a {
-    border-top-right-radius:5px ;
-}
-#scroll_apartados ul:last-child a {
-    border-bottom-right-radius:5px ;
-}
 #scroll_apartados li span {
     padding-left: 20px !important;
 }
@@ -321,7 +315,7 @@ li a {
 #index_aboutus h1 {
     font-family: "Gobold Regular";
     text-align: justify;
-    padding: 50px;
+    padding: 100px;
     font-size: 3em;
 }
 

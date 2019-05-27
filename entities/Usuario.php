@@ -144,6 +144,26 @@ class Usuario {
         return $meses;
     }
 
+    public function actualizarGraficas($conexion) {
+        $month = date("m", time());
+        $year = date("Y", time());
+        $stmt_busqueda = $conexion->prepare("SELECT * FROM disp_mensual WHERE mes = :mes AND anyo = :anyo AND usuario_email = :email");
+        $parameters_busqueda = [':mes'=>$month, ':anyo'=>$year, ':email'=>$this->email];
+        $stmt_busqueda->execute($parameters_busqueda);
+        $existe = $stmt_busqueda->fetchAll(PDO::FETCH_ASSOC);
+        if(is_null($existe)) {
+            $dispositivos = $this->getDispositivos($conexion);
+            foreach($dispositivos as $dispositivo) {
+                $stmt1 = $conexion->prepare("INSERT INTO disp_mensual (id_dispositivo, nombre, habitacion, num_encendidos, tiempo_encendido, mes, anyo, usuario_email) VALUES (:id, :nombre, :habitacion, :encendidos, :tiempo, :mes, :anyo, :email)");
+                $parameters1 = [':id'=>$dispositivo['id'], ':nombre'=>$dispositivo['nombre'], ':habitacion'=>$dispositivo['habitacion'], ':encendidos'=>$dispositivo['num_encendidos'], ':tiempo'=>$dispositivo['tiempo_encendido'], ':mes'=>$month, ':anyo'=>$year, ':email'=>$this->email];
+                $stmt1->execute($parameters1);
+            }
+            $stmt2 = $conexion->prepare("UPDATE dispositivo SET num_encendidos = 0, tiempo_encendido = 0 WHERE usuario_email = :email");
+            $parameters2 = [':email'=>$this->email];
+            $stmt2->execute($parameters2);
+        }
+    }
+
 
     /* -- GETTERS & SETTERS -- */
 

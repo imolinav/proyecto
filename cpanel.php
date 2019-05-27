@@ -73,7 +73,6 @@ if (isset($_POST['su_name'])) {
     $relays = [];
     $relay_num = 1;
 
-    // TODO: ~ Modificar la creacion de scripts
     // Guardamos los dispositivos y los pins en variables para acceder a ellas de forma mas sencilla
     $dispositivos = $_POST['su_disp_name'];
     $pin = 2;

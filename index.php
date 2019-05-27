@@ -12,7 +12,7 @@ if (isset($_POST['li_email'])) {
         if (!empty($reco)) {
             deletePswdRec($conexion, $usuario->getEmail());
         }
-        /* $usuario->deleteProgramas($conexion, ) */
+        $usuario->actualizarGraficas($conexion);
     } else {
         echo "<script type='text/javascript'>alert('La contrasenya no es correcta');</script>";
     }
