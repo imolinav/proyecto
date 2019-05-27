@@ -102,11 +102,6 @@
                                     </select>
                                     <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
                                 </div>
-                                <!-- <div class="col-6 col-md-3 mb-3">
-                                    <label><?= $i_cpanel_form8 ?></label>
-                                    <input type="text" class="form-control" name="su_disp_pin[]">
-                                    <div class="invalid-feedback"><?= $i_guser_error2 ?></div>
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -177,7 +172,6 @@
         $('.select2-user').select2();
     });
     $(document).ready(cargarTab);
-    //document.body.onload = cargarTab;
     document.getElementsByName('su_hab_num')[0].onchange = anyadirHab;
     document.getElementsByName('su_hab_cant_disp[]')[0].onchange = anyadirDisp;
     document.getElementsByName('submit_btn')[0].onclick = comprobarForm;
@@ -300,13 +294,10 @@
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
                     quitarCargando();
-                    //document.getElementById('modify_user').insertAdjacentHTML('beforeend', httpRequest.responseText);
                     $('#modify_user').append(httpRequest.responseText).children(':last').hide().fadeIn("slow");
                     document.getElementsByName('new_su_hab_num')[0].onchange = anyadirHab;
                     document.getElementsByName('new_su_hab_cant_disp[]')[0].onchange = anyadirDisp;
                     document.getElementsByName('new_submit_btn')[0].onclick = comprobarForm;
-                    //document.getElementById('btn_new_email').onclick = modificarEmail;
-                    //document.getElementsByName('new_delete_btn')[0].onclick = confirmarDelete;
                     new_div_hab = document.getElementsByClassName('new_habitaciones')[0].cloneNode(true);
                     new_div_disp = document.getElementsByClassName('new_dispositivos')[0].cloneNode(true);
                 }
@@ -331,7 +322,6 @@
     }
 
     function modificarEmail() {
-        //Aqui la expresion regular, if buena, cambiamos, else, mensaje de error
         document.getElementsByName('user_mod_option')[0].value = "update";
         document.getElementById('new_form_reg').submit();
 
@@ -357,8 +347,6 @@
         if(event.target.value!=="") {
             cadena = event.target.value;
         }
-        //document.getElementById('admin_chat_users').removeChild(document.getElementById('admin_chat_users').firstChild);
-        //document.getElementById('admin_chat_users').removeChild(document.getElementById('admin_chat_users').firstChild);
         let httpRequest = obtainXMLHttpRequest();
         httpRequest.open('POST', 'gest_chat.php', true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
