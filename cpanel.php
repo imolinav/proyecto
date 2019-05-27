@@ -104,6 +104,12 @@ if (isset($_POST['su_name'])) {
                     var sensor".$relay_num." = require('node-dht-sensor');
                     ";
                     break;
+                case 3:
+                    $relay_txt = "
+                    var infrared" . $relay_num . " = new Gpio(" . $pin . ", 'out');
+                    var relayStatus" . $relay_num . " = 0;
+                    ";
+                    break;
                 case 4:
                     $relay_txt = "
                     var lcd".$relay_num."= new LCD(".$pin.", 0x27, 20, 2);
