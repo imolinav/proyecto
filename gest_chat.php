@@ -92,5 +92,12 @@ if (isset($_POST['user'])) {
     <?php else : ?>
         <div><p id="texto_error" class="error_chat">Usuarios no encontrados</p></div>
     <?php endif;
+} else if(isset($_POST['notifications'])) {
+    $stmt = $conexion->prepare("SELECT * FROM mensaje WHERE para = :email AND leido = 0");
+    $parameters = [':email'=>$usuario->getEmail()];
+    $stmt->execute($parameters);
+    $mensajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $cant = count($mensajes);
+    echo $cant;
 }
 ?>

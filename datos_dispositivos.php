@@ -59,8 +59,13 @@ if (isset($_POST['disp'])) {
                             <form method="post" action="control.php" id="form_del_prg">
                                 <button type="button" class="btn btn-danger" name="btn_del_prg"><i class="far fa-trash-alt"></i></button>
                                 <p><?= $i_disp_texto5 ?></p>
-                                <p>Dia: <?= $programa['dia_inicio'] ?></p>
-                                <?php if (!is_null($programa['hora_inicio'])) : ?>
+                                <?php if (!is_null($programa['dia_inicio'])) : ?>
+                                    <p>Dia: <?= $programa['dia_inicio'] ?></p>
+                                <?php endif;
+                                if (!is_null($programa['repetir_dias'])) : ?>
+                                    <p>Dias: <?= $programa['repetir_dias'] ?></p>
+                                <?php endif;
+                                if (!is_null($programa['hora_inicio'])) : ?>
                                     <p>Hora inicio: <?= $programa['hora_inicio'] ?></p>
                                 <?php endif;
                                 if (!is_null($programa['hora_fin'])) : ?>

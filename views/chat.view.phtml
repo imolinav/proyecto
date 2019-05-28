@@ -118,6 +118,29 @@
         httpRequest.send('new_msg=' + datos);
     }
 
+    // Busca mensajes nuevos
+    function newMsgs() {
+        let httpRequest = obtainXMLHttpRequest();
+        httpRequest.open('POST', 'gest_chat.php', true);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
+                    if(httpRequest.responseText != 0) {
+                        let div = document.createElement('div');
+                        div.setAttribute('id', 'new_msg_user');
+                        let text = document.createTextNode(httpRequest.responseText);
+                        div.appendChild(text);
+                        document.getElementById('chat_wdw').appendChild(div);
+                    }
+                }
+            }
+        };
+        httpRequest.send('notifications=foo');
+    }
+
+    setInterval(newMsgs, 10000);
+
     // Hace que al cargar los mensajes, la ventana de los mensajes salga bajada para leer los ultimos primero
     function actualizarScroll() {
         document.getElementById('cuerpo_chat').scrollTop = document.getElementById('cuerpo_chat').scrollHeight;
